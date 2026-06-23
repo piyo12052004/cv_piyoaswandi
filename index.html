@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piyo Aswandi - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+
+        <!-- Header Section -->
+        <header
+            class="flex flex-col-reverse sm:flex-row justify-between items-start sm:items-center gap-6 border-b border-gray-100 pb-8">
+            <div>
+                <h1 class="text-3xl font-bold tracking-tight text-gray-900">Piyo Aswandi</h1>
+                <p class="text-lg text-gray-600 font-medium mt-1">Fullstack Developer | DevOps Engineer</p>
+                <p class="text-sm text-gray-500 mt-2 flex items-center gap-1">
+                    <i class="fa-solid fa-location-dot text-gray-400"></i> Bekasi, West Java, Indonesia
+                </p>
+                <!-- Social Icons -->
+                <div class="flex gap-3 mt-4">
+                    <a href="mailto:piyoaswandi@gmail.com"
+                        class="p-2 border border-gray-200 rounded-md hover:bg-gray-50 text-gray-600" title="Email"><i
+                            class="fa-regular fa-envelope"></i></a>
+                    <a href="https://wa.me/6285770485606?text=Halo,%20Piyo Aswandi"
+                        class="p-2 border border-gray-200 rounded-md hover:bg-gray-50 text-gray-600" title="WhatsApp"><i
+                            class="fa-solid fa-phone"></i></a>
+                    <a href="https://github.com/piyo12052004"
+                        class="p-2 border border-gray-200 rounded-md hover:bg-gray-50 text-gray-600" title="GitHub"><i
+                            class="fa-brands fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/piyo-aswandi-3477812a0/"
+                        class="p-2 border border-gray-200 rounded-md hover:bg-gray-50 text-gray-600" title="LinkedIn"><i
+                            class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <!-- Avatar Placeholder -->
+            <div class="w-32 h-32 rounded-lg overflow-hidden shadow-sm">
+                <img src="./asset/foto_1.jpeg" alt="Piyo Aswandi" class="w-full h-full object-cover">
+            </div>
+        </header>
+
+        <!-- About Section -->
+        <section class="mt-8">
+            <h2 class="text-xl font-bold text-gray-900 mb-3">About Me</h2>
+            <p class="text-gray-600 leading-relaxed text-justify text-sm sm:text-base">
+                An experienced Full-Stack Web Developer and DevOps enthusiast with a proven track record in developing, optimizing, and maintaining robust web applications, particularly for large-scale enterprise environments like Hospital Management Information Systems (HMIS). Highly proficient in modern ecosystems including PHP (Laravel) and JavaScript/TypeScript (Vue.js, Nuxt.js, NestJS). Skilled in database optimization, API architectural design, containerization with Docker, and building automated, secure CI/CD pipelines. A proactive problem-solver who thrives in both autonomous and collaborative settings, with a strong ability to adapt rapidly to emerging technologies.
+            </p>
+        </section>
+
+        <!-- Work Experience Section -->
+        <section class="mt-10">
+            <h2 class="text-xl font-bold text-gray-900 mb-6">Work Experience</h2>
+
+            <div class="space-y-8">
+                <!-- Job 1 -->
+                <div>
+                    <h3 class="font-bold text-gray-900 text-base">PT Jasamedika Saranatama</h3>
+                    <div class="flex justify-between text-sm text-gray-500 mt-0.5">
+                        <span class="font-medium text-gray-700">On-Site Programmer Analyst</span>
+                        <span>May 2024 - January 2026</span>
+                    </div>
+                    <ul class="list-disc list-inside mt-2 text-gray-600 space-y-1.5 text-sm pl-1 text-justify">
+                        <li>Developed and maintained a comprehensive Hospital Management Information System (HMIS) utilizing Laravel and Vue.js.</li>
+                        <li>Collaborated closely with hospital stakeholders to analyze business requirements and translate them into production-ready system features.</li>
+                        <li>Optimized complex database queries and indexing to significantly enhance system performance and reliability.</li>
+                        <li>Handled critical troubleshooting, resolved system anomalies, and provided high-tier technical support to end-users.</li>
+                        <li>Prepared comprehensive technical documentation and conducted hands-on user training sessions for smooth system implementation.</li>
+                    </ul>
+                </div>
+
+                <!-- Job 2 -->
+                <div>
+                    <h3 class="font-bold text-gray-900 text-base">BBPVP Bekasi</h3>
+                    <div class="flex justify-between text-sm text-gray-500 mt-0.5">
+                        <span class="font-medium text-gray-700">Junior Web Developer (Intensive Training)</span>
+                        <span>August 2023 - October 2023</span>
+                    </div>
+                    <ul class="list-disc list-inside mt-2 text-gray-600 space-y-1.5 text-sm pl-1 text-justify">
+                        <li>Participated in a rigorous, fast-paced web development training program focusing on HTML5, CSS3, JavaScript, and Native PHP.</li>
+                        <li>Mastered core web programming fundamentals through comprehensive theoretical studies and practical, hands-on implementations.</li>
+                        <li>Engineered a fully functional e-commerce capstone project featuring a dynamic product catalog, shopping cart logic, and an order management system.</li>
+                        <li>Successfully achieved formal training and professional competency certifications validating mastery over core web development concepts.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Languages and Tools Section -->
+        <section class="mt-10">
+            <h2 class="text-xl font-bold text-gray-900 mb-4">Languages and Tools</h2>
+            <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">Laravel</span>
+                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">NestJS</span>
+                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">Vue.js</span>
+                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">Nuxt.js</span>
+                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">JavaScript</span>
+                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">TypeScript</span>
+                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">PHP</span>
+                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">TailwindCSS</span>
+                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">Docker</span>
+                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">GitLab CI/CD</span>
+                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">Jenkins</span>
+                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">Linux</span>
+                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">GitHub</span>
+                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">MySQL / PostgreSQL</span>
+                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">MongoDB</span>
+            </div>
+        </section>
+
+        <!-- Footer / Link Project -->
+        <footer class="mt-12 pt-6 border-t border-gray-100 flex justify-end">
+            <a href="#"
+                class="inline-flex items-center gap-2 font-semibold text-gray-900 hover:text-gray-600 transition-colors text-sm">
+                See All My Projects <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </footer>
+
+    </div>
+</body>
+
+</html>
