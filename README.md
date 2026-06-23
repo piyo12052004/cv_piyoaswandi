@@ -6,7 +6,7 @@
 
 Ini adalah repositori kode sumber untuk website portofolio dan resume digital profesional saya. Website ini dirancang agar bersih, responsif, mudah dibaca oleh rekruter, serta mencerminkan keahlian saya di bidang **Full-Stack Development** dan **DevOps Engineering**.
 
-🌐 **Live Demo:** [https://piyo12052004.github.io/piyo-aswandi-portfolio](https://piyo12052004.github.io/piyo-aswandi-portfolio) *(Ganti URL ini sesuai nama repo Anda)*
+🌐 **Live Demo:** https://github.com/piyo12052004/piyo-aswandi-portfolio.git *(Ganti URL ini sesuai nama repo Anda)*
 
 ---
 
