@@ -5,6 +5,10 @@ pipeline {
         DOCKER_IMAGE = 'pyoawndi12/cv-piyoaswandi-image:latest'
     }
 
+    triggers {
+        githubPush()
+    }
+
     stages {
 
         stage('2. Build Docker Image') {
