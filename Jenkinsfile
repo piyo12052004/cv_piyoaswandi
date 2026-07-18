@@ -90,6 +90,19 @@ pipeline {
             }
         }
 
+        stage('5. Rolling Update MIG') {
+
+            steps {
+
+                sh '''
+                gcloud compute instance-groups managed rolling-action replace portfolio-mig \
+                    --region=asia-southeast2
+                '''
+
+            }
+
+        }
+
 
     }
 
