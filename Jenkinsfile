@@ -68,12 +68,9 @@ pipeline {
 
 
         stage('4. Push Image ke Docker Hub') {
-
             steps {
 
-
                 echo 'Mengunggah Image ke Docker Hub...'
-
 
                 withCredentials([usernamePassword(
                     credentialsId: 'dockerhub-credentials',
@@ -81,22 +78,16 @@ pipeline {
                     usernameVariable: 'DOCKER_USER'
                 )]) {
 
-
                     sh """
+                        echo ${DOCKER_PWD} | docker login \
+                        -u ${DOCKER_USER} \
+                        --password-stdin
 
-                    echo ${DOCKER_PWD} | docker login \
-                    -u ${DOCKER_USER} \
-                    --password-stdin
-
-
-                    docker push ${DOCKER_IMAGE}
-
+                        docker push ${DOCKER_IMAGE}
+                        docker push ${IMAGE_NAME}:latest
                     """
-
                 }
-
             }
-
         }
 
 
