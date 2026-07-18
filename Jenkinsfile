@@ -80,11 +80,17 @@ pipeline {
 
                     sh """
                         echo ${DOCKER_PWD} | docker login \
-                        -u ${DOCKER_USER} \
-                        --password-stdin
+                            -u ${DOCKER_USER} \
+                            --password-stdin
 
+                        # Buat tag latest dari image BUILD_NUMBER
+                        docker tag ${DOCKER_IMAGE} ${IMAGE_NAME}:latest
+
+                        # Push kedua tag
                         docker push ${DOCKER_IMAGE}
                         docker push ${IMAGE_NAME}:latest
+
+                        docker logout
                     """
                 }
             }
