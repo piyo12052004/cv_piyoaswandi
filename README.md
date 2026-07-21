@@ -39,3 +39,4 @@ Jika Anda ingin mengkloning dan memodifikasi proyek ini di komputer lokal Anda:
 1. Kloning repositori ini:
 ```bash
    git clone https://github.com/piyo12052004/cv_piyoaswandi.git
+
