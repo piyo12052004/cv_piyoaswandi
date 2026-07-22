@@ -16,7 +16,8 @@
     </style>
 </head>
 
-<body class="bg-gray-50">
+<body class="bg-gray-50" x-data="portfolioApp()">
+
     <section class="bg-white border-b">
         <div class="max-w-7xl mx-auto px-6 py-16">
 
@@ -40,164 +41,415 @@
         </div>
     </section>
 
-    <!-- Content -->
-    <section class="max-w-7xl mx-auto px-6 py-12">
+    <!-- Search & Filter Bar -->
+    <section class="bg-white border-b sticky top-0 z-10 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 py-5">
+            <div class="flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-between">
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-            <!-- Card -->
-            <div class="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg transition">
-
-                <div class="flex justify-between items-center">
-
-                    <span class="bg-blue-100 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full">
-                        Documentation
-                    </span>
-
-                    <span class="text-sm text-gray-400">
-                        Jul 2026
-                    </span>
-
+                <!-- Search -->
+                <div class="relative w-full lg:max-w-md">
+                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                    <input
+                        type="text"
+                        x-model="search"
+                        placeholder="Cari judul, deskripsi"
+                        class="w-full pl-11 pr-10 py-2.5 rounded-full border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white transition">
+                    <button
+                        type="button"
+                        x-show="search.length > 0"
+                        @click="search = ''"
+                        class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
                 </div>
 
-                <h2 class="text-xl font-bold text-gray-900 mt-5">
-                    Terraform GCP Documentation
-                </h2>
+                <!-- Filters -->
+                <div class="flex flex-wrap gap-3 items-center">
 
-                <p class="text-gray-500 text-sm mt-3 leading-6">
-                    Complete documentation about Terraform modules,
-                    VPC, Compute Engine, Cloud NAT, Cloud SQL,
-                    Load Balancer, IAM, Monitoring and deployment.
-                </p>
+                    <!-- Category filter -->
+                    <div class="flex bg-gray-100 rounded-full p-1 text-sm">
+                        <template x-for="opt in categoryOptions" :key="opt.value">
+                            <button
+                                type="button"
+                                @click="category = opt.value"
+                                class="px-4 py-1.5 rounded-full font-semibold transition"
+                                :class="category === opt.value ? 'bg-gray-900 text-white shadow' : 'text-gray-600 hover:text-gray-900'"
+                                x-text="opt.label + ' (' + opt.count + ')'">
+                            </button>
+                        </template>
+                    </div>
 
-                <div class="flex flex-wrap gap-2 mt-5">
+                    <!-- Tech filter -->
+                    <!-- <select
+                        x-model="tech"
+                        class="text-sm border border-gray-200 rounded-full px-4 py-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-900">
+                        <option value="all">Semua Teknologi</option>
+                        <template x-for="t in techOptions" :key="t">
+                            <option :value="t" x-text="t"></option>
+                        </template>
+                    </select> -->
 
-                    <span class="bg-gray-100 px-3 py-1 rounded text-xs">
-                        Terraform
-                    </span>
-
-                    <span class="bg-gray-100 px-3 py-1 rounded text-xs">
-                        GCP
-                    </span>
-
-                    <span class="bg-gray-100 px-3 py-1 rounded text-xs">
-                        DevOps
-                    </span>
+                    <!-- Sort direction -->
+                    <button
+                        type="button"
+                        @click="sortAsc = !sortAsc"
+                        class="flex items-center gap-2 text-sm border border-gray-200 rounded-full px-4 py-2 bg-gray-50 hover:bg-gray-100 transition">
+                        <i class="fa-solid" :class="sortAsc ? 'fa-arrow-up-short-wide' : 'fa-arrow-down-wide-short'"></i>
+                        <span x-text="sortAsc ? 'Terlama' : 'Terbaru'"></span>
+                    </button>
 
                 </div>
-
-                <a target="_blank"
-                    href="https://docs.google.com/document/d/1le4eUokA1sMhx1qKFlUpiBwa7GGoF05Y29OKZYsFMKw/edit?usp=sharing"
-                    class="inline-flex items-center gap-2 mt-6 font-semibold text-gray-900 hover:text-gray-600">
-
-                    View Documentation
-                    <i class="fa-solid fa-arrow-right"></i>
-
-                </a>
-
             </div>
 
-            <!-- Card -->
-            <!-- <div class="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg transition">
+            <p class="text-xs text-gray-400 mt-3" x-text="resultSummary"></p>
+        </div>
+    </section>
 
-                <div class="flex justify-between">
+    <!-- Content -->
+    <section class="max-w-7xl mx-auto px-6 py-12 space-y-16">
 
-                    <span class="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">
-                        Project
-                    </span>
+        <!-- Empty state -->
+        <div x-show="filteredItems.length === 0" x-cloak class="text-center py-24">
+            <i class="fa-solid fa-folder-open text-4xl text-gray-300"></i>
+            <p class="mt-4 text-gray-500 font-medium">Tidak ada hasil yang cocok.</p>
+            <p class="text-sm text-gray-400">Coba ubah kata kunci pencarian atau filter.</p>
+        </div>
 
-                    <span class="text-sm text-gray-400">
-                        Jan 2026
-                    </span>
-
+        <!-- Documentation group -->
+        <div x-show="groupedDocs.length > 0" x-cloak>
+            <div class="flex items-center gap-4 mb-6">
+                <div class="flex items-center gap-2 text-blue-700">
+                    <i class="fa-solid fa-file-lines"></i>
+                    <h2 class="text-lg font-bold uppercase tracking-wide">Documentation</h2>
                 </div>
+                <span class="text-xs font-semibold bg-blue-100 text-blue-700 px-2.5 py-1 rounded-full" x-text="groupedDocs.length"></span>
+                <div class="flex-1 border-t border-gray-200"></div>
+            </div>
 
-                <h2 class="text-xl font-bold mt-5">
-                    Inventory Management System
-                </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <template x-for="item in groupedDocs" :key="item.id">
+                    <div class="bg-white rounded-2xl border border-gray-200 border-t-4 p-6 flex flex-col h-full hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                        :class="item.borderColor">
 
-                <p class="text-gray-500 text-sm mt-3">
-                    Asset inventory system built with PHP Native,
-                    MySQL, Tailwind CSS, Docker and Jenkins CI/CD.
-                </p>
+                        <div class="flex justify-between items-center">
+                            <span class="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full" :class="item.badgeColor">
+                                <i :class="item.icon"></i>
+                                <span x-text="item.badge"></span>
+                            </span>
+                            <span class="text-sm text-gray-400" x-text="item.dateLabel"></span>
+                        </div>
 
-                <div class="flex flex-wrap gap-2 mt-5">
+                        <div class="mt-5 space-y-3">
+                            <h2 class="text-xl font-bold text-gray-900 leading-snug" x-text="item.title"></h2>
+                            <span class="inline-flex items-center bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full w-fit" x-text="item.subtitle"></span>
+                        </div>
 
-                    <span class="bg-gray-100 px-3 py-1 rounded text-xs">
-                        PHP
-                    </span>
+                        <p class="text-gray-500 text-sm leading-7 mt-4" x-text="item.description"></p>
 
-                    <span class="bg-gray-100 px-3 py-1 rounded text-xs">
-                        Docker
-                    </span>
+                        <div class="flex flex-wrap gap-2 mt-6">
+                            <template x-for="t in item.tech" :key="t">
+                                <span class="bg-gray-100 px-3 py-1 rounded-md text-xs font-medium" x-text="t"></span>
+                            </template>
+                        </div>
 
-                    <span class="bg-gray-100 px-3 py-1 rounded text-xs">
-                        Jenkins
-                    </span>
+                        <div class="mt-auto pt-6 border-t border-gray-100 flex justify-between items-center">
+                            <template x-for="link in item.links" :key="link.label">
+                                <a :href="link.url" target="_blank"
+                                    class="inline-flex items-center gap-2 font-semibold text-gray-900 transition-colors"
+                                    :class="item.hoverColor">
+                                    <span x-text="link.label"></span>
+                                    <i :class="link.icon"></i>
+                                </a>
+                            </template>
+                        </div>
 
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <!-- Project group -->
+        <div x-show="groupedProjects.length > 0" x-cloak>
+            <div class="flex items-center gap-4 mb-6">
+                <div class="flex items-center gap-2 text-green-700">
+                    <i class="fa-solid fa-diagram-project"></i>
+                    <h2 class="text-lg font-bold uppercase tracking-wide">Project</h2>
                 </div>
+                <span class="text-xs font-semibold bg-green-100 text-green-700 px-2.5 py-1 rounded-full" x-text="groupedProjects.length"></span>
+                <div class="flex-1 border-t border-gray-200"></div>
+            </div>
 
-                <a href="#" class="inline-flex items-center gap-2 mt-6 font-semibold text-gray-900 hover:text-gray-600">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <template x-for="item in groupedProjects" :key="item.id">
+                    <div class="bg-white rounded-2xl border border-gray-200 border-t-4 p-6 flex flex-col h-full hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                        :class="item.borderColor">
 
-                    View Project
-                    <i class="fa-solid fa-arrow-right"></i>
+                        <div class="flex justify-between items-center">
+                            <span class="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full" :class="item.badgeColor">
+                                <i :class="item.icon"></i>
+                                <span x-text="item.badge"></span>
+                            </span>
+                            <span class="text-sm text-gray-400" x-text="item.dateLabel"></span>
+                        </div>
 
-                </a>
+                        <div class="mt-5 space-y-3">
+                            <h2 class="text-xl font-bold text-gray-900 leading-snug min-h-[60px]" x-text="item.title"></h2>
+                            <span class="inline-flex items-center bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full w-fit" x-text="item.subtitle"></span>
+                        </div>
 
-            </div> -->
+                        <p class="text-gray-500 text-sm leading-7 mt-4" x-text="item.description"></p>
 
-            <!-- Card -->
-            <!-- <div class="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg transition">
+                        <div class="flex flex-wrap gap-2 mt-6">
+                            <template x-for="t in item.tech" :key="t">
+                                <span class="px-3 py-1 rounded-full text-xs font-medium bg-slate-100" x-text="t"></span>
+                            </template>
+                        </div>
 
-                <div class="flex justify-between">
+                        <div class="mt-auto pt-6 border-t border-gray-100 flex justify-between items-center">
+                            <span x-show="item.note" class="text-xs text-gray-400" x-text="item.note"></span>
+                            <template x-for="link in item.links" :key="link.label">
+                                <a :href="link.url" target="_blank"
+                                    class="inline-flex items-center gap-2 font-semibold text-gray-900 transition"
+                                    :class="item.hoverColor">
+                                    <span x-text="link.label"></span>
+                                    <i :class="link.icon"></i>
+                                </a>
+                            </template>
+                        </div>
 
-                    <span class="bg-purple-100 text-purple-700 text-xs font-semibold px-3 py-1 rounded-full">
-                        Documentation
-                    </span>
-
-                    <span class="text-sm text-gray-400">
-                        Aug 2026
-                    </span>
-
-                </div>
-
-                <h2 class="text-xl font-bold mt-5">
-                    Docker & Jenkins CI/CD
-                </h2>
-
-                <p class="text-gray-500 text-sm mt-3">
-                    Step-by-step guide for Docker, Docker Compose,
-                    Jenkins Pipeline, GitHub Webhook and Deployment.
-                </p>
-
-                <div class="flex flex-wrap gap-2 mt-5">
-
-                    <span class="bg-gray-100 px-3 py-1 rounded text-xs">
-                        Docker
-                    </span>
-
-                    <span class="bg-gray-100 px-3 py-1 rounded text-xs">
-                        Jenkins
-                    </span>
-
-                    <span class="bg-gray-100 px-3 py-1 rounded text-xs">
-                        CI/CD
-                    </span>
-
-                </div>
-
-                <a href="#" class="inline-flex items-center gap-2 mt-6 font-semibold text-gray-900 hover:text-gray-600">
-
-                    View Documentation
-                    <i class="fa-solid fa-arrow-right"></i>
-
-                </a>
-
-            </div> -->
-
+                    </div>
+                </template>
+            </div>
         </div>
 
     </section>
+
+    <script>
+        function portfolioApp() {
+            return {
+                search: '',
+                category: 'all',
+                tech: 'all',
+                sortAsc: false,
+                categoryOptions: [
+                    { value: 'all', label: 'Semua', count: 0 },
+                    { value: 'documentation', label: 'Documentation', count: 0 },
+                    { value: 'project', label: 'Project', count: 0 },
+                ],
+                items: [
+                    {
+                        id: 1, category: 'documentation', badge: 'Documentation',
+                        badgeColor: 'bg-blue-100 text-blue-700', borderColor: 'border-t-blue-500',
+                        icon: 'fa-solid fa-file-lines', hoverColor: 'hover:text-blue-600',
+                        year: 2026, month: 7, dateLabel: 'Jul 2026',
+                        title: 'Terraform GCP Documentation', subtitle: 'Google Cloud Platform',
+                        description: 'Comprehensive documentation covering Terraform modules, Google Cloud infrastructure, VPC, Compute Engine, Cloud NAT, Cloud SQL, IAM, Monitoring, Infrastructure as Code (IaC), and deployment best practices for production environments.',
+                        tech: ['Terraform', 'Google Cloud', 'DevOps', 'Infrastructure as Code', 'Cloud Computing'],
+                        links: [{ label: 'View Documentation', url: 'https://docs.google.com/document/d/1le4eUokA1sMhx1qKFlUpiBwa7GGoF05Y29OKZYsFMKw/edit?usp=sharing', icon: 'fa-solid fa-arrow-up-right-from-square text-sm' }]
+                    },
+                    {
+                        id: 2, category: 'project', badge: 'Project',
+                        badgeColor: 'bg-green-100 text-green-700', borderColor: 'border-t-green-500',
+                        icon: 'fa-solid fa-diagram-project', hoverColor: 'hover:text-blue-600',
+                        year: 2026, month: 6, dateLabel: 'Jun 2026',
+                        title: 'Asset Inventory Management System', subtitle: 'Branch : data-aset-barang',
+                        description: 'A web-based asset inventory management system developed using PHP Native and MySQL. The application manages company assets, categories, suppliers, locations, transactions, and reporting. It is containerized with Docker and deployed automatically using Jenkins CI/CD.',
+                        tech: ['PHP Native', 'MySQL', 'Tailwind CSS', 'Alpine.js', 'Docker', 'Jenkins', 'GitHub'],
+                        links: [{ label: 'Source Code', url: 'https://github.com/piyo12052004/project_hanina', icon: 'fa-solid fa-code' }]
+                    },
+                    {
+                        id: 3, category: 'project', badge: 'Project',
+                        badgeColor: 'bg-green-100 text-green-700', borderColor: 'border-t-green-500',
+                        icon: 'fa-solid fa-diagram-project', hoverColor: 'hover:text-blue-600',
+                        year: 2026, month: 7, dateLabel: 'Jul 2026',
+                        title: 'Personal Portfolio Website', subtitle: 'Branch : main',
+                        description: 'A responsive personal portfolio website built with HTML and Tailwind CSS to showcase projects, documentation, skills, and professional experience. The website is hosted using GitHub Pages, allowing anyone to access it directly from a web browser.',
+                        tech: ['HTML5', 'Tailwind CSS', 'Alpine.js', 'GitHub', 'GitHub Pages'],
+                        links: [
+                            { label: 'Source Code', url: 'https://github.com/piyo12052004/project_hanina', icon: 'fa-solid fa-code' },
+                            { label: 'Live Demo', url: 'https://haninanurfaizah.github.io/portofolio_nina', icon: 'fa-solid fa-arrow-up-right-from-square' }
+                        ]
+                    },
+                    {
+                        id: 4, category: 'project', badge: 'Team Project',
+                        badgeColor: 'bg-green-100 text-green-700', borderColor: 'border-t-green-500',
+                        icon: 'fa-solid fa-diagram-project', hoverColor: 'hover:text-blue-600',
+                        year: 2026, month: 1, dateLabel: 'Jan 2026',
+                        title: 'Company Profile Website', subtitle: 'Branch : main',
+                        description: 'A responsive company profile website developed collaboratively using Laravel Blade. The project showcases company information, services, portfolio, and contact pages with a clean and modern user interface. Built as a team project following the Laravel MVC architecture.',
+                        tech: ['Laravel', 'Blade', 'PHP', 'MySQL', 'Bootstrap', 'Git', 'Team Collaboration'],
+                        links: [{ label: 'Source Code', url: 'https://github.com/piyo12052004/frelance_company_profile_team_work', icon: 'fa-solid fa-code' }]
+                    },
+                    {
+                        id: 5, category: 'project', badge: 'Full Stack Project',
+                        badgeColor: 'bg-emerald-100 text-emerald-700', borderColor: 'border-t-emerald-500',
+                        icon: 'fa-solid fa-layer-group', hoverColor: 'hover:text-emerald-600',
+                        year: 2026, month: 4, dateLabel: 'Apr 2026',
+                        title: 'Product Management Application', subtitle: 'Branch : main',
+                        description: 'A modern full-stack product management application built with a decoupled architecture using Nuxt 3, NestJS, Laravel 11 Filament, and PostgreSQL. The project includes a responsive frontend, RESTful API backend, and an administrative dashboard for complete product management.',
+                        tech: ['Nuxt 3', 'NestJS', 'Laravel 11', 'Filament', 'PostgreSQL', 'Tailwind CSS', 'REST API', 'Full Stack'],
+                        links: [{ label: 'Source Code', url: 'https://github.com/piyo12052004/nuxt-nest-filament-product-app', icon: 'fa-solid fa-code' }]
+                    },
+                    {
+                        id: 6, category: 'project', badge: 'JavaScript Project',
+                        badgeColor: 'bg-yellow-100 text-yellow-700', borderColor: 'border-t-yellow-500',
+                        icon: 'fa-solid fa-calculator', hoverColor: 'hover:text-yellow-600',
+                        year: 2025, month: 7, dateLabel: 'Jul 2025',
+                        title: 'Simply Supported Beam Analysis', subtitle: 'Branch : calculator-test',
+                        description: 'A JavaScript-based engineering calculation application for analyzing simply supported beams. The project calculates support reactions and internal forces based on beam loading conditions, following the provided engineering calculation model.',
+                        tech: ['JavaScript', 'HTML5', 'CSS3', 'Engineering Calculation', 'Beam Analysis'],
+                        links: [{ label: 'Source Code', url: 'https://github.com/piyo12052004/piyo-assignment/tree/calculator-test', icon: 'fa-solid fa-code' }]
+                    },
+                    {
+                        id: 7, category: 'project', badge: 'Laravel Project',
+                        badgeColor: 'bg-red-100 text-red-700', borderColor: 'border-t-red-500',
+                        icon: 'fa-solid fa-laptop-code', hoverColor: 'hover:text-red-600',
+                        year: 2025, month: 7, dateLabel: 'Jul 2025',
+                        title: 'Supplier & CLT Management System', subtitle: 'Branch : feature-test',
+                        description: 'A Laravel-based management system for handling Suppliers, CLT Layups, and Layers with a hierarchical data structure. The application supports full CRUD operations, data import/export, conflict resolution during import, and follows Laravel best practices for scalable development.',
+                        tech: ['Laravel', 'PHP', 'MySQL', 'Bootstrap', 'Import / Export', 'CRUD', 'Repository Pattern', 'Feature Testing'],
+                        links: [{ label: 'Source Code', url: 'https://github.com/piyo12052004/piyo-assignment/tree/feature-test', icon: 'fa-solid fa-code' }]
+                    },
+                    {
+                        id: 8, category: 'project', badge: '3D Graphics Project',
+                        badgeColor: 'bg-indigo-100 text-indigo-700', borderColor: 'border-t-indigo-500',
+                        icon: 'fa-solid fa-cube', hoverColor: 'hover:text-indigo-600',
+                        year: 2025, month: 7, dateLabel: 'Jul 2025',
+                        title: '3D Wood Model Viewer', subtitle: 'Branch : three-dimension-test',
+                        description: 'A JavaScript-based 3D visualization project built with Three.js to render an interactive wooden model from an FBX file. The application recreates a realistic 3D scene with camera controls, lighting, and accurate model scaling.',
+                        tech: ['JavaScript', 'Three.js', 'WebGL', 'FBX Loader', 'HTML5', 'CSS3'],
+                        links: [{ label: 'Source Code', url: 'https://github.com/piyo12052004/piyo-assignment/tree/three-dimension-test', icon: 'fa-solid fa-code' }]
+                    },
+                    {
+                        id: 9, category: 'project', badge: 'Desktop Application',
+                        badgeColor: 'bg-cyan-100 text-cyan-700', borderColor: 'border-t-cyan-500',
+                        icon: 'fa-solid fa-desktop', hoverColor: 'hover:text-cyan-600',
+                        year: 2026, month: 4, dateLabel: 'Apr 2026',
+                        title: 'Parking Entry Management System', subtitle: 'Branch : main',
+                        description: 'A desktop-based parking entry management system developed with Python and PyQt5. The application records incoming vehicles using QR Code / Barcode scanning or manual license plate input, automatically stores entry time, and saves parking data into a database.',
+                        tech: ['Python', 'PyQt5', 'OpenCV', 'QR Code', 'SQLite', 'MySQL'],
+                        links: [{ label: 'View Source Code', url: 'https://github.com/piyo12052004/in_parkir_system_pyqt', icon: 'fa-solid fa-arrow-up-right-from-square' }]
+                    },
+                    {
+                        id: 10, category: 'project', badge: 'Desktop Application',
+                        badgeColor: 'bg-orange-100 text-orange-700', borderColor: 'border-t-orange-500',
+                        icon: 'fa-solid fa-right-to-bracket', hoverColor: 'hover:text-orange-600',
+                        year: 2026, month: 4, dateLabel: 'April 2026',
+                        title: 'Parking Exit Management System', subtitle: 'Branch : main',
+                        description: 'A desktop-based parking exit management system developed using Python and PyQt5. The application processes outgoing vehicles through QR Code / Barcode scanning or manual license plate input, updates parking records, and synchronizes data with the database in real time.',
+                        tech: ['Python', 'PyQt5', 'OpenCV', 'QR Code', 'SQLite', 'MySQL'],
+                        links: [{ label: 'Source Code', url: 'https://github.com/piyo12052004/out_parkir_system_pyqt', icon: 'fa-solid fa-code' }]
+                    },
+                    {
+                        id: 11, category: 'project', badge: 'Laravel Web App',
+                        badgeColor: 'bg-rose-100 text-rose-700', borderColor: 'border-t-rose-500',
+                        icon: 'fa-solid fa-film', hoverColor: 'hover:text-rose-600',
+                        year: 2026, month: 2, dateLabel: 'Feb 2026',
+                        title: 'Movie Information Application', subtitle: 'Branch : main',
+                        description: 'A Laravel-based movie information application integrated with the OMDb API. Users can search for movies, view detailed movie information, save favorite movies, and manage their personal favorite list through a responsive web interface.',
+                        tech: ['Laravel 5.5', 'PHP', 'Blade', 'Tailwind CSS', 'PostgreSQL', 'OMDb API', 'Guzzle HTTP'],
+                        links: [{ label: 'Source Code', url: 'https://github.com/piyo12052004/laravel-movie-app', icon: 'fa-solid fa-code' }]
+                    },
+                    {
+                        id: 12, category: 'project', badge: 'Full Stack Project',
+                        badgeColor: 'bg-violet-100 text-violet-700', borderColor: 'border-t-violet-500',
+                        icon: 'fa-solid fa-layer-group', hoverColor: 'hover:text-violet-600',
+                        year: 2025, month: 2, dateLabel: 'Feb 2025',
+                        title: 'Dynamic Portfolio Website', subtitle: 'Branch : main',
+                        description: 'A dynamic portfolio website built with a decoupled architecture, using Vue.js for the frontend and Laravel REST API for the backend. The application integrates PostgreSQL for data management and supports Google Authentication for secure user login.',
+                        tech: ['Vue.js', 'Laravel', 'REST API', 'PostgreSQL', 'Google OAuth', 'JWT Authentication', 'Full Stack'],
+                        note: 'Backend: Private',
+                        links: [{ label: 'Source Code Frontend', url: 'https://github.com/piyo12052004/portofolio_piyo_fe', icon: 'fa-solid fa-code' }]
+                    },
+                    {
+                        id: 13, category: 'project', badge: 'Laravel Project',
+                        badgeColor: 'bg-orange-100 text-orange-700', borderColor: 'border-t-orange-500',
+                        icon: 'fa-solid fa-graduation-cap', hoverColor: 'hover:text-orange-600',
+                        year: 2025, month: 4, dateLabel: 'Apr 2025',
+                        title: 'Online Student Admission System (PPDB)', subtitle: 'Branch : dev',
+                        description: 'A Laravel-based online student admission (PPDB) system featuring applicant registration, an administrative dashboard, and integrated online payments using the Midtrans Payment Gateway. The application streamlines the admission process from registration through payment verification.',
+                        tech: ['Laravel', 'PHP', 'MySQL', 'Midtrans', 'Payment Gateway', 'Bootstrap', 'Admin Dashboard'],
+                        links: [{ label: 'Source Code', url: 'https://github.com/piyo12052004/frelance_ppdb_sekolah/tree/dev', icon: 'fa-solid fa-code' }]
+                    },
+                    {
+                        id: 14, category: 'project', badge: 'Portfolio Website',
+                        badgeColor: 'bg-emerald-100 text-emerald-700', borderColor: 'border-t-emerald-500',
+                        icon: 'fa-solid fa-globe', hoverColor: 'hover:text-emerald-600',
+                        year: 2025, month: 8, dateLabel: 'Agu 2025',
+                        title: 'Freelance Portfolio \u2013 Natanusa', subtitle: 'Branch : production',
+                        description: 'A modern and responsive portfolio website developed using Vue.js. The application showcases company information, services, featured projects, and contact details with a clean user interface and component-based architecture for maintainability and scalability.',
+                        tech: ['Vue.js', 'JavaScript', 'HTML5', 'CSS3', 'Responsive Design', 'GitHub'],
+                        links: [{ label: 'Source Code', url: 'https://github.com/piyo12052004/freelance_profile_natanusa/tree/production', icon: 'fa-solid fa-code' }]
+                    },
+                    {
+                        id: 15, category: 'project', badge: 'E-Commerce Project',
+                        badgeColor: 'bg-orange-100 text-orange-700', borderColor: 'border-t-orange-500',
+                        icon: 'fa-solid fa-cart-shopping', hoverColor: 'hover:text-orange-600',
+                        year: 2025, month: 5, dateLabel: 'May 2025',
+                        title: 'Online Store Management System', subtitle: 'Branch : production',
+                        description: 'A web-based e-commerce application developed using PHP Native and MySQL. The system enables customers to browse products, manage shopping activities, and supports product management through an administrative interface.',
+                        tech: ['PHP Native', 'MySQL', 'HTML5', 'CSS3', 'JavaScript', 'Bootstrap'],
+                        links: [{ label: 'Source Code', url: 'https://github.com/piyo12052004/frelance-toko_oneline/tree/production', icon: 'fa-solid fa-code' }]
+                    },
+                    {
+                        id: 16, category: 'project', badge: 'Laravel Project',
+                        badgeColor: 'bg-teal-100 text-teal-700', borderColor: 'border-t-teal-500',
+                        icon: 'fa-solid fa-car-side', hoverColor: 'hover:text-teal-600',
+                        year: 2025, month: 0, dateLabel: '2025',
+                        title: 'Car Rental Management System', subtitle: 'Branch : main',
+                        description: 'A web-based car rental management system developed using Laravel and PostgreSQL. The application provides complete CRUD functionality for managing vehicle data, rental transactions, customer information, and rental records through an intuitive web interface.',
+                        tech: ['Laravel', 'PHP', 'PostgreSQL', 'Bootstrap', 'CRUD', 'MVC'],
+                        links: [{ label: 'Source Code', url: 'https://github.com/piyo12052004/peminjaman_mobil', icon: 'fa-solid fa-code' }]
+                    },
+                ],
+
+                get techOptions() {
+                    const set = new Set();
+                    this.items.forEach(i => i.tech.forEach(t => set.add(t)));
+                    return Array.from(set).sort();
+                },
+
+                matchesSearch(item) {
+                    if (!this.search.trim()) return true;
+                    const q = this.search.trim().toLowerCase();
+                    const haystack = [item.title, item.description, item.badge, item.subtitle, ...item.tech].join(' ').toLowerCase();
+                    return haystack.includes(q);
+                },
+                matchesCategory(item) {
+                    return this.category === 'all' || item.category === this.category;
+                },
+                matchesTech(item) {
+                    return this.tech === 'all' || item.tech.includes(this.tech);
+                },
+
+                get filteredItems() {
+                    const list = this.items.filter(i => this.matchesSearch(i) && this.matchesCategory(i) && this.matchesTech(i));
+                    return list.sort((a, b) => {
+                        const diff = (a.year * 12 + a.month) - (b.year * 12 + b.month);
+                        return this.sortAsc ? diff : -diff;
+                    });
+                },
+                get groupedDocs() {
+                    return this.filteredItems.filter(i => i.category === 'documentation');
+                },
+                get groupedProjects() {
+                    return this.filteredItems.filter(i => i.category === 'project');
+                },
+                get resultSummary() {
+                    const total = this.filteredItems.length;
+                    return total + ' hasil ditemukan \u00b7 diurutkan berdasarkan tahun (' + (this.sortAsc ? 'terlama ke terbaru' : 'terbaru ke terlama') + ')';
+                },
+
+                init() {
+                    this.$watch('items', () => {});
+                    this.categoryOptions[0].count = this.items.length;
+                    this.categoryOptions[1].count = this.items.filter(i => i.category === 'documentation').length;
+                    this.categoryOptions[2].count = this.items.filter(i => i.category === 'project').length;
+                }
+            }
+        }
+    </script>
+
 </body>
 
 </html>
