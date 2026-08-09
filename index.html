@@ -1,148 +1,347 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Piyo Aswandi - Portfolio</title>
+    <title>Piyo Aswandi — Fullstack Developer & DevOps Engineer</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'monospace']
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s ease-in-out infinite'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-8px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
     <style>
+        html { scroll-behavior: smooth; }
         body {
-            background-image: linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
-            background-size: 20px 20px;
+            background:
+                radial-gradient(circle at 15% 10%, rgba(34, 211, 238, .10), transparent 28rem),
+                radial-gradient(circle at 85% 15%, rgba(59, 130, 246, .10), transparent 30rem),
+                #070b12;
+        }
+        .grid-bg {
+            background-image:
+                linear-gradient(rgba(148,163,184,.045) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(148,163,184,.045) 1px, transparent 1px);
+            background-size: 32px 32px;
+            mask-image: linear-gradient(to bottom, black 0%, transparent 85%);
+        }
+        .glass {
+            background: rgba(15, 23, 42, .68);
+            border: 1px solid rgba(148, 163, 184, .12);
+            box-shadow: 0 20px 60px rgba(0,0,0,.20);
+            backdrop-filter: blur(18px);
+        }
+        .card {
+            transition: transform .25s ease, border-color .25s ease, background .25s ease;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(34, 211, 238, .25);
+            background: rgba(15, 23, 42, .82);
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #67e8f9, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .terminal-line::before {
+            content: ">";
+            color: #22d3ee;
+            margin-right: .55rem;
         }
     </style>
 </head>
 
-<body class="bg-gray-50 text-gray-800 font-sans min-h-screen py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+<body class="min-h-screen text-slate-200 font-sans antialiased selection:bg-cyan-400/20 selection:text-cyan-200">
 
-        <!-- Header Section -->
-        <header
-            class="flex flex-col-reverse sm:flex-row justify-between items-start sm:items-center gap-6 border-b border-gray-100 pb-8">
-            <div>
-                <h1 class="text-3xl font-bold tracking-tight text-gray-900">Piyo Aswandi</h1>
-                <p class="text-lg text-gray-600 font-medium mt-1">Fullstack Developer | DevOps Engineer</p>
-                <p class="text-sm text-gray-500 mt-2 flex items-center gap-1">
-                    <i class="fa-solid fa-location-dot text-gray-400"></i> Bekasi, West Java, Indonesia
-                </p>
-                <!-- Social Icons -->
-                <div class="flex gap-3 mt-4">
-                    <a href="mailto:piyoaswandi@gmail.com"
-                        class="p-2 border border-gray-200 rounded-md hover:bg-gray-50 text-gray-600" title="Email"><i
-                            class="fa-regular fa-envelope"></i></a>
-                    <a href="https://wa.me/6285770485606?text=Halo,%20Piyo Aswandi"
-                        class="p-2 border border-gray-200 rounded-md hover:bg-gray-50 text-gray-600" title="WhatsApp"><i
-                            class="fa-solid fa-phone"></i></a>
-                    <a href="https://github.com/piyo12052004"
-                        class="p-2 border border-gray-200 rounded-md hover:bg-gray-50 text-gray-600" title="GitHub"><i
-                            class="fa-brands fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/piyo-aswandi-3477812a0/"
-                        class="p-2 border border-gray-200 rounded-md hover:bg-gray-50 text-gray-600" title="LinkedIn"><i
-                            class="fa-brands fa-linkedin-in"></i></a>
-                </div>
-            </div>
-            <!-- Avatar Placeholder -->
-            <div class="w-32 h-32 rounded-lg overflow-hidden shadow-sm">
-                <img src="./asset/foto_1.jpeg" alt="Piyo Aswandi" class="w-full h-full object-cover">
-            </div>
-        </header>
+    <div class="fixed inset-0 -z-10 grid-bg pointer-events-none"></div>
 
-        <!-- About Section -->
-        <section class="mt-8">
-            <h2 class="text-xl font-bold text-gray-900 mb-3">About Me</h2>
-            <p class="text-gray-600 leading-relaxed text-justify text-sm sm:text-base">
-                Full-Stack Web Developer with professional experience in developing and maintaining web applications using Laravel and Vue.js, particularly for medium- to large-scale Hospital Management Information Systems (SIMRS). Currently pursuing a Bachelor's degree at Universitas Pelita Bangsa. Skilled in database design and optimization, REST API integration, and deploying applications to Linux servers. Possesses strong analytical and problem-solving skills, adapts quickly to new technologies, and works effectively both independently and as part of a team.
-            </p>
-        </section>
+    <main class="max-w-6xl mx-auto px-5 sm:px-8 py-8 sm:py-12">
 
-        <!-- Work Experience Section -->
-        <section class="mt-10">
-            <h2 class="text-xl font-bold text-gray-900 mb-6">Work Experience</h2>
-
-            <div class="space-y-8">
-                <!-- Job 1 -->
-                <div>
-                    <h3 class="font-bold text-gray-900 text-base">PT Jasamedika Saranatama</h3>
-                    <div class="flex justify-between text-sm text-gray-500 mt-0.5">
-                        <span class="font-medium text-gray-700">On-Site Programmer Analyst</span>
-                        <span>May 2024 - January 2026</span>
-                    </div>
-                    <ul class="list-disc list-inside mt-2 text-gray-600 space-y-1.5 text-sm pl-1 text-justify">
-                        <li>Developed and maintained a comprehensive Hospital Management Information System (HMIS) utilizing Laravel and Vue.js.</li>
-                        <li>Collaborated closely with hospital stakeholders to analyze business requirements and translate them into production-ready system features.</li>
-                        <li>Optimized complex database queries and indexing to significantly enhance system performance and reliability.</li>
-                        <li>Handled critical troubleshooting, resolved system anomalies, and provided high-tier technical support to end-users.</li>
-                        <li>Prepared comprehensive technical documentation and conducted hands-on user training sessions for smooth system implementation.</li>
-                    </ul>
-                </div>
-
-                <!-- Job 2 -->
-                <div>
-                    <h3 class="font-bold text-gray-900 text-base">BBPVP Bekasi</h3>
-                    <div class="flex justify-between text-sm text-gray-500 mt-0.5">
-                        <span class="font-medium text-gray-700">Junior Web Developer (Intensive Training)</span>
-                        <span>August 2023 - October 2023</span>
-                    </div>
-                    <ul class="list-disc list-inside mt-2 text-gray-600 space-y-1.5 text-sm pl-1 text-justify">
-                        <li>Participated in a rigorous, fast-paced web development training program focusing on HTML5, CSS3, JavaScript, and Native PHP.</li>
-                        <li>Mastered core web programming fundamentals through comprehensive theoretical studies and practical, hands-on implementations.</li>
-                        <li>Engineered a fully functional e-commerce capstone project featuring a dynamic product catalog, shopping cart logic, and an order management system.</li>
-                        <li>Successfully achieved formal training and professional competency certifications validating mastery over core web development concepts.</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Languages and Tools Section -->
-        <section class="mt-10">
-            <h2 class="text-xl font-bold text-gray-900 mb-4">Languages and Tools</h2>
-            <div class="flex flex-wrap gap-2">
-                <!-- Backend & Frontend -->
-                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">Laravel</span>
-                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">NestJS</span>
-                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">Vue.js</span>
-                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">Nuxt.js</span>
-                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">JavaScript</span>
-                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">TypeScript</span>
-                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">PHP</span>
-                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">Tailwind CSS</span>
-        
-                <!-- Database -->
-                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">MySQL</span>
-                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">PostgreSQL</span>
-                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">MongoDB</span>
-        
-                <!-- DevOps -->
-                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">Docker</span>
-                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">Docker Compose</span>
-                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">Jenkins</span>
-                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">GitHub Actions</span>
-                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">GitLab CI/CD</span>
-                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">Terraform</span>
-                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">Google Cloud Platform (GCP)</span>
-                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">AWS</span>
-                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">Linux</span>
-                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">Nginx</span>
-                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">Prometheus</span>
-                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">Grafana</span>
-                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">Loki</span>
-                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">Git</span>
-                <span class="px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-md">GitHub</span>
-            </div>
-        </section>
-
-        <!-- Footer / Link Project -->
-        <footer class="mt-12 pt-6 border-t border-gray-100 flex justify-end">
-            <a href="project-documation.html"
-                class="inline-flex items-center gap-2 font-semibold text-gray-900 hover:text-gray-600 transition-colors text-sm">
-                See All My Projects Or Documentation <i class="fa-solid fa-arrow-right"></i>
+        <!-- NAVBAR -->
+        <nav class="glass rounded-2xl px-5 py-4 flex items-center justify-between sticky top-4 z-50">
+            <a href="#" class="font-mono font-semibold text-sm tracking-tight">
+                <span class="text-cyan-400">~/</span>piyo-aswandi
             </a>
+
+            <div class="hidden md:flex items-center gap-6 text-sm text-slate-400">
+                <a href="#about" class="hover:text-cyan-300 transition">About</a>
+                <a href="#experience" class="hover:text-cyan-300 transition">Experience</a>
+                <a href="#skills" class="hover:text-cyan-300 transition">Skills</a>
+                <a href="project-documation.html" class="hover:text-cyan-300 transition">Projects</a>
+            </div>
+
+            <a href="mailto:piyoaswandi@gmail.com"
+               class="inline-flex items-center gap-2 rounded-xl bg-cyan-400 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-cyan-300 transition">
+                <i class="fa-regular fa-envelope"></i>
+                Contact
+            </a>
+        </nav>
+
+        <!-- HERO -->
+        <section class="grid lg:grid-cols-[1.45fr_.75fr] gap-8 items-center py-16 sm:py-24">
+            <div>
+                <div class="inline-flex items-center gap-2 rounded-full border border-cyan-400/20 bg-cyan-400/5 px-3 py-1.5 text-xs font-mono text-cyan-300 mb-6">
+                    <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+                    Available for opportunities
+                </div>
+
+                <p class="font-mono text-sm text-slate-500 mb-3 terminal-line">whoami</p>
+
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.02]">
+                    Piyo <span class="gradient-text">Aswandi</span>
+                </h1>
+
+                <h2 class="mt-5 text-xl sm:text-2xl font-semibold text-slate-300">
+                    Fullstack Developer <span class="text-cyan-400">|</span> DevOps Engineer
+                </h2>
+
+                <p class="mt-5 max-w-2xl text-slate-400 leading-7">
+                    Building scalable web applications, reliable infrastructure, and automated delivery pipelines.
+                    Focused on Laravel, Vue.js, Docker, Kubernetes, Terraform, and cloud infrastructure.
+                </p>
+
+                <div class="flex flex-wrap gap-3 mt-8">
+                    <a href="#experience" class="inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-bold text-slate-950 hover:bg-slate-200 transition">
+                        View Experience <i class="fa-solid fa-arrow-down"></i>
+                    </a>
+                    <a href="project-documation.html" class="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-900/60 px-5 py-3 text-sm font-semibold text-slate-200 hover:border-cyan-400/40 hover:text-cyan-300 transition">
+                        Projects & Docs <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                    </a>
+                </div>
+
+                <div class="flex items-center gap-3 mt-8">
+                    <a href="mailto:piyoaswandi@gmail.com" title="Email"
+                       class="w-10 h-10 rounded-xl glass flex items-center justify-center text-slate-400 hover:text-cyan-300 hover:border-cyan-400/30 transition">
+                        <i class="fa-regular fa-envelope"></i>
+                    </a>
+                    <a href="https://wa.me/6285770485606?text=Halo,%20Piyo%20Aswandi" title="WhatsApp"
+                       class="w-10 h-10 rounded-xl glass flex items-center justify-center text-slate-400 hover:text-cyan-300 hover:border-cyan-400/30 transition">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </a>
+                    <a href="https://github.com/piyo12052004" title="GitHub"
+                       class="w-10 h-10 rounded-xl glass flex items-center justify-center text-slate-400 hover:text-cyan-300 hover:border-cyan-400/30 transition">
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/piyo-aswandi-3477812a0/" title="LinkedIn"
+                       class="w-10 h-10 rounded-xl glass flex items-center justify-center text-slate-400 hover:text-cyan-300 hover:border-cyan-400/30 transition">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="flex justify-center lg:justify-end">
+                <div class="relative animate-float">
+                    <div class="absolute -inset-5 rounded-[2rem] bg-cyan-400/10 blur-2xl"></div>
+                    <div class="relative glass rounded-[2rem] p-3 rotate-2 hover:rotate-0 transition duration-500">
+                        <img src="./asset/foto_1.jpeg" alt="Piyo Aswandi"
+                             class="w-64 h-72 sm:w-72 sm:h-80 object-cover rounded-[1.4rem]">
+                        <div class="absolute -bottom-5 -left-5 glass rounded-2xl px-4 py-3 font-mono text-xs">
+                            <div class="text-cyan-400">status</div>
+                            <div class="text-slate-300">building & learning</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT -->
+        <section id="about" class="scroll-mt-28 mb-20">
+            <div class="flex items-end justify-between gap-4 mb-6">
+                <div>
+                    <p class="font-mono text-xs text-cyan-400 mb-2">01 / ABOUT</p>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-white">About Me</h2>
+                </div>
+            </div>
+
+            <div class="glass rounded-3xl p-6 sm:p-8">
+                <p class="text-slate-400 leading-8">
+                    Full-Stack Web Developer with professional experience in developing and maintaining web applications using Laravel and Vue.js, particularly for medium- to large-scale Hospital Management Information Systems (SIMRS). Currently pursuing a Bachelor's degree at Universitas Pelita Bangsa. Skilled in database design and optimization, REST API integration, and deploying applications to Linux servers. Possesses strong analytical and problem-solving skills, adapts quickly to new technologies, and works effectively both independently and as part of a team.
+                </p>
+
+                <div class="grid sm:grid-cols-3 gap-4 mt-8">
+                    <div class="rounded-2xl border border-slate-800 bg-slate-950/50 p-4">
+                        <i class="fa-solid fa-code text-cyan-400 mb-3"></i>
+                        <h3 class="font-semibold text-white">Development</h3>
+                        <p class="text-xs text-slate-500 mt-1">Web applications & REST APIs</p>
+                    </div>
+                    <div class="rounded-2xl border border-slate-800 bg-slate-950/50 p-4">
+                        <i class="fa-solid fa-server text-blue-400 mb-3"></i>
+                        <h3 class="font-semibold text-white">Infrastructure</h3>
+                        <p class="text-xs text-slate-500 mt-1">Linux, Docker & Cloud</p>
+                    </div>
+                    <div class="rounded-2xl border border-slate-800 bg-slate-950/50 p-4">
+                        <i class="fa-solid fa-gears text-violet-400 mb-3"></i>
+                        <h3 class="font-semibold text-white">Automation</h3>
+                        <p class="text-xs text-slate-500 mt-1">CI/CD & Infrastructure as Code</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXPERIENCE -->
+        <section id="experience" class="scroll-mt-28 mb-20">
+            <p class="font-mono text-xs text-cyan-400 mb-2">02 / EXPERIENCE</p>
+            <h2 class="text-2xl sm:text-3xl font-bold text-white mb-8">Work Experience</h2>
+
+            <div class="space-y-5">
+                <article class="card glass rounded-3xl p-6 sm:p-8">
+                    <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-3">
+                        <div>
+                            <p class="text-cyan-400 font-mono text-xs mb-2">01</p>
+                            <h3 class="text-xl font-bold text-white">PT Jasamedika Saranatama</h3>
+                            <p class="text-slate-300 mt-1">On-Site Programmer Analyst</p>
+                        </div>
+                        <span class="inline-flex w-fit rounded-full border border-slate-700 bg-slate-950/50 px-3 py-1 text-xs font-mono text-slate-400">
+                            May 2024 — January 2026
+                        </span>
+                    </div>
+
+                    <ul class="mt-6 space-y-3 text-sm text-slate-400 leading-6">
+                        <li class="flex gap-3"><span class="text-cyan-400">▹</span><span>Developed and maintained a comprehensive Hospital Management Information System (HMIS) utilizing Laravel and Vue.js.</span></li>
+                        <li class="flex gap-3"><span class="text-cyan-400">▹</span><span>Collaborated closely with hospital stakeholders to analyze business requirements and translate them into production-ready system features.</span></li>
+                        <li class="flex gap-3"><span class="text-cyan-400">▹</span><span>Optimized complex database queries and indexing to significantly enhance system performance and reliability.</span></li>
+                        <li class="flex gap-3"><span class="text-cyan-400">▹</span><span>Handled critical troubleshooting, resolved system anomalies, and provided high-tier technical support to end-users.</span></li>
+                        <li class="flex gap-3"><span class="text-cyan-400">▹</span><span>Prepared comprehensive technical documentation and conducted hands-on user training sessions for smooth system implementation.</span></li>
+                    </ul>
+                </article>
+
+                <article class="card glass rounded-3xl p-6 sm:p-8">
+                    <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-3">
+                        <div>
+                            <p class="text-blue-400 font-mono text-xs mb-2">02</p>
+                            <h3 class="text-xl font-bold text-white">BBPVP Bekasi</h3>
+                            <p class="text-slate-300 mt-1">Junior Web Developer (Intensive Training)</p>
+                        </div>
+                        <span class="inline-flex w-fit rounded-full border border-slate-700 bg-slate-950/50 px-3 py-1 text-xs font-mono text-slate-400">
+                            August 2023 — October 2023
+                        </span>
+                    </div>
+
+                    <ul class="mt-6 space-y-3 text-sm text-slate-400 leading-6">
+                        <li class="flex gap-3"><span class="text-blue-400">▹</span><span>Participated in a rigorous web development training program focusing on HTML5, CSS3, JavaScript, and Native PHP.</span></li>
+                        <li class="flex gap-3"><span class="text-blue-400">▹</span><span>Mastered core web programming fundamentals through theoretical studies and practical implementations.</span></li>
+                        <li class="flex gap-3"><span class="text-blue-400">▹</span><span>Engineered a fully functional e-commerce capstone project featuring a dynamic product catalog, shopping cart logic, and order management.</span></li>
+                        <li class="flex gap-3"><span class="text-blue-400">▹</span><span>Successfully achieved formal training and professional competency certifications validating core web development concepts.</span></li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <!-- SKILLS -->
+        <section id="skills" class="scroll-mt-28 mb-20">
+            <p class="font-mono text-xs text-cyan-400 mb-2">03 / STACK</p>
+            <h2 class="text-2xl sm:text-3xl font-bold text-white mb-8">Languages & Tools</h2>
+
+            <div class="grid md:grid-cols-2 gap-5">
+                <div class="card glass rounded-3xl p-6">
+                    <div class="flex items-center gap-3 mb-5">
+                        <div class="w-10 h-10 rounded-xl bg-cyan-400/10 flex items-center justify-center text-cyan-400">
+                            <i class="fa-solid fa-laptop-code"></i>
+                        </div>
+                        <h3 class="font-bold text-white">Development</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill">Laravel</span><span class="skill">NestJS</span><span class="skill">Vue.js</span>
+                        <span class="skill">Nuxt.js</span><span class="skill">JavaScript</span><span class="skill">TypeScript</span>
+                        <span class="skill">PHP</span><span class="skill">Tailwind CSS</span>
+                    </div>
+                </div>
+
+                <div class="card glass rounded-3xl p-6">
+                    <div class="flex items-center gap-3 mb-5">
+                        <div class="w-10 h-10 rounded-xl bg-violet-400/10 flex items-center justify-center text-violet-400">
+                            <i class="fa-solid fa-database"></i>
+                        </div>
+                        <h3 class="font-bold text-white">Database</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill">MySQL</span><span class="skill">PostgreSQL</span><span class="skill">MongoDB</span>
+                    </div>
+                </div>
+
+                <div class="card glass rounded-3xl p-6">
+                    <div class="flex items-center gap-3 mb-5">
+                        <div class="w-10 h-10 rounded-xl bg-blue-400/10 flex items-center justify-center text-blue-400">
+                            <i class="fa-solid fa-cloud"></i>
+                        </div>
+                        <h3 class="font-bold text-white">DevOps & Cloud</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill">Docker</span><span class="skill">Docker Compose</span><span class="skill">Jenkins</span>
+                        <span class="skill">GitHub Actions</span><span class="skill">GitLab CI/CD</span><span class="skill">Terraform</span>
+                        <span class="skill">Google Cloud Platform (GCP)</span><span class="skill">AWS</span><span class="skill">Linux</span>
+                    </div>
+                </div>
+
+                <div class="card glass rounded-3xl p-6">
+                    <div class="flex items-center gap-3 mb-5">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-400/10 flex items-center justify-center text-emerald-400">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+                        <h3 class="font-bold text-white">Infrastructure & Monitoring</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill">Nginx</span><span class="skill">Prometheus</span><span class="skill">Grafana</span>
+                        <span class="skill">Git</span><span class="skill">GitHub</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="relative overflow-hidden glass rounded-3xl p-8 sm:p-10 mb-12">
+            <div class="absolute -right-20 -top-20 w-64 h-64 rounded-full bg-cyan-400/10 blur-3xl"></div>
+            <div class="relative">
+                <p class="font-mono text-xs text-cyan-400 mb-3">04 / NEXT</p>
+                <h2 class="text-2xl sm:text-3xl font-bold text-white">Explore my projects & documentation.</h2>
+                <p class="text-slate-400 mt-3 max-w-2xl">
+                    A collection of projects, experiments, technical notes, and documentation.
+                </p>
+                <a href="project-documation.html"
+                   class="inline-flex items-center gap-2 mt-6 rounded-xl bg-cyan-400 px-5 py-3 text-sm font-bold text-slate-950 hover:bg-cyan-300 transition">
+                    See Projects & Documentation
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="border-t border-slate-800/80 pt-6 flex flex-col sm:flex-row justify-between gap-3 text-xs text-slate-500 font-mono">
+            <span>© 2026 Piyo Aswandi</span>
+            <span>built with HTML + Tailwind CSS</span>
         </footer>
+    </main>
 
-    </div>
+    <script>
+        document.querySelectorAll('.skill').forEach(el => {
+            el.className = 'skill px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-950/60 text-xs font-medium text-slate-300 hover:border-cyan-400/30 hover:text-cyan-300 transition';
+        });
+    </script>
 </body>
-
 </html>
