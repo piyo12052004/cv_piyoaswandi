@@ -10,6 +10,92 @@ function portfolioApp() {
         searchInfrastructure: '',
         certificateModal: null,
 
+        // Di dalam return { ... } pada portfolioApp()
+        githubUsername: 'piyo12052004',
+        contributionWeeks: [],
+        totalContributions: 0,
+        isLoadingContributions: true,
+        selectedYear: 'last',
+        availableYears: [], // Diisi otomatis dari API
+
+        async fetchGitHubContributions(year = 'last') {
+            this.selectedYear = year;
+            this.isLoadingContributions = true;
+
+            try {
+                const response = await fetch(`https://github-contributions-api.jogruber.de/v4/${this.githubUsername}?y=${year}`);
+                const data = await response.json();
+
+                // AUTO-DETECT TAHUN
+                if (data) {
+                    if (data.years && Array.isArray(data.years)) {
+                        this.availableYears = data.years.map(y => (y.year || y).toString()).sort((a, b) => b - a);
+                    } else if (this.availableYears.length === 0) {
+                        const currentYear = new Date().getFullYear();
+                        this.availableYears = [currentYear, currentYear - 1, currentYear - 2, currentYear - 3].map(String);
+                    }
+                }
+
+                if (data && data.contributions) {
+                    this.totalContributions = data.total && (data.total[year] || data.total.lastYear)
+                        ? (data.total[year] || data.total.lastYear)
+                        : data.contributions.reduce((acc, curr) => acc + curr.count, 0);
+
+                    const contributions = data.contributions;
+                    const weeks = [];
+                    let currentWeek = [];
+                    let lastMonth = -1;
+
+                    // Memasukkan seluruh data harian ke dalam kelompok minggu secara presisi
+                    contributions.forEach((day, index) => {
+                        const dateObj = new Date(day.date);
+                        const month = dateObj.toLocaleString('en-US', { month: 'short' });
+
+                        // Deteksi perubahan bulan untuk label di atas kolom
+                        if (currentWeek.length === 0) {
+                            const monthIndex = dateObj.getMonth();
+                            if (monthIndex !== lastMonth) {
+                                currentWeek.monthLabel = month;
+                                lastMonth = monthIndex;
+                            } else {
+                                currentWeek.monthLabel = '';
+                            }
+                        }
+
+                        currentWeek.push({
+                            ...day,
+                            isEmpty: false
+                        });
+
+                        // Jika sudah genap 7 hari (1 minggu) atau data hari terakhir tercapai
+                        if (currentWeek.length === 7 || index === contributions.length - 1) {
+                            weeks.push({
+                                monthLabel: currentWeek.monthLabel || '',
+                                days: [...currentWeek]
+                            });
+                            currentWeek = [];
+                        }
+                    });
+
+                    this.contributionWeeks = weeks;
+                }
+            } catch (error) {
+                console.error('Gagal memuat data GitHub contributions:', error);
+            } finally {
+                this.isLoadingContributions = false;
+            }
+        },
+
+        getContributionColor(level) {
+            switch (level) {
+                case 1: return 'bg-emerald-950 border border-emerald-900';
+                case 2: return 'bg-emerald-700';
+                case 3: return 'bg-emerald-500';
+                case 4: return 'bg-emerald-300';
+                default: return 'bg-slate-800/90';
+            }
+        },
+
         projects: [
             {
                 id: 2,
@@ -753,6 +839,7 @@ function portfolioApp() {
             const systemPrefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
             this.theme = savedTheme || (systemPrefersLight ? 'light' : 'dark');
             this.applyTheme();
+            this.fetchGitHubContributions();
         },
 
         applyTheme() {
