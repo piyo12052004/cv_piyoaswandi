@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Piyo Aswandi — Fullstack Developer & DevOps Engineer</title>
 
+    <!-- Tailwind CSS & Config -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -16,12 +18,18 @@
                     },
                     animation: {
                         'float': 'float 6s ease-in-out infinite',
-                        'pulse-slow': 'pulse 4s ease-in-out infinite'
+                        'pulse-slow': 'pulse 4s ease-in-out infinite',
+                        'spotlight': 'spotlightMove 8s ease-in-out infinite alternate',
                     },
                     keyframes: {
                         float: {
                             '0%, 100%': { transform: 'translateY(0px)' },
                             '50%': { transform: 'translateY(-8px)' }
+                        },
+                        spotlightMove: {
+                            '0%': { transform: 'translate(-35%, 15%) scale(0.9)', opacity: '0.6' },
+                            '50%': { transform: 'translate(0%, -10%) scale(1.15)', opacity: '0.9' },
+                            '100%': { transform: 'translate(35%, 10%) scale(0.95)', opacity: '0.7' },
                         }
                     }
                 }
@@ -29,59 +37,31 @@
         }
     </script>
 
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-    <style>
-        html { scroll-behavior: smooth; }
-        body {
-            background:
-                radial-gradient(circle at 15% 10%, rgba(34, 211, 238, .10), transparent 28rem),
-                radial-gradient(circle at 85% 15%, rgba(59, 130, 246, .10), transparent 30rem),
-                #070b12;
-        }
-        .grid-bg {
-            background-image:
-                linear-gradient(rgba(148,163,184,.045) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(148,163,184,.045) 1px, transparent 1px);
-            background-size: 32px 32px;
-            mask-image: linear-gradient(to bottom, black 0%, transparent 85%);
-        }
-        .glass {
-            background: rgba(15, 23, 42, .68);
-            border: 1px solid rgba(148, 163, 184, .12);
-            box-shadow: 0 20px 60px rgba(0,0,0,.20);
-            backdrop-filter: blur(18px);
-        }
-        .card {
-            transition: transform .25s ease, border-color .25s ease, background .25s ease;
-        }
-        .card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(34, 211, 238, .25);
-            background: rgba(15, 23, 42, .82);
-        }
-        .gradient-text {
-            background: linear-gradient(90deg, #67e8f9, #60a5fa, #a78bfa);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        .terminal-line::before {
-            content: ">";
-            color: #22d3ee;
-            margin-right: .55rem;
-        }
-    </style>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="asset/css/style.css">
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
-<body class="min-h-screen text-slate-200 font-sans antialiased selection:bg-cyan-400/20 selection:text-cyan-200">
+<body x-data="portfolioApp()" x-init="init()"
+    class="min-h-screen text-slate-200 font-sans antialiased selection:bg-cyan-400/20 selection:text-cyan-200">
 
+    <!-- Background Grid -->
     <div class="fixed inset-0 -z-10 grid-bg pointer-events-none"></div>
 
-    <main class="max-w-6xl mx-auto px-5 sm:px-8 py-8 sm:py-12">
+    <!-- MAIN CONTAINER -->
+    <main class="main-border max-w-6xl mx-auto px-5 sm:px-8 pt-8 ">
 
         <!-- NAVBAR -->
         <nav class="glass rounded-2xl px-5 py-4 flex items-center justify-between sticky top-4 z-50">
@@ -91,22 +71,40 @@
 
             <div class="hidden md:flex items-center gap-6 text-sm text-slate-400">
                 <a href="#about" class="hover:text-cyan-300 transition">About</a>
-                <a href="#experience" class="hover:text-cyan-300 transition">Experience</a>
                 <a href="#skills" class="hover:text-cyan-300 transition">Skills</a>
-                <a href="project-documation.html" class="hover:text-cyan-300 transition">Projects</a>
+                <a href="#projects-section" class="hover:text-cyan-300 transition">Projects & Dokumentasi</a>
+                <a href="#certificates" class="hover:text-cyan-300 transition">Certificate</a>
             </div>
 
-            <a href="mailto:piyoaswandi@gmail.com"
-               class="inline-flex items-center gap-2 rounded-xl bg-cyan-400 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-cyan-300 transition">
-                <i class="fa-regular fa-envelope"></i>
-                Contact
-            </a>
+            <div class="flex items-center gap-2 sm:gap-3">
+                <!-- Theme Toggle -->
+                <button id="themeToggle" type="button" class="theme-toggle" @click="toggleTheme()"
+                    :aria-label="theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'"
+                    :title="theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'">
+                    <i id="themeIcon" :class="theme === 'light' ? 'fa-solid fa-moon' : 'fa-solid fa-sun'"></i>
+                </button>
+
+                <!-- Resume / CV (Outline Button with File Icon) -->
+                <a href="https://canva.link/w3gdu9fqikn0s2u" target="_blank" rel="noopener noreferrer"
+                    class="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-900/60 px-3.5 sm:px-4 py-2 text-sm font-semibold text-slate-200 hover:border-cyan-400/40 hover:text-cyan-300 transition">
+                    <i class="fa-regular fa-file-lines text-cyan-400"></i>
+                    <span>CV</span>
+                </a>
+
+                <!-- Contact (Primary Solid Button) -->
+                <a href="mailto:piyoaswandi@gmail.com"
+                    class="inline-flex items-center gap-2 rounded-xl bg-cyan-400 px-3.5 sm:px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-cyan-300 transition">
+                    <i class="fa-regular fa-envelope"></i>
+                    <span>Contact</span>
+                </a>
+            </div>
         </nav>
 
         <!-- HERO -->
         <section class="grid lg:grid-cols-[1.45fr_.75fr] gap-8 items-center py-16 sm:py-24">
             <div>
-                <div class="inline-flex items-center gap-2 rounded-full border border-cyan-400/20 bg-cyan-400/5 px-3 py-1.5 text-xs font-mono text-cyan-300 mb-6">
+                <div
+                    class="inline-flex items-center gap-2 rounded-full border border-cyan-400/20 bg-cyan-400/5 px-3 py-1.5 text-xs font-mono text-cyan-300 mb-6">
                     <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
                     Available for opportunities
                 </div>
@@ -127,30 +125,39 @@
                 </p>
 
                 <div class="flex flex-wrap gap-3 mt-8">
-                    <a href="#experience" class="inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-bold text-slate-950 hover:bg-slate-200 transition">
-                        View Experience <i class="fa-solid fa-arrow-down"></i>
+                    <a href="#experience"
+                        class="inline-flex items-center gap-2 rounded-xl bg-blue-500 px-5 py-3 text-sm font-bold text-slate-950 hover:bg-slate-200 transition">
+                        View Experience
+                        <i class="fa-solid fa-arrow-down"></i>
                     </a>
-                    <a href="project-documation.html" class="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-900/60 px-5 py-3 text-sm font-semibold text-slate-200 hover:border-cyan-400/40 hover:text-cyan-300 transition">
-                        Projects & Docs <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                    <a href="project-documation.html"
+                        class="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-900/60 px-5 py-3 text-sm font-semibold text-slate-200 hover:border-cyan-400/40 hover:text-cyan-300 transition">
+                        Projects & Docs
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
                     </a>
                 </div>
 
                 <div class="flex items-center gap-3 mt-8">
                     <a href="mailto:piyoaswandi@gmail.com" title="Email"
-                       class="w-10 h-10 rounded-xl glass flex items-center justify-center text-slate-400 hover:text-cyan-300 hover:border-cyan-400/30 transition">
+                        class="w-10 h-10 rounded-xl glass flex items-center justify-center text-slate-400 hover:text-cyan-300 hover:border-cyan-400/30 transition">
                         <i class="fa-regular fa-envelope"></i>
                     </a>
-                    <a href="https://wa.me/6285770485606?text=Halo,%20Piyo%20Aswandi" title="WhatsApp"
-                       class="w-10 h-10 rounded-xl glass flex items-center justify-center text-slate-400 hover:text-cyan-300 hover:border-cyan-400/30 transition">
+                    <a href="https://wa.me/6285770485606?text=Hello,%20Piyo%20Aswandi" title="WhatsApp"
+                        class="w-10 h-10 rounded-xl glass flex items-center justify-center text-slate-400 hover:text-cyan-300 hover:border-cyan-400/30 transition">
                         <i class="fa-brands fa-whatsapp"></i>
                     </a>
                     <a href="https://github.com/piyo12052004" title="GitHub"
-                       class="w-10 h-10 rounded-xl glass flex items-center justify-center text-slate-400 hover:text-cyan-300 hover:border-cyan-400/30 transition">
+                        class="w-10 h-10 rounded-xl glass flex items-center justify-center text-slate-400 hover:text-cyan-300 hover:border-cyan-400/30 transition">
                         <i class="fa-brands fa-github"></i>
                     </a>
                     <a href="https://www.linkedin.com/in/piyo-aswandi-3477812a0/" title="LinkedIn"
-                       class="w-10 h-10 rounded-xl glass flex items-center justify-center text-slate-400 hover:text-cyan-300 hover:border-cyan-400/30 transition">
+                        class="w-10 h-10 rounded-xl glass flex items-center justify-center text-slate-400 hover:text-cyan-300 hover:border-cyan-400/30 transition">
                         <i class="fa-brands fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://www.youtube.com/@PiyoAcademy" target="_blank" rel="noopener noreferrer"
+                        title="YouTube"
+                        class="w-10 h-10 rounded-xl glass flex items-center justify-center text-slate-400 hover:text-cyan-300 hover:border-cyan-400/30 transition">
+                        <i class="fa-brands fa-youtube"></i>
                     </a>
                 </div>
             </div>
@@ -159,8 +166,9 @@
                 <div class="relative animate-float">
                     <div class="absolute -inset-5 rounded-[2rem] bg-cyan-400/10 blur-2xl"></div>
                     <div class="relative glass rounded-[2rem] p-3 rotate-2 hover:rotate-0 transition duration-500">
-                        <img src="./asset/foto_1.jpeg" alt="Piyo Aswandi"
-                             class="w-64 h-72 sm:w-72 sm:h-80 object-cover rounded-[1.4rem]">
+                        <img id="profileImage"
+                            :src="theme === 'light' ? './asset/img-piyo-1.png' : './asset/img-piyo-2.png'"
+                            alt="Piyo Aswandi" class="w-64 h-72 sm:w-72 sm:h-80 object-cover rounded-[1.4rem]">
                         <div class="absolute -bottom-5 -left-5 glass rounded-2xl px-4 py-3 font-mono text-xs">
                             <div class="text-cyan-400">status</div>
                             <div class="text-slate-300">building & learning</div>
@@ -174,14 +182,18 @@
         <section id="about" class="scroll-mt-28 mb-20">
             <div class="flex items-end justify-between gap-4 mb-6">
                 <div>
-                    <p class="font-mono text-xs text-cyan-400 mb-2">01 / ABOUT</p>
+                    <p class="font-mono text-xs text-cyan-400 mb-2">&gt; ABOUT</p>
                     <h2 class="text-2xl sm:text-3xl font-bold text-white">About Me</h2>
                 </div>
             </div>
 
             <div class="glass rounded-3xl p-6 sm:p-8">
                 <p class="text-slate-400 leading-8">
-                    Full-Stack Web Developer with professional experience in developing and maintaining web applications using Laravel and Vue.js, particularly for medium- to large-scale Hospital Management Information Systems (SIMRS). Currently pursuing a Bachelor's degree at Universitas Pelita Bangsa. Skilled in database design and optimization, REST API integration, and deploying applications to Linux servers. Possesses strong analytical and problem-solving skills, adapts quickly to new technologies, and works effectively both independently and as part of a team.
+                    Full-Stack Web Developer with professional experience in developing and maintaining web applications
+                    using Laravel and Vue.js. Currently pursuing a Bachelor's degree at Universitas Pelita Bangsa.
+                    Skilled in database design and optimization, REST API integration, and deploying applications to
+                    Linux servers. Possesses strong analytical and problem-solving skills, adapts quickly to new
+                    technologies, and works effectively both independently and as part of a team.
                 </p>
 
                 <div class="grid sm:grid-cols-3 gap-4 mt-8">
@@ -190,11 +202,13 @@
                         <h3 class="font-semibold text-white">Development</h3>
                         <p class="text-xs text-slate-500 mt-1">Web applications & REST APIs</p>
                     </div>
+
                     <div class="rounded-2xl border border-slate-800 bg-slate-950/50 p-4">
                         <i class="fa-solid fa-server text-blue-400 mb-3"></i>
                         <h3 class="font-semibold text-white">Infrastructure</h3>
                         <p class="text-xs text-slate-500 mt-1">Linux, Docker & Cloud</p>
                     </div>
+
                     <div class="rounded-2xl border border-slate-800 bg-slate-950/50 p-4">
                         <i class="fa-solid fa-gears text-violet-400 mb-3"></i>
                         <h3 class="font-semibold text-white">Automation</h3>
@@ -204,144 +218,1084 @@
             </div>
         </section>
 
-        <!-- EXPERIENCE -->
-        <section id="experience" class="scroll-mt-28 mb-20">
-            <p class="font-mono text-xs text-cyan-400 mb-2">02 / EXPERIENCE</p>
-            <h2 class="text-2xl sm:text-3xl font-bold text-white mb-8">Work Experience</h2>
+        <!-- SKILLS CONTAINER -->
+        <p class="font-mono text-xs text-cyan-400 mb-2">&gt; Skills & Projects/Documentation</p>
+        <div
+            class="relative overflow-hidden rounded-[2rem] border border-slate-800/80 bg-slate-900/60 backdrop-blur-xl p-4 sm:p-6 lg:p-8">
+            <section id="skills" x-data="{ activeSlide: 'development' }" class="scroll-mt-28 mb-20">
+                <div
+                    class="pointer-events-none absolute -top-24 -right-24 w-64 h-64 rounded-full bg-blue-500/10 blur-3xl">
+                </div>
+                <div
+                    class="pointer-events-none absolute -bottom-24 -left-24 w-64 h-64 rounded-full bg-violet-500/10 blur-3xl">
+                </div>
 
-            <div class="space-y-5">
-                <article class="card glass rounded-3xl p-6 sm:p-8">
-                    <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-3">
-                        <div>
-                            <p class="text-cyan-400 font-mono text-xs mb-2">01</p>
-                            <h3 class="text-xl font-bold text-white">PT Jasamedika Saranatama</h3>
-                            <p class="text-slate-300 mt-1">On-Site Programmer Analyst</p>
-                        </div>
-                        <span class="inline-flex w-fit rounded-full border border-slate-700 bg-slate-950/50 px-3 py-1 text-xs font-mono text-slate-400">
-                            May 2024 — January 2026
-                        </span>
-                    </div>
+                <!-- Tab Controls -->
+                <div class="relative flex justify-center">
+                    <div
+                        class="inline-flex max-w-full flex-wrap justify-center gap-1.5 sm:gap-2 rounded-2xl bg-slate-950/50 p-1.5 backdrop-blur-md">
+                        <button type="button"
+                            class="slide-button group inline-flex items-center gap-2 rounded-xl px-3.5 sm:px-4 py-2.5 text-xs sm:text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
+                            :class="{ 'active': activeSlide === 'development' }" @click="activeSlide = 'development'">
+                            <i class="fa-solid fa-code text-blue-500"></i>
+                            <span>Development</span>
+                        </button>
 
-                    <ul class="mt-6 space-y-3 text-sm text-slate-400 leading-6">
-                        <li class="flex gap-3"><span class="text-cyan-400">▹</span><span>Developed and maintained a comprehensive Hospital Management Information System (HMIS) utilizing Laravel and Vue.js.</span></li>
-                        <li class="flex gap-3"><span class="text-cyan-400">▹</span><span>Collaborated closely with hospital stakeholders to analyze business requirements and translate them into production-ready system features.</span></li>
-                        <li class="flex gap-3"><span class="text-cyan-400">▹</span><span>Optimized complex database queries and indexing to significantly enhance system performance and reliability.</span></li>
-                        <li class="flex gap-3"><span class="text-cyan-400">▹</span><span>Handled critical troubleshooting, resolved system anomalies, and provided high-tier technical support to end-users.</span></li>
-                        <li class="flex gap-3"><span class="text-cyan-400">▹</span><span>Prepared comprehensive technical documentation and conducted hands-on user training sessions for smooth system implementation.</span></li>
-                    </ul>
-                </article>
+                        <button type="button"
+                            class="slide-button group inline-flex items-center gap-2 rounded-xl px-3.5 sm:px-4 py-2.5 text-xs sm:text-sm font-medium transition-all duration-300 hover:-translate-y-0.5"
+                            :class="{ 'active': activeSlide === 'database' }" @click="activeSlide = 'database'">
+                            <i class="fa-solid fa-database text-emerald-500"></i>
+                            <span>Database</span>
+                        </button>
 
-                <article class="card glass rounded-3xl p-6 sm:p-8">
-                    <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-3">
-                        <div>
-                            <p class="text-blue-400 font-mono text-xs mb-2">02</p>
-                            <h3 class="text-xl font-bold text-white">BBPVP Bekasi</h3>
-                            <p class="text-slate-300 mt-1">Junior Web Developer (Intensive Training)</p>
-                        </div>
-                        <span class="inline-flex w-fit rounded-full border border-slate-700 bg-slate-950/50 px-3 py-1 text-xs font-mono text-slate-400">
-                            August 2023 — October 2023
-                        </span>
-                    </div>
+                        <button type="button"
+                            class="slide-button group inline-flex items-center gap-2 rounded-xl px-3.5 sm:px-4 py-2.5 text-xs sm:text-sm font-medium transition-all duration-300 hover:-translate-y-0.5"
+                            :class="{ 'active': activeSlide === 'devops' }" @click="activeSlide = 'devops'">
+                            <i class="fa-solid fa-cloud text-violet-500"></i>
+                            <span>DevOps & Cloud</span>
+                        </button>
 
-                    <ul class="mt-6 space-y-3 text-sm text-slate-400 leading-6">
-                        <li class="flex gap-3"><span class="text-blue-400">▹</span><span>Participated in a rigorous web development training program focusing on HTML5, CSS3, JavaScript, and Native PHP.</span></li>
-                        <li class="flex gap-3"><span class="text-blue-400">▹</span><span>Mastered core web programming fundamentals through theoretical studies and practical implementations.</span></li>
-                        <li class="flex gap-3"><span class="text-blue-400">▹</span><span>Engineered a fully functional e-commerce capstone project featuring a dynamic product catalog, shopping cart logic, and order management.</span></li>
-                        <li class="flex gap-3"><span class="text-blue-400">▹</span><span>Successfully achieved formal training and professional competency certifications validating core web development concepts.</span></li>
-                    </ul>
-                </article>
-            </div>
-        </section>
-
-        <!-- SKILLS -->
-        <section id="skills" class="scroll-mt-28 mb-20">
-            <p class="font-mono text-xs text-cyan-400 mb-2">03 / STACK</p>
-            <h2 class="text-2xl sm:text-3xl font-bold text-white mb-8">Languages & Tools</h2>
-
-            <div class="grid md:grid-cols-2 gap-5">
-                <div class="card glass rounded-3xl p-6">
-                    <div class="flex items-center gap-3 mb-5">
-                        <div class="w-10 h-10 rounded-xl bg-cyan-400/10 flex items-center justify-center text-cyan-400">
-                            <i class="fa-solid fa-laptop-code"></i>
-                        </div>
-                        <h3 class="font-bold text-white">Development</h3>
-                    </div>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="skill">Laravel</span><span class="skill">NestJS</span><span class="skill">Vue.js</span>
-                        <span class="skill">Nuxt.js</span><span class="skill">JavaScript</span><span class="skill">TypeScript</span>
-                        <span class="skill">PHP</span><span class="skill">Tailwind CSS</span>
+                        <button type="button"
+                            class="slide-button group inline-flex items-center gap-2 rounded-xl px-3.5 sm:px-4 py-2.5 text-xs sm:text-sm font-medium transition-all duration-300 hover:-translate-y-0.5"
+                            :class="{ 'active': activeSlide === 'infrastructure' }"
+                            @click="activeSlide = 'infrastructure'">
+                            <i class="fa-solid fa-server text-orange-500"></i>
+                            <span class="hidden sm:inline">Infrastructure & Monitoring</span>
+                            <span class="sm:hidden">Infrastructure</span>
+                        </button>
                     </div>
                 </div>
 
-                <div class="card glass rounded-3xl p-6">
-                    <div class="flex items-center gap-3 mb-5">
-                        <div class="w-10 h-10 rounded-xl bg-violet-400/10 flex items-center justify-center text-violet-400">
-                            <i class="fa-solid fa-database"></i>
+                <!-- Slides -->
+                <div class="relative mt-6 sm:mt-8">
+                    <!-- Development Slide -->
+                    <div x-show="activeSlide === 'development'" x-transition
+                        class="min-h-[420px] overflow-hidden rounded-3xl border border-slate-800 bg-slate-950/50 p-5 sm:p-8">
+                        <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-6 lg:gap-12">
+                            <div class="order-2 md:order-1 text-left">
+                                <div class="mb-5">
+                                    <div
+                                        class="mb-3 inline-flex items-center gap-2 rounded-full border border-blue-900/60 bg-blue-500/10 px-3 py-1.5 text-xs font-medium text-blue-400">
+                                        <span class="h-1.5 w-1.5 rounded-full bg-blue-500"></span>
+                                        Development
+                                    </div>
+                                    <h3 class="text-xl sm:text-2xl font-bold tracking-tight text-white">Languages &
+                                        Tools</h3>
+                                    <p class="mt-2 max-w-md text-sm leading-6 text-slate-400">Technologies used to build
+                                        modern, scalable web applications.</p>
+                                </div>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="skill"><i class="fa-brands fa-laravel text-red-500"></i> Laravel</span>
+                                    <span class="skill"><i class="fa-solid fa-server text-green-500"></i> NestJS</span>
+                                    <span class="skill"><i class="fa-brands fa-vuejs text-emerald-500"></i>
+                                        Vue.js</span>
+                                    <span class="skill"><i class="fa-solid fa-layer-group text-green-500"></i>
+                                        Nuxt.js</span>
+                                    <span class="skill"><i class="fa-brands fa-js text-yellow-500"></i>
+                                        JavaScript</span>
+                                    <span class="skill"><i class="fa-solid fa-code text-blue-500"></i> TypeScript</span>
+                                    <span class="skill"><i class="fa-brands fa-php text-indigo-500"></i> PHP</span>
+                                    <span class="skill"><i class="fa-solid fa-wind text-cyan-500"></i> Tailwind
+                                        CSS</span>
+                                </div>
+                            </div>
+                            <div class="order-1 md:order-2 relative w-full h-[280px] sm:h-[340px]">
+                                <div class="absolute inset-8 rounded-full bg-blue-500/10 blur-3xl"></div>
+                                <model-viewer src="asset/model/voxel_web_development.glb" alt="Voxel Web Development"
+                                    camera-controls auto-rotate shadow-intensity="1" exposure="1"
+                                    interaction-prompt="none" style="width: 100%; height: 100%;"></model-viewer>
+                            </div>
                         </div>
-                        <h3 class="font-bold text-white">Database</h3>
                     </div>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="skill">MySQL</span><span class="skill">PostgreSQL</span><span class="skill">MongoDB</span>
+
+                    <!-- Database Slide -->
+                    <div x-show="activeSlide === 'database'" x-transition
+                        class="min-h-[420px] overflow-hidden rounded-3xl border border-slate-800 bg-slate-950/50 p-5 sm:p-8">
+                        <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-6 lg:gap-12">
+                            <div class="order-1 relative w-full h-[280px] sm:h-[340px]">
+                                <div class="absolute inset-8 rounded-full bg-emerald-500/10 blur-3xl"></div>
+                                <model-viewer src="asset/model/database_l.glb" alt="Database" camera-controls
+                                    auto-rotate shadow-intensity="1" exposure="1" interaction-prompt="none"
+                                    style="width: 100%; height: 100%;"></model-viewer>
+                            </div>
+                            <div class="order-2 text-left">
+                                <div class="mb-5">
+                                    <div
+                                        class="mb-3 inline-flex items-center gap-2 rounded-full border border-emerald-900/60 bg-emerald-500/10 px-3 py-1.5 text-xs font-medium text-emerald-400">
+                                        <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                                        Database
+                                    </div>
+                                    <h3 class="text-xl sm:text-2xl font-bold tracking-tight text-white">Database
+                                        Technologies</h3>
+                                    <p class="mt-2 max-w-md text-sm leading-6 text-slate-400">Relational and NoSQL
+                                        databases engineered for applications across diverse scales.</p>
+                                </div>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="skill"><i class="fa-solid fa-database text-blue-500"></i> MySQL</span>
+                                    <span class="skill"><i class="fa-solid fa-database text-indigo-500"></i>
+                                        PostgreSQL</span>
+                                    <span class="skill"><i class="fa-solid fa-leaf text-green-500"></i> MongoDB</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DevOps Slide -->
+                    <div x-show="activeSlide === 'devops'" x-transition
+                        class="min-h-[420px] overflow-hidden rounded-3xl border border-slate-800 bg-slate-950/50 p-5 sm:p-8">
+                        <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-6 lg:gap-12">
+                            <div class="order-2 md:order-1 text-left">
+                                <div class="mb-5">
+                                    <div
+                                        class="mb-3 inline-flex items-center gap-2 rounded-full border border-violet-900/60 bg-violet-500/10 px-3 py-1.5 text-xs font-medium text-violet-400">
+                                        <span class="h-1.5 w-1.5 rounded-full bg-violet-500"></span>
+                                        DevOps & Cloud
+                                    </div>
+                                    <h3 class="text-xl sm:text-2xl font-bold tracking-tight text-white">DevOps & Cloud
+                                    </h3>
+                                    <p class="mt-2 max-w-md text-sm leading-6 text-slate-400">Tools for
+                                        containerization, automation, CI/CD, cloud computing, and infrastructure as
+                                        code.</p>
+                                </div>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="skill"><i class="fa-brands fa-docker text-blue-500"></i> Docker</span>
+                                    <span class="skill"><i class="fa-solid fa-box text-blue-500"></i> Docker
+                                        Compose</span>
+                                    <span class="skill"><i class="fa-solid fa-gears text-red-500"></i> Jenkins</span>
+                                    <span class="skill"><i class="fa-brands fa-github text-white"></i> GitHub
+                                        Actions</span>
+                                    <span class="skill"><i class="fa-brands fa-gitlab text-orange-500"></i> GitLab
+                                        CI/CD</span>
+                                    <span class="skill"><i class="fa-solid fa-cubes text-purple-500"></i>
+                                        Terraform</span>
+                                    <span class="skill"><i class="fa-brands fa-google text-blue-500"></i> GCP</span>
+                                    <span class="skill"><i class="fa-brands fa-aws text-orange-500"></i> AWS</span>
+                                    <span class="skill"><i class="fa-brands fa-linux text-white"></i> Linux</span>
+                                </div>
+                            </div>
+                            <div class="order-1 md:order-2 relative w-full h-[280px] sm:h-[340px]">
+                                <div class="absolute inset-8 rounded-full bg-violet-500/10 blur-3xl"></div>
+                                <model-viewer src="asset/model/clouds.glb" alt="DevOps and Cloud" camera-controls
+                                    auto-rotate shadow-intensity="1" exposure="1" interaction-prompt="none"
+                                    style="width: 100%; height: 100%;"></model-viewer>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Infrastructure Slide -->
+                    <div x-show="activeSlide === 'infrastructure'" x-transition
+                        class="min-h-[420px] overflow-hidden rounded-3xl border border-slate-800 bg-slate-950/50 p-5 sm:p-8">
+                        <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-6 lg:gap-12">
+                            <div class="order-1 relative w-full h-[280px] sm:h-[340px]">
+                                <div class="absolute inset-8 rounded-full bg-orange-500/10 blur-3xl"></div>
+                                <model-viewer src="asset/model/sci_fi_monitor.glb" alt="Infrastructure and Monitoring"
+                                    camera-controls auto-rotate shadow-intensity="1" exposure="1"
+                                    interaction-prompt="none" style="width: 100%; height: 100%;"></model-viewer>
+                            </div>
+                            <div class="order-2 text-left">
+                                <div class="mb-5">
+                                    <div
+                                        class="mb-3 inline-flex items-center gap-2 rounded-full border border-orange-900/60 bg-orange-500/10 px-3 py-1.5 text-xs font-medium text-orange-400">
+                                        <span class="h-1.5 w-1.5 rounded-full bg-orange-500"></span>
+                                        Infrastructure
+                                    </div>
+                                    <h3 class="text-xl sm:text-2xl font-bold tracking-tight text-white">Infrastructure &
+                                        Monitoring</h3>
+                                    <p class="mt-2 max-w-md text-sm leading-6 text-slate-400">Tools for managing
+                                        servers, reverse proxies, version control, monitoring, and observability.</p>
+                                </div>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="skill"><i class="fa-solid fa-server text-green-500"></i> Nginx</span>
+                                    <span class="skill"><i class="fa-solid fa-chart-line text-orange-500"></i>
+                                        Prometheus</span>
+                                    <span class="skill"><i class="fa-solid fa-chart-area text-orange-500"></i>
+                                        Grafana</span>
+                                    <span class="skill"><i class="fa-brands fa-git-alt text-orange-500"></i> Git</span>
+                                    <span class="skill"><i class="fa-brands fa-github text-white"></i> GitHub</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </section>
 
-                <div class="card glass rounded-3xl p-6">
-                    <div class="flex items-center gap-3 mb-5">
-                        <div class="w-10 h-10 rounded-xl bg-blue-400/10 flex items-center justify-center text-blue-400">
-                            <i class="fa-solid fa-cloud"></i>
-                        </div>
-                        <h3 class="font-bold text-white">DevOps & Cloud</h3>
-                    </div>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="skill">Docker</span><span class="skill">Docker Compose</span><span class="skill">Jenkins</span>
-                        <span class="skill">GitHub Actions</span><span class="skill">GitLab CI/CD</span><span class="skill">Terraform</span>
-                        <span class="skill">Google Cloud Platform (GCP)</span><span class="skill">AWS</span><span class="skill">Linux</span>
-                    </div>
+            <!-- PROJECT & DOCUMENTATION SECTION -->
+            <section id="projects-section" class="scroll-mt-28 mb-20">
+                <div class="max-w-3xl mx-auto text-center mt-8 sm:mt-12">
+                    <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-white">
+                        Projects & <span class="gradient-text">Documentation</span>
+                    </h1>
+                    <p class="text-slate-400 mt-5 leading-7 max-w-2xl mx-auto">
+                        Collection of web development, DevOps, cloud computing, infrastructure as code, and technical
+                        documentation projects.
+                    </p>
                 </div>
 
-                <div class="card glass rounded-3xl p-6">
-                    <div class="flex items-center gap-3 mb-5">
-                        <div class="w-10 h-10 rounded-xl bg-emerald-400/10 flex items-center justify-center text-emerald-400">
-                            <i class="fa-solid fa-chart-line"></i>
-                        </div>
-                        <h3 class="font-bold text-white">Infrastructure & Monitoring</h3>
-                    </div>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="skill">Nginx</span><span class="skill">Prometheus</span><span class="skill">Grafana</span>
-                        <span class="skill">Git</span><span class="skill">GitHub</span>
+                <div class="max-w-6xl mx-auto mt-10 sm:mt-14 px-4">
+                    <div class="grid grid-cols-1 lg:grid-cols-[220px_minmax(0,1fr)] gap-6">
+
+                        <!-- Sidebar Tabs -->
+                        <aside class="sidebar">
+                            <div class="sidebar-nav">
+                                <button type="button" class="content-menu"
+                                    :class="{ 'active': activeContent === 'project' }"
+                                    @click="activeContent = 'project'">
+                                    <span class="menu-icon project-icon"><i class="fa-solid fa-folder-open"></i></span>
+                                    <span class="menu-label">Projects</span>
+                                </button>
+
+                                <div class="sidebar-title">Documentation</div>
+
+                                <button type="button" class="content-menu"
+                                    :class="{ 'active': activeContent === 'devops' }" @click="activeContent = 'devops'">
+                                    <span class="menu-icon devops-icon"><i class="fa-solid fa-cloud"></i></span>
+                                    <span class="menu-label">DevOps</span>
+                                </button>
+
+                                <button type="button" class="content-menu"
+                                    :class="{ 'active': activeContent === 'database' }"
+                                    @click="activeContent = 'database'">
+                                    <span class="menu-icon database-icon"><i class="fa-solid fa-database"></i></span>
+                                    <span class="menu-label">Database</span>
+                                </button>
+
+                                <button type="button" class="content-menu"
+                                    :class="{ 'active': activeContent === 'developer' }"
+                                    @click="activeContent = 'developer'">
+                                    <span class="menu-icon developer-icon"><i class="fa-solid fa-code"></i></span>
+                                    <span class="menu-label">Developer</span>
+                                </button>
+
+                                <button type="button" class="content-menu"
+                                    :class="{ 'active': activeContent === 'infrastructure' }"
+                                    @click="activeContent = 'infrastructure'">
+                                    <span class="menu-icon infrastructure-icon"><i
+                                            class="fa-solid fa-server"></i></span>
+                                    <span class="menu-label">Infrastructure</span>
+                                </button>
+                            </div>
+                        </aside>
+
+                        <!-- Dynamic Content Area -->
+                        <main>
+                            <!-- Projects View -->
+                            <section x-show="activeContent === 'project'" x-transition class="content-panel">
+                                <div class="glass rounded-3xl p-6 sm:p-8">
+                                    <div class="mb-6">
+                                        <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+                                            <div>
+                                                <span
+                                                    class="text-xs font-semibold uppercase tracking-wider text-blue-500">Projects</span>
+                                                <h2 class="text-2xl sm:text-3xl font-bold text-white mt-2">My Projects
+                                                </h2>
+                                                <p class="text-slate-400 mt-2">A portfolio of projects I have developed
+                                                    across web development, DevOps, cloud, and infrastructure.</p>
+                                            </div>
+                                            <div class="flex items-center gap-2 shrink-0">
+                                                <span
+                                                    class="inline-flex items-center justify-center min-w-9 h-9 px-2 rounded-xl border border-slate-700 bg-slate-900/70 text-sm font-bold text-blue-400"
+                                                    x-text="projects.length"></span>
+                                                <span class="text-sm text-slate-400">Projects</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="relative mt-6">
+                                            <div
+                                                class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+                                                <i class="fa-solid fa-magnifying-glass text-slate-500"></i>
+                                            </div>
+                                            <input type="text" x-model="searchProject" placeholder="Search projects..."
+                                                class="w-full rounded-xl border border-slate-700 bg-slate-950/60 py-3 pl-11 pr-11 text-sm text-white placeholder:text-slate-500 outline-none transition focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/10">
+                                            <button type="button" x-show="searchProject" @click="searchProject = ''"
+                                                class="absolute inset-y-0 right-0 flex items-center pr-4 text-slate-500 hover:text-white transition">
+                                                <i class="fa-solid fa-xmark"></i>
+                                            </button>
+                                        </div>
+
+                                        <div class="flex items-center justify-between mt-3">
+                                            <p class="text-xs text-slate-500">
+                                                Showing <span class="font-semibold text-slate-300"
+                                                    x-text="filteredProjects.length"></span> of <span
+                                                    class="font-semibold text-slate-300"
+                                                    x-text="projects.length"></span> projects
+                                            </p>
+                                            <p x-show="searchProject" class="text-xs text-blue-400">
+                                                Searching for: <span class="font-medium" x-text="searchProject"></span>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="project-scroll flex flex-col gap-4 max-h-[700px] overflow-y-auto pr-2">
+                                        <template x-for="project in filteredProjects" :key="project.id">
+                                            <article
+                                                class="group relative overflow-hidden shrink-0 rounded-2xl border border-slate-800 bg-slate-950/50 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-slate-700 hover:shadow-xl"
+                                                :class="project.borderColor">
+                                                <div class="flex items-start justify-between gap-3">
+                                                    <span
+                                                        class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold"
+                                                        :class="project.badgeColor" x-text="project.badge"></span>
+                                                    <span class="text-xs font-mono text-slate-500"
+                                                        x-text="project.dateLabel"></span>
+                                                </div>
+                                                <div
+                                                    class="mt-5 flex items-center justify-center w-12 h-12 rounded-xl bg-slate-800/70 text-slate-300 group-hover:scale-105 transition">
+                                                    <i :class="project.icon"></i>
+                                                </div>
+                                                <h3 class="mt-5 text-lg font-bold text-white transition"
+                                                    :class="project.hoverColor" x-text="project.title"></h3>
+                                                <p class="mt-1 text-xs font-mono text-slate-500"
+                                                    x-text="project.subtitle"></p>
+                                                <p class="mt-4 text-sm leading-6 text-slate-400"
+                                                    x-text="project.description"></p>
+
+                                                <div class="flex flex-wrap gap-1.5 mt-5">
+                                                    <template x-for="technology in project.tech" :key="technology">
+                                                        <span
+                                                            class="rounded-lg border border-slate-700/70 bg-slate-900/70 px-2 py-1 text-[11px] text-slate-400"
+                                                            x-text="technology"></span>
+                                                    </template>
+                                                </div>
+
+                                                <template x-if="project.note">
+                                                    <p class="mt-4 text-xs text-amber-400" x-text="project.note"></p>
+                                                </template>
+
+                                                <div class="flex flex-wrap gap-2 mt-6">
+                                                    <template x-for="link in project.links" :key="link.url">
+                                                        <a :href="link.url" target="_blank" rel="noopener noreferrer"
+                                                            class="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-900/70 px-3 py-2 text-xs font-semibold text-slate-300 transition hover:border-cyan-400/30 hover:text-cyan-300">
+                                                            <i :class="link.icon"></i>
+                                                            <span x-text="link.label"></span>
+                                                        </a>
+                                                    </template>
+                                                </div>
+                                            </article>
+                                        </template>
+
+                                        <div x-show="filteredProjects.length === 0" x-transition
+                                            class="py-12 text-center">
+                                            <div
+                                                class="mx-auto flex items-center justify-center w-14 h-14 rounded-2xl bg-slate-800/70 text-slate-500">
+                                                <i class="fa-solid fa-magnifying-glass text-xl"></i>
+                                            </div>
+                                            <h3 class="mt-4 text-base font-semibold text-slate-300">No projects found
+                                            </h3>
+                                            <p class="mt-1 text-sm text-slate-500">Try using different search keywords.
+                                            </p>
+                                            <button type="button" @click="searchProject = ''"
+                                                class="mt-4 text-sm font-medium text-blue-400 hover:text-blue-300 transition">Clear
+                                                search</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- DevOps View -->
+                            <section x-show="activeContent === 'devops'" x-transition class="content-panel">
+                                <div class="glass rounded-3xl p-6 sm:p-8">
+                                    <div class="mb-6">
+                                        <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+                                            <div>
+                                                <span
+                                                    class="text-xs font-semibold uppercase tracking-wider text-violet-500">Documentation</span>
+                                                <h2 class="text-2xl sm:text-3xl font-bold text-white mt-2">DevOps</h2>
+                                                <p class="text-slate-400 mt-3 leading-7">Documentation and practical
+                                                    implementations of DevOps practices.</p>
+                                            </div>
+                                            <div class="flex items-center gap-2 shrink-0">
+                                                <span
+                                                    class="inline-flex items-center justify-center min-w-9 h-9 px-2 rounded-xl border border-slate-700 bg-slate-900/70 text-sm font-bold text-violet-400"
+                                                    x-text="devopsProjects.length"></span>
+                                                <span class="text-sm text-slate-400">Documentation</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="relative mt-6">
+                                            <div
+                                                class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+                                                <i class="fa-solid fa-magnifying-glass text-slate-500"></i>
+                                            </div>
+                                            <input type="text" x-model="searchDevops"
+                                                placeholder="Search documentation..."
+                                                class="w-full rounded-xl border border-slate-700 bg-slate-950/60 py-3 pl-11 pr-11 text-sm text-white placeholder:text-slate-500 outline-none transition focus:border-violet-500/50 focus:ring-2 focus:ring-violet-500/10">
+                                            <button type="button" x-show="searchDevops" @click="searchDevops = ''"
+                                                class="absolute inset-y-0 right-0 flex items-center pr-4 text-slate-500 hover:text-white transition">
+                                                <i class="fa-solid fa-xmark"></i>
+                                            </button>
+                                        </div>
+
+                                        <div class="flex items-center justify-between mt-3">
+                                            <p class="text-xs text-slate-500">
+                                                Showing <span class="font-semibold text-slate-300"
+                                                    x-text="filteredDevopsProjects.length"></span> of <span
+                                                    class="font-semibold text-slate-300"
+                                                    x-text="devopsProjects.length"></span> documentation entries
+                                            </p>
+                                            <p x-show="searchDevops" class="text-xs text-violet-400">
+                                                Searching for: <span class="font-medium" x-text="searchDevops"></span>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="project-scroll flex flex-col gap-4 max-h-[700px] overflow-y-auto pr-2">
+                                        <template x-for="documentation in filteredDevopsProjects"
+                                            :key="documentation.id">
+                                            <article
+                                                class="group relative overflow-hidden shrink-0 rounded-2xl border border-slate-800 bg-slate-950/50 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-slate-700 hover:shadow-xl"
+                                                :class="documentation.borderColor">
+                                                <div class="flex items-start justify-between gap-3">
+                                                    <span
+                                                        class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold"
+                                                        :class="documentation.badgeColor"
+                                                        x-text="documentation.badge"></span>
+                                                    <span class="text-xs font-mono text-slate-500"
+                                                        x-text="documentation.dateLabel"></span>
+                                                </div>
+                                                <div class="flex items-start gap-4 mt-5">
+                                                    <div
+                                                        class="shrink-0 flex items-center justify-center w-12 h-12 rounded-xl bg-slate-800/70 text-slate-300 group-hover:scale-105 transition">
+                                                        <i :class="documentation.icon"></i>
+                                                    </div>
+                                                    <div class="min-w-0">
+                                                        <h3 class="text-lg font-bold text-white transition"
+                                                            :class="documentation.hoverColor"
+                                                            x-text="documentation.title"></h3>
+                                                        <p class="mt-1 text-xs font-mono text-slate-500"
+                                                            x-text="documentation.subtitle"></p>
+                                                    </div>
+                                                </div>
+                                                <p class="mt-4 text-sm leading-6 text-slate-400"
+                                                    x-text="documentation.description"></p>
+
+                                                <div class="flex flex-wrap gap-1.5 mt-5">
+                                                    <template x-for="technology in documentation.tech"
+                                                        :key="technology">
+                                                        <span
+                                                            class="rounded-lg border border-slate-700/70 bg-slate-900/70 px-2 py-1 text-[11px] text-slate-400"
+                                                            x-text="technology"></span>
+                                                    </template>
+                                                </div>
+
+                                                <div class="flex flex-wrap gap-2 mt-6">
+                                                    <template x-for="link in documentation.links" :key="link.url">
+                                                        <a :href="link.url" target="_blank" rel="noopener noreferrer"
+                                                            class="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-900/70 px-3 py-2 text-xs font-semibold text-slate-300 transition hover:border-violet-400/30 hover:text-violet-300">
+                                                            <i :class="link.icon"></i>
+                                                            <span x-text="link.label"></span>
+                                                        </a>
+                                                    </template>
+                                                </div>
+                                            </article>
+                                        </template>
+
+                                        <div x-show="filteredDevopsProjects.length === 0" x-transition
+                                            class="py-12 text-center">
+                                            <div
+                                                class="mx-auto flex items-center justify-center w-14 h-14 rounded-2xl bg-slate-800/70 text-slate-500">
+                                                <i class="fa-solid fa-magnifying-glass text-xl"></i>
+                                            </div>
+                                            <h3 class="mt-4 text-base font-semibold text-slate-300">Documentation not
+                                                found</h3>
+                                            <p class="mt-1 text-sm text-slate-500">Try using different search keywords.
+                                            </p>
+                                            <button type="button" @click="searchDevops = ''"
+                                                class="mt-4 text-sm font-medium text-violet-400 hover:text-violet-300 transition">Clear
+                                                search</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Database View -->
+                            <section x-show="activeContent === 'database'" x-transition class="content-panel">
+                                <div class="glass rounded-3xl p-6 sm:p-8">
+                                    <div class="mb-6">
+                                        <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+                                            <div>
+                                                <span
+                                                    class="text-xs font-semibold uppercase tracking-wider text-emerald-500">Documentation</span>
+                                                <h2 class="text-2xl sm:text-3xl font-bold text-white mt-2">Database</h2>
+                                                <p class="text-slate-400 mt-3 leading-7">Documentation and technical
+                                                    references for databases and SQL.</p>
+                                            </div>
+                                            <div class="flex items-center gap-2 shrink-0">
+                                                <span
+                                                    class="inline-flex items-center justify-center min-w-9 h-9 px-2 rounded-xl border border-slate-700 bg-slate-900/70 text-sm font-bold text-emerald-400"
+                                                    x-text="databaseDocumentasi.length"></span>
+                                                <span class="text-sm text-slate-400">Documentation</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="relative mt-6">
+                                            <div
+                                                class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+                                                <i class="fa-solid fa-magnifying-glass text-slate-500"></i>
+                                            </div>
+                                            <input type="text" x-model="searchDatabase"
+                                                placeholder="Search documentation..."
+                                                class="w-full rounded-xl border border-slate-700 bg-slate-950/60 py-3 pl-11 pr-11 text-sm text-white placeholder:text-slate-500 outline-none transition focus:border-emerald-500/50 focus:ring-2 focus:ring-emerald-500/10">
+                                            <button type="button" x-show="searchDatabase" @click="searchDatabase = ''"
+                                                class="absolute inset-y-0 right-0 flex items-center pr-4 text-slate-500 hover:text-white transition">
+                                                <i class="fa-solid fa-xmark"></i>
+                                            </button>
+                                        </div>
+
+                                        <div class="flex items-center justify-between mt-3">
+                                            <p class="text-xs text-slate-500">
+                                                Showing <span class="font-semibold text-slate-300"
+                                                    x-text="filteredDatabaseProjects.length"></span> of <span
+                                                    class="font-semibold text-slate-300"
+                                                    x-text="databaseDocumentasi.length"></span> documentation entries
+                                            </p>
+                                            <p x-show="searchDatabase" class="text-xs text-emerald-400">
+                                                Searching for: <span class="font-medium" x-text="searchDatabase"></span>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="project-scroll flex flex-col gap-4 max-h-[700px] overflow-y-auto pr-2">
+                                        <template x-for="documentation in filteredDatabaseProjects"
+                                            :key="documentation.id">
+                                            <article
+                                                class="group relative overflow-hidden shrink-0 rounded-2xl border border-slate-800 bg-slate-950/50 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-slate-700 hover:shadow-xl"
+                                                :class="documentation.borderColor">
+                                                <div class="flex items-start justify-between gap-3">
+                                                    <span
+                                                        class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold"
+                                                        :class="documentation.badgeColor"
+                                                        x-text="documentation.badge"></span>
+                                                    <span class="text-xs font-mono text-slate-500"
+                                                        x-text="documentation.dateLabel"></span>
+                                                </div>
+                                                <div class="flex items-start gap-4 mt-5">
+                                                    <div
+                                                        class="shrink-0 flex items-center justify-center w-12 h-12 rounded-xl bg-slate-800/70 text-slate-300 group-hover:scale-105 transition">
+                                                        <i :class="documentation.icon"></i>
+                                                    </div>
+                                                    <div class="min-w-0">
+                                                        <h3 class="text-lg font-bold text-white transition"
+                                                            :class="documentation.hoverColor"
+                                                            x-text="documentation.title"></h3>
+                                                        <p class="mt-1 text-xs font-mono text-slate-500"
+                                                            x-text="documentation.subtitle"></p>
+                                                    </div>
+                                                </div>
+                                                <p class="mt-4 text-sm leading-6 text-slate-400"
+                                                    x-text="documentation.description"></p>
+
+                                                <div class="flex flex-wrap gap-1.5 mt-5">
+                                                    <template x-for="technology in documentation.tech"
+                                                        :key="technology">
+                                                        <span
+                                                            class="rounded-lg border border-slate-700/70 bg-slate-900/70 px-2 py-1 text-[11px] text-slate-400"
+                                                            x-text="technology"></span>
+                                                    </template>
+                                                </div>
+
+                                                <div class="flex flex-wrap gap-2 mt-6">
+                                                    <template x-for="link in documentation.links" :key="link.url">
+                                                        <a :href="link.url" target="_blank" rel="noopener noreferrer"
+                                                            class="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-900/70 px-3 py-2 text-xs font-semibold text-slate-300 transition hover:border-emerald-400/30 hover:text-emerald-300">
+                                                            <i :class="link.icon"></i>
+                                                            <span x-text="link.label"></span>
+                                                        </a>
+                                                    </template>
+                                                </div>
+                                            </article>
+                                        </template>
+
+                                        <div x-show="filteredDatabaseProjects.length === 0" x-transition
+                                            class="py-12 text-center">
+                                            <div
+                                                class="mx-auto flex items-center justify-center w-14 h-14 rounded-2xl bg-slate-800/70 text-slate-500">
+                                                <i class="fa-solid fa-magnifying-glass text-xl"></i>
+                                            </div>
+                                            <h3 class="mt-4 text-base font-semibold text-slate-300">Documentation not
+                                                found</h3>
+                                            <p class="mt-1 text-sm text-slate-500">Try using different search keywords.
+                                            </p>
+                                            <button type="button" @click="searchDatabase = ''"
+                                                class="mt-4 text-sm font-medium text-emerald-400 hover:text-emerald-300 transition">Clear
+                                                search</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Developer View -->
+                            <section x-show="activeContent === 'developer'" x-transition class="content-panel">
+                                <div class="glass rounded-3xl p-6 sm:p-8">
+                                    <div class="mb-6">
+                                        <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+                                            <div>
+                                                <span
+                                                    class="text-xs font-semibold uppercase tracking-wider text-blue-500">Documentation</span>
+                                                <h2 class="text-2xl sm:text-3xl font-bold text-white mt-2">Developer
+                                                </h2>
+                                                <p class="text-slate-400 mt-3 leading-7">Documentation and notes on web
+                                                    development and programming.</p>
+                                            </div>
+                                            <div class="flex items-center gap-2 shrink-0">
+                                                <span
+                                                    class="inline-flex items-center justify-center min-w-9 h-9 px-2 rounded-xl border border-slate-700 bg-slate-900/70 text-sm font-bold text-blue-400"
+                                                    x-text="developerDokumentasi.length"></span>
+                                                <span class="text-sm text-slate-400">Documentation</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="relative mt-6">
+                                            <div
+                                                class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+                                                <i class="fa-solid fa-magnifying-glass text-slate-500"></i>
+                                            </div>
+                                            <input type="text" x-model="searchDeveloper"
+                                                placeholder="Search documentation..."
+                                                class="w-full rounded-xl border border-slate-700 bg-slate-950/60 py-3 pl-11 pr-11 text-sm text-white placeholder:text-slate-500 outline-none transition focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/10">
+                                            <button type="button" x-show="searchDeveloper" @click="searchDeveloper = ''"
+                                                class="absolute inset-y-0 right-0 flex items-center pr-4 text-slate-500 hover:text-white transition">
+                                                <i class="fa-solid fa-xmark"></i>
+                                            </button>
+                                        </div>
+
+                                        <div class="flex items-center justify-between mt-3">
+                                            <p class="text-xs text-slate-500">
+                                                Showing <span class="font-semibold text-slate-300"
+                                                    x-text="filteredDeveloper.length"></span> of <span
+                                                    class="font-semibold text-slate-300"
+                                                    x-text="developerDokumentasi.length"></span> documentation entries
+                                            </p>
+                                            <p x-show="searchDeveloper" class="text-xs text-blue-400">
+                                                Searching for: <span class="font-medium"
+                                                    x-text="searchDeveloper"></span>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="project-scroll flex flex-col gap-4 max-h-[700px] overflow-y-auto pr-2">
+                                        <template x-for="documentation in filteredDeveloper" :key="documentation.id">
+                                            <article
+                                                class="group relative overflow-hidden shrink-0 rounded-2xl border border-slate-800 bg-slate-950/50 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-slate-700 hover:shadow-xl"
+                                                :class="documentation.borderColor">
+                                                <div class="flex items-start justify-between gap-3">
+                                                    <span
+                                                        class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold"
+                                                        :class="documentation.badgeColor"
+                                                        x-text="documentation.badge"></span>
+                                                    <span class="text-xs font-mono text-slate-500"
+                                                        x-text="documentation.dateLabel"></span>
+                                                </div>
+                                                <div class="flex items-start gap-4 mt-5">
+                                                    <div
+                                                        class="shrink-0 flex items-center justify-center w-12 h-12 rounded-xl bg-slate-800/70 text-slate-300 group-hover:scale-105 transition">
+                                                        <i :class="documentation.icon"></i>
+                                                    </div>
+                                                    <div class="min-w-0">
+                                                        <h3 class="text-lg font-bold text-white transition"
+                                                            :class="documentation.hoverColor"
+                                                            x-text="documentation.title"></h3>
+                                                        <p class="mt-1 text-xs font-mono text-slate-500"
+                                                            x-text="documentation.subtitle"></p>
+                                                    </div>
+                                                </div>
+                                                <p class="mt-4 text-sm leading-6 text-slate-400"
+                                                    x-text="documentation.description"></p>
+
+                                                <div class="flex flex-wrap gap-1.5 mt-5">
+                                                    <template x-for="technology in documentation.tech"
+                                                        :key="technology">
+                                                        <span
+                                                            class="rounded-lg border border-slate-700/70 bg-slate-900/70 px-2 py-1 text-[11px] text-slate-400"
+                                                            x-text="technology"></span>
+                                                    </template>
+                                                </div>
+
+                                                <div class="flex flex-wrap gap-2 mt-6">
+                                                    <template x-for="link in documentation.links" :key="link.url">
+                                                        <a :href="link.url" target="_blank" rel="noopener noreferrer"
+                                                            class="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-900/70 px-3 py-2 text-xs font-semibold text-slate-300 transition hover:border-blue-400/30 hover:text-blue-300">
+                                                            <i :class="link.icon"></i>
+                                                            <span x-text="link.label"></span>
+                                                        </a>
+                                                    </template>
+                                                </div>
+                                            </article>
+                                        </template>
+
+                                        <div x-show="filteredDeveloper.length === 0" x-transition
+                                            class="py-12 text-center">
+                                            <div
+                                                class="mx-auto flex items-center justify-center w-14 h-14 rounded-2xl bg-slate-800/70 text-slate-500">
+                                                <i class="fa-solid fa-magnifying-glass text-xl"></i>
+                                            </div>
+                                            <h3 class="mt-4 text-base font-semibold text-slate-300">Documentation not
+                                                found</h3>
+                                            <p class="mt-1 text-sm text-slate-500">Try using different search keywords.
+                                            </p>
+                                            <button type="button" @click="searchDeveloper = ''"
+                                                class="mt-4 text-sm font-medium text-blue-400 hover:text-blue-300 transition">Clear
+                                                search</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Infrastructure View -->
+                            <section x-show="activeContent === 'infrastructure'" x-transition class="content-panel">
+                                <div class="glass rounded-3xl p-6 sm:p-8">
+                                    <div class="mb-6">
+                                        <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+                                            <div>
+                                                <span
+                                                    class="text-xs font-semibold uppercase tracking-wider text-orange-500">Documentation</span>
+                                                <h2 class="text-2xl sm:text-3xl font-bold text-white mt-2">
+                                                    Infrastructure</h2>
+                                                <p class="text-slate-400 mt-3 leading-7">Documentation covering
+                                                    infrastructure management, servers, cloud hosting, and monitoring.
+                                                </p>
+                                            </div>
+                                            <div class="flex items-center gap-2 shrink-0">
+                                                <span
+                                                    class="inline-flex items-center justify-center min-w-9 h-9 px-2 rounded-xl border border-slate-700 bg-slate-900/70 text-sm font-bold text-orange-400"
+                                                    x-text="infrastructureDokumentasi.length"></span>
+                                                <span class="text-sm text-slate-400">Documentation</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="relative mt-6">
+                                            <div
+                                                class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+                                                <i class="fa-solid fa-magnifying-glass text-slate-500"></i>
+                                            </div>
+                                            <input type="text" x-model="searchInfrastructure"
+                                                placeholder="Search documentation..."
+                                                class="w-full rounded-xl border border-slate-700 bg-slate-950/60 py-3 pl-11 pr-11 text-sm text-white placeholder:text-slate-500 outline-none transition focus:border-orange-500/50 focus:ring-2 focus:ring-orange-500/10">
+                                            <button type="button" x-show="searchInfrastructure"
+                                                @click="searchInfrastructure = ''"
+                                                class="absolute inset-y-0 right-0 flex items-center pr-4 text-slate-500 hover:text-white transition">
+                                                <i class="fa-solid fa-xmark"></i>
+                                            </button>
+                                        </div>
+
+                                        <div class="flex items-center justify-between mt-3">
+                                            <p class="text-xs text-slate-500">
+                                                Showing <span class="font-semibold text-slate-300"
+                                                    x-text="filteredInfrastructure.length"></span> of <span
+                                                    class="font-semibold text-slate-300"
+                                                    x-text="infrastructureDokumentasi.length"></span> documentation
+                                                entries
+                                            </p>
+                                            <p x-show="searchInfrastructure" class="text-xs text-orange-400">
+                                                Searching for: <span class="font-medium"
+                                                    x-text="searchInfrastructure"></span>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="project-scroll flex flex-col gap-4 max-h-[700px] overflow-y-auto pr-2">
+                                        <template x-for="documentation in filteredInfrastructure"
+                                            :key="documentation.id">
+                                            <article
+                                                class="group relative overflow-hidden shrink-0 rounded-2xl border border-slate-800 bg-slate-950/50 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-slate-700 hover:shadow-xl"
+                                                :class="documentation.borderColor">
+                                                <div class="flex items-start justify-between gap-3">
+                                                    <span
+                                                        class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold"
+                                                        :class="documentation.badgeColor"
+                                                        x-text="documentation.badge"></span>
+                                                    <span class="text-xs font-mono text-slate-500"
+                                                        x-text="documentation.dateLabel"></span>
+                                                </div>
+                                                <div class="flex items-start gap-4 mt-5">
+                                                    <div
+                                                        class="shrink-0 flex items-center justify-center w-12 h-12 rounded-xl bg-slate-800/70 text-slate-300 group-hover:scale-105 transition">
+                                                        <i :class="documentation.icon"></i>
+                                                    </div>
+                                                    <div class="min-w-0">
+                                                        <h3 class="text-lg font-bold text-white transition"
+                                                            :class="documentation.hoverColor"
+                                                            x-text="documentation.title"></h3>
+                                                        <p class="mt-1 text-xs font-mono text-slate-500"
+                                                            x-text="documentation.subtitle"></p>
+                                                    </div>
+                                                </div>
+                                                <p class="mt-4 text-sm leading-6 text-slate-400"
+                                                    x-text="documentation.description"></p>
+
+                                                <div class="flex flex-wrap gap-1.5 mt-5">
+                                                    <template x-for="technology in documentation.tech"
+                                                        :key="technology">
+                                                        <span
+                                                            class="rounded-lg border border-slate-700/70 bg-slate-900/70 px-2 py-1 text-[11px] text-slate-400"
+                                                            x-text="technology"></span>
+                                                    </template>
+                                                </div>
+
+                                                <div class="flex flex-wrap gap-2 mt-6">
+                                                    <template x-for="link in documentation.links" :key="link.url">
+                                                        <a :href="link.url" target="_blank" rel="noopener noreferrer"
+                                                            class="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-900/70 px-3 py-2 text-xs font-semibold text-slate-300 transition hover:border-orange-400/30 hover:text-orange-300">
+                                                            <i :class="link.icon"></i>
+                                                            <span x-text="link.label"></span>
+                                                        </a>
+                                                    </template>
+                                                </div>
+                                            </article>
+                                        </template>
+
+                                        <div x-show="filteredInfrastructure.length === 0" x-transition
+                                            class="py-12 text-center">
+                                            <div
+                                                class="mx-auto flex items-center justify-center w-14 h-14 rounded-2xl bg-slate-800/70 text-slate-500">
+                                                <i class="fa-solid fa-magnifying-glass text-xl"></i>
+                                            </div>
+                                            <h3 class="mt-4 text-base font-semibold text-slate-300">Documentation not
+                                                found</h3>
+                                            <p class="mt-1 text-sm text-slate-500">Try using different search keywords.
+                                            </p>
+                                            <button type="button" @click="searchInfrastructure = ''"
+                                                class="mt-4 text-sm font-medium text-orange-400 hover:text-orange-300 transition">Clear
+                                                search</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </main>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
 
-        <!-- CTA -->
-        <section class="relative overflow-hidden glass rounded-3xl p-8 sm:p-10 mb-12">
-            <div class="absolute -right-20 -top-20 w-64 h-64 rounded-full bg-cyan-400/10 blur-3xl"></div>
-            <div class="relative">
-                <p class="font-mono text-xs text-cyan-400 mb-3">04 / NEXT</p>
-                <h2 class="text-2xl sm:text-3xl font-bold text-white">Explore my projects & documentation.</h2>
-                <p class="text-slate-400 mt-3 max-w-2xl">
-                    A collection of projects, experiments, technical notes, and documentation.
+        <!-- CERTIFICATES -->
+        <section id="certificates" class="scroll-mt-28 my-20">
+            <p class="font-mono text-xs text-cyan-400 mb-2">&gt; Certificate</p>
+            <div class="max-w-3xl mx-auto text-center mb-10 sm:mb-14">
+                <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-white">
+                    Certificates & <span class="gradient-text">Achievements</span>
+                </h2>
+                <p class="mt-4 text-sm sm:text-base text-slate-400 leading-relaxed">
+                    A showcase of earned certifications and accomplishments, reflecting continuous skill development and
+                    technological expertise.
                 </p>
-                <a href="project-documation.html"
-                   class="inline-flex items-center gap-2 mt-6 rounded-xl bg-cyan-400 px-5 py-3 text-sm font-bold text-slate-950 hover:bg-cyan-300 transition">
-                    See Projects & Documentation
-                    <i class="fa-solid fa-arrow-right"></i>
-                </a>
+            </div>
+
+            <div class="relative w-full max-w-7xl mx-auto">
+                <!-- Carousel Viewport -->
+                <div class="relative h-[650px] sm:h-[700px] lg:h-[800px] overflow-visible">
+                    <template x-for="(certificate, index) in certificates" :key="certificate.id">
+                        <article
+                            class="absolute top-1/2 left-1/2 -translate-y-1/2 w-[70%] sm:w-[58%] lg:w-[52%] xl:w-[48%] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                            :style="getCertificateStyle(index)">
+                            <div
+                                class="overflow-hidden rounded-[1.5rem] sm:rounded-[1.75rem] p-2 sm:p-3 bg-slate-600 border border-slate-600/30 shadow-[0_30px_80px_rgba(0,0,0,0.30)]">
+                                <!-- Browser Bar -->
+                                <div class="flex items-center gap-2 h-9 sm:h-11 px-3 sm:px-4 rounded-t-xl bg-slate-100">
+                                    <span class="w-3 h-3 rounded-full bg-red-500 shrink-0"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-500 shrink-0"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-500 shrink-0"></span>
+                                </div>
+
+                                <!-- Content -->
+                                <div
+                                    class="flex flex-col items-center justify-center min-h-[520px] sm:min-h-[540px] lg:min-h-[560px] px-5 sm:px-8 lg:px-12 py-8 text-center rounded-b-xl bg-white">
+                                    <div
+                                        class="w-full h-[220px] sm:h-[250px] lg:h-[270px] mb-6 overflow-hidden rounded-xl border border-slate-200 bg-slate-50 shadow-[0_15px_40px_rgba(15,23,42,0.10)]">
+                                        <img :src="certificate.image" :alt="certificate.title"
+                                            class="block w-full h-full object-cover">
+                                    </div>
+                                    <span
+                                        class="inline-flex items-center px-3 py-1.5 rounded-full bg-sky-100 text-sky-600 text-xs font-semibold mb-3"
+                                        x-text="certificate.badge"></span>
+                                    <h3 class="max-w-2xl text-lg sm:text-xl lg:text-2xl font-bold leading-tight text-slate-900"
+                                        x-text="certificate.title"></h3>
+                                    <p class="max-w-xl mt-3 text-sm sm:text-base leading-relaxed text-slate-500"
+                                        x-text="certificate.description"></p>
+                                    <a :href="certificate.url" target="_blank" rel="noopener noreferrer"
+                                        class="inline-flex items-center justify-center gap-2 mt-6 px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-semibold shadow-sm transition-all duration-200 hover:bg-slate-50 hover:border-slate-300 hover:text-slate-900 hover:-translate-y-0.5 hover:shadow-md">
+                                        <span>View Certificate</span>
+                                        <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+                    </template>
+                </div>
+
+                <!-- Controls -->
+                <div class="relative z-50 flex items-center justify-center gap-4 mt-5 sm:mt-6">
+                    <button type="button" @click="prevCertificate()" aria-label="Previous certificate"
+                        class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-300 bg-white/90 text-slate-700 shadow-sm transition-all duration-200 hover:bg-white hover:border-slate-400 hover:scale-105 active:scale-95">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+
+                    <div class="flex items-center gap-1.5">
+                        <template x-for="(certificate, index) in certificates" :key="'indicator-' + certificate.id">
+                            <button type="button" @click="selectCertificate(index)"
+                                :aria-label="'Certificate ' + (index + 1)"
+                                :class="activeCertificate === index ? 'w-7 bg-slate-900' : 'w-2 bg-slate-300'"
+                                class="h-2 rounded-full transition-all duration-300"></button>
+                        </template>
+                    </div>
+
+                    <button type="button" @click="nextCertificate()" aria-label="Next certificate"
+                        class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-300 bg-white/90 text-slate-700 shadow-sm transition-all duration-200 hover:bg-white hover:border-slate-400 hover:scale-105 active:scale-95">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
             </div>
         </section>
 
         <!-- FOOTER -->
-        <footer class="border-t border-slate-800/80 pt-6 flex flex-col sm:flex-row justify-between gap-3 text-xs text-slate-500 font-mono">
-            <span>© 2026 Piyo Aswandi</span>
-            <span>built with HTML + Tailwind CSS</span>
+        <footer class="relative overflow-hidden border-t border-slate-800/80 pt-16 pb-28 sm:pb-36 lg:pb-44 mt-24">
+
+            <!-- ================= AMBIENT SPOTLIGHT BEAM ================= -->
+            <!-- Cahaya senter biru besar yang bergerak bolak-balik menerangi background teks -->
+            <div
+                class="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-72 sm:h-96 -z-10 flex justify-center items-end">
+                <!-- Blue Glow Core -->
+                <div
+                    class="animate-spotlight w-[320px] sm:w-[500px] lg:w-[650px] h-[220px] sm:h-[300px] rounded-full bg-gradient-to-t from-blue-600/50 via-cyan-500/40 to-indigo-500/20 blur-[80px] sm:blur-[120px]">
+                </div>
+            </div>
+
+            <!-- ================= WATERMARK BACKGROUND ================= -->
+            <!-- Teks piyo academy dengan efek transparan & backdrop agar menyerap cahaya senter -->
+            <div
+                class="pointer-events-none absolute inset-x-0 bottom-6 sm:bottom-8 lg:bottom-10 flex justify-center items-end select-none -z-0">
+                <span
+                    class="font-sans font-black tracking-tight uppercase whitespace-nowrap text-[7vw] leading-none text-slate-400/20 mix-blend-plus-lighter drop-shadow-[0_0_35px_rgba(59,130,246,0.35)]">
+                    piyo academy
+                </span>
+            </div>
+
+            <!-- ================= CONTENT (LAYER ATAS) ================= -->
+            <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6">
+                <!-- Top Grid: Address & Links -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 pb-12">
+                    <!-- Address & Info -->
+                    <div class="space-y-4 lg:col-span-2">
+                        <h4 class="text-sm font-bold text-white uppercase tracking-wider font-mono">
+                            Address
+                        </h4>
+                        <p class="text-sm text-slate-400 leading-relaxed max-w-sm">
+                            Piyo Academy Learning Hub<br>
+                            Bekasi Regency, West Java, Indonesia
+                        </p>
+
+                        <!-- Social Media Links -->
+                        <div class="flex items-center gap-3 pt-2 text-slate-400">
+                            <!-- GitHub -->
+                            <a href="https://github.com/piyo12052004" target="_blank" rel="noopener noreferrer"
+                                title="GitHub"
+                                class="w-9 h-9 rounded-xl border border-slate-800 bg-slate-900/60 flex items-center justify-center hover:text-cyan-300 hover:border-cyan-400/40 transition">
+                                <i class="fa-brands fa-github text-sm"></i>
+                            </a>
+
+                            <!-- YouTube -->
+                            <a href="https://www.youtube.com/@PiyoAcademy" target="_blank" rel="noopener noreferrer"
+                                title="YouTube"
+                                class="w-9 h-9 rounded-xl border border-slate-800 bg-slate-900/60 flex items-center justify-center hover:text-cyan-300 hover:border-cyan-400/40 transition">
+                                <i class="fa-brands fa-youtube text-sm"></i>
+                            </a>
+
+                            <!-- LinkedIn -->
+                            <a href="https://www.linkedin.com/in/piyo-aswandi-3477812a0/" target="_blank"
+                                rel="noopener noreferrer" title="LinkedIn"
+                                class="w-9 h-9 rounded-xl border border-slate-800 bg-slate-900/60 flex items-center justify-center hover:text-cyan-300 hover:border-cyan-400/40 transition">
+                                <i class="fa-brands fa-linkedin-in text-sm"></i>
+                            </a>
+
+                            <!-- WhatsApp -->
+                            <a href="https://wa.me/6285770485606" target="_blank" rel="noopener noreferrer"
+                                title="WhatsApp"
+                                class="w-9 h-9 rounded-xl border border-slate-800 bg-slate-900/60 flex items-center justify-center hover:text-cyan-300 hover:border-cyan-400/40 transition">
+                                <i class="fa-brands fa-whatsapp text-sm"></i>
+                            </a>
+
+                            <!-- Email -->
+                            <a href="mailto:piyoaswandi@gmail.com" title="Email"
+                                class="w-9 h-9 rounded-xl border border-slate-800 bg-slate-900/60 flex items-center justify-center hover:text-cyan-300 hover:border-cyan-400/40 transition">
+                                <i class="fa-regular fa-envelope text-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Company Column -->
+                    <div class="space-y-3">
+                        <h4 class="text-sm font-bold text-white uppercase tracking-wider font-mono">
+                            Company
+                        </h4>
+                        <ul class="space-y-2 text-sm text-slate-400">
+                            <li><a href="#about" class="hover:text-cyan-300 transition">About Us</a></li>
+                            <li><a href="mailto:piyoaswandi@gmail.com" class="hover:text-cyan-300 transition">Contact
+                                    Us</a></li>
+                            <li><a href="#skills" class="hover:text-cyan-300 transition">Skills Track</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Programs Column -->
+                    <div class="space-y-3">
+                        <h4 class="text-sm font-bold text-white uppercase tracking-wider font-mono">
+                            Projects & Documentation
+                        </h4>
+                        <ul class="space-y-2 text-sm text-slate-400">
+                            <li>
+                                <a href="#projects-section"
+                                    @click="activeContent = 'project'; document.getElementById('projects-section').scrollIntoView({ behavior: 'smooth' })"
+                                    class="cursor-pointer hover:text-cyan-300 transition">
+                                    Projects
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#projects-section"
+                                    @click="activeContent = 'devops'; document.getElementById('projects-section').scrollIntoView({ behavior: 'smooth' })"
+                                    class="cursor-pointer hover:text-cyan-300 transition">
+                                    DevOps
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#projects-section"
+                                    @click="activeContent = 'database'; document.getElementById('projects-section').scrollIntoView({ behavior: 'smooth' })"
+                                    class="cursor-pointer hover:text-cyan-300 transition">
+                                    Database
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#projects-section"
+                                    @click="activeContent = 'developer'; document.getElementById('projects-section').scrollIntoView({ behavior: 'smooth' })"
+                                    class="cursor-pointer hover:text-cyan-300 transition">
+                                    Developer
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#projects-section"
+                                    @click="activeContent = 'infrastructure'; document.getElementById('projects-section').scrollIntoView({ behavior: 'smooth' })"
+                                    class="cursor-pointer hover:text-cyan-300 transition">
+                                    Infrastructure
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Bottom Line: Copyright & Terms -->
+                <div
+                    class="border-t border-slate-800/80 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 font-mono">
+                    <p class="text-center sm:text-left">
+                        &copy; 2026 Piyo Academy. All rights reserved. Built and maintained by Piyo Aswandi.
+                    </p>
+                    <div class="flex items-center gap-4 shrink-0">
+                        <a href="#" class="hover:text-slate-300 transition">Terms</a>
+                        <span>&bull;</span>
+                        <a href="#" class="hover:text-slate-300 transition">Privacy</a>
+                    </div>
+                </div>
+            </div>
         </footer>
     </main>
 
-    <script>
-        document.querySelectorAll('.skill').forEach(el => {
-            el.className = 'skill px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-950/60 text-xs font-medium text-slate-300 hover:border-cyan-400/30 hover:text-cyan-300 transition';
-        });
-    </script>
+    <!-- Scripts -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <script src="asset/js/function.js"></script>
 </body>
+
 </html>

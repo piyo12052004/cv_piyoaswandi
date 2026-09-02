@@ -1,0 +1,1213 @@
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+/* =========================================================
+   THEME VARIABLES
+========================================================= */
+
+:root {
+    --page-bg: #070b12;
+    --page-text: #e2e8f0;
+
+    --surface: rgba(15, 23, 42, .68);
+    --surface-hover: rgba(15, 23, 42, .82);
+
+    --border: rgba(148, 163, 184, .12);
+    --grid: rgba(148, 163, 184, .045);
+}
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+body {
+
+    background:
+        radial-gradient(
+            circle at 15% 10%,
+            rgba(34, 211, 238, .10),
+            transparent 28rem
+        ),
+
+        radial-gradient(
+            circle at 85% 15%,
+            rgba(59, 130, 246, .10),
+            transparent 30rem
+        ),
+
+        var(--page-bg);
+
+    color: var(--page-text);
+
+    transition:
+        background .3s ease,
+        color .3s ease;
+
+}
+
+
+/* =========================================================
+   LIGHT MODE
+========================================================= */
+
+body.light-mode {
+
+    --page-bg: #f8fafc;
+    --page-text: #0f172a;
+
+    --surface: rgba(255, 255, 255, .78);
+    --surface-hover: rgba(255, 255, 255, .95);
+
+    --border: rgba(15, 23, 42, .10);
+    --grid: rgba(100, 116, 139, .10);
+
+
+    background:
+
+        radial-gradient(
+            circle at 15% 10%,
+            rgba(34, 211, 238, .12),
+            transparent 28rem
+        ),
+
+        radial-gradient(
+            circle at 85% 15%,
+            rgba(59, 130, 246, .10),
+            transparent 30rem
+        ),
+
+        #f8fafc;
+
+    color: var(--page-text);
+
+}
+
+
+/* =========================================================
+   GRID BACKGROUND
+========================================================= */
+
+.grid-bg {
+
+    background-image:
+
+        linear-gradient(
+            var(--grid) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            var(--grid) 1px,
+            transparent 1px
+        );
+
+    background-size: 32px 32px;
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            black 0%,
+            transparent 85%
+        );
+
+}
+
+
+/* =========================================================
+   GLASS
+========================================================= */
+
+.glass {
+
+    background: rgba(15, 23, 42, .68);
+
+    border:
+        1px solid rgba(
+            148,
+            163,
+            184,
+            .12
+        );
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, .20);
+
+    backdrop-filter: blur(18px);
+
+}
+
+
+body.light-mode .glass {
+
+    background: var(--surface);
+
+    border-color: var(--border);
+
+    box-shadow:
+        0 20px 60px rgba(
+            15,
+            23,
+            42,
+            .08
+        );
+
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.card {
+
+    transition:
+        transform .25s ease,
+        border-color .25s ease,
+        background .25s ease;
+
+}
+
+
+.card:hover {
+
+    transform: translateY(-4px);
+
+    border-color:
+        rgba(34, 211, 238, .25);
+
+    background:
+        rgba(15, 23, 42, .82);
+
+}
+
+
+body.light-mode .card:hover {
+
+    background: var(--surface-hover);
+
+    border-color:
+        rgba(8, 145, 178, .28);
+
+}
+
+
+/* =========================================================
+   GRADIENT TEXT
+========================================================= */
+
+.gradient-text {
+
+    background:
+        linear-gradient(
+            90deg,
+            #67e8f9,
+            #60a5fa,
+            #a78bfa
+        );
+
+    -webkit-background-clip: text;
+
+    background-clip: text;
+
+    color: transparent;
+
+}
+
+
+/* =========================================================
+   TERMINAL
+========================================================= */
+
+.terminal-line::before {
+
+    content: ">";
+
+    color: #22d3ee;
+
+    margin-right: .55rem;
+
+}
+
+
+/* =========================================================
+   MAIN BORDER
+========================================================= */
+
+.main-border {
+
+    position: relative;
+
+}
+
+
+/* LEFT */
+
+.main-border::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+    left: 0;
+
+    width: 1px;
+
+    background:
+
+        linear-gradient(
+            to bottom,
+
+            transparent 0%,
+
+            rgba(194, 194, 194, .15) 10%,
+
+            rgba(194, 194, 194, .45) 30%,
+
+            rgba(194, 194, 194, .8) 50%,
+
+            rgba(194, 194, 194, .45) 70%,
+
+            rgba(194, 194, 194, .15) 90%,
+
+            transparent 100%
+        );
+
+    filter: blur(.3px);
+
+}
+
+
+/* RIGHT */
+
+.main-border::after {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+    right: 0;
+
+    width: 1px;
+
+    background:
+
+        linear-gradient(
+            to bottom,
+
+            transparent 0%,
+
+            rgba(194, 194, 194, .15) 10%,
+
+            rgba(194, 194, 194, .45) 30%,
+
+            rgba(194, 194, 194, .8) 50%,
+
+            rgba(194, 194, 194, .45) 70%,
+
+            rgba(194, 194, 194, .15) 90%,
+
+            transparent 100%
+        );
+
+    filter: blur(.3px);
+
+}
+
+
+/* =========================================================
+   THEME BUTTON
+========================================================= */
+
+.theme-toggle {
+
+    width: 40px;
+    height: 40px;
+
+    border-radius: .75rem;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border:
+        1px solid rgba(
+            148,
+            163,
+            184,
+            .20
+        );
+
+    background:
+        rgba(15, 23, 42, .55);
+
+    color: #cbd5e1;
+
+    transition: all .25s ease;
+
+    cursor: pointer;
+
+}
+
+
+.theme-toggle:hover {
+
+    color: #22d3ee;
+
+    border-color:
+        rgba(34, 211, 238, .35);
+
+    transform:
+        translateY(-1px);
+
+}
+
+
+body.light-mode .theme-toggle {
+
+    background:
+        rgba(255, 255, 255, .8);
+
+    color: #475569;
+
+    border-color: #cbd5e1;
+
+}
+
+
+body.light-mode .theme-toggle:hover {
+
+    color: #0891b2;
+
+    border-color:
+        rgba(8, 145, 178, .35);
+
+}
+
+
+/* =========================================================
+   SLIDE BUTTON
+========================================================= */
+
+.slide-button {
+
+    transition:
+        background-color .3s ease,
+        color .3s ease,
+        transform .3s ease,
+        box-shadow .3s ease;
+
+}
+
+
+/* Dark inactive */
+
+.slide-button:not(.active) {
+
+    background:
+        rgba(30, 41, 59, .70);
+
+    color: #94a3b8;
+
+}
+
+
+/* Active */
+
+.slide-button.active {
+
+    background: #ffffff;
+
+    color: #0f172a;
+
+    box-shadow:
+
+        0 1px 2px
+        rgba(0, 0, 0, .08),
+
+        0 0 0 1px
+        rgba(226, 232, 240, .8);
+
+}
+
+
+/* Light inactive */
+
+body.light-mode
+.slide-button:not(.active) {
+
+    background:
+        rgba(241, 245, 249, .75);
+
+    color: #475569;
+
+}
+
+
+/* Light active */
+
+body.light-mode
+.slide-button.active {
+
+    background: #ffffff;
+
+    color: #0f172a;
+
+    box-shadow:
+
+        0 1px 3px
+        rgba(15, 23, 42, .10),
+
+        0 0 0 1px
+        rgba(203, 213, 225, .8);
+
+}
+
+
+/* Dark hover */
+
+.slide-button:not(.active):hover {
+
+    background:
+        rgba(51, 65, 85, .85);
+
+    color: #ffffff;
+
+}
+
+
+/* Light hover */
+
+body.light-mode
+.slide-button:not(.active):hover {
+
+    background: #e2e8f0;
+
+    color: #0f172a;
+
+}
+
+
+/* =========================================================
+   SKILL
+========================================================= */
+
+.skill {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: .45rem;
+
+    padding:
+        .375rem .75rem;
+
+    border-radius: .5rem;
+
+    border:
+        1px solid
+        rgba(148, 163, 184, .12);
+
+    background:
+        rgba(15, 23, 42, .60);
+
+    color: #cbd5e1;
+
+    font-size: .75rem;
+
+    font-weight: 500;
+
+    transition: all .25s ease;
+
+}
+
+
+.skill:hover {
+
+    border-color:
+        rgba(34, 211, 238, .30);
+
+    color: #67e8f9;
+
+}
+
+
+body.light-mode .skill {
+
+    background:
+        rgba(241, 245, 249, .78);
+
+    border-color:
+        rgba(15, 23, 42, .10);
+
+    color: #475569;
+
+}
+
+
+body.light-mode .skill:hover {
+
+    border-color:
+        rgba(8, 145, 178, .30);
+
+    color: #0891b2;
+
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar {
+
+    position: relative;
+
+}
+
+
+.sidebar-nav {
+
+    position: sticky;
+
+    top: 2rem;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: .35rem;
+
+}
+
+
+/* =========================================================
+   SIDEBAR TITLE
+========================================================= */
+
+.sidebar-title {
+
+    margin-top: 1.25rem;
+
+    margin-bottom: .45rem;
+
+    padding: 0 .85rem;
+
+    font-size: .7rem;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: .08em;
+
+    color: #64748b;
+
+}
+
+
+body.light-mode .sidebar-title {
+
+    color: #94a3b8;
+
+}
+
+
+/* =========================================================
+   CONTENT MENU
+========================================================= */
+
+.content-menu {
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: .8rem;
+
+    padding:
+        .55rem .7rem;
+
+    border-radius: .85rem;
+
+    border:
+        1px solid transparent;
+
+    background: transparent;
+
+    color: #94a3b8;
+
+    font-size: .9rem;
+
+    font-weight: 500;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+
+        background-color .25s ease,
+        color .25s ease,
+        transform .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+
+}
+
+
+.content-menu:hover {
+
+    background:
+        rgba(30, 41, 59, .65);
+
+    color: #f8fafc;
+
+    transform:
+        translateX(2px);
+
+}
+
+
+.content-menu.active {
+
+    background:
+        rgba(255, 255, 255, .95);
+
+    color: #0f172a;
+
+    border-color:
+        rgba(255, 255, 255, .1);
+
+    box-shadow:
+        0 3px 10px
+        rgba(0, 0, 0, .18);
+
+    transform:
+        translateX(0);
+
+}
+
+
+body.light-mode .content-menu {
+
+    color: #475569;
+
+}
+
+
+body.light-mode .content-menu:hover {
+
+    background:
+        rgba(226, 232, 240, .7);
+
+    color: #0f172a;
+
+}
+
+
+body.light-mode .content-menu.active {
+
+    background: #ffffff;
+
+    color: #334155;
+
+    border-color: #e2e8f0;
+
+    box-shadow:
+        0 3px 10px
+        rgba(15, 23, 42, .08);
+
+}
+
+
+/* =========================================================
+   MENU ICON
+========================================================= */
+
+.menu-icon {
+
+    width: 34px;
+    height: 34px;
+
+    flex: 0 0 34px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: .45rem;
+
+    font-size: .9rem;
+
+    box-shadow:
+        0 2px 5px
+        rgba(15, 23, 42, .10);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+
+}
+
+
+.content-menu:hover .menu-icon {
+
+    transform: scale(1.05);
+
+}
+
+
+.content-menu.active .menu-icon {
+
+    box-shadow:
+        0 3px 8px
+        rgba(15, 23, 42, .15);
+
+}
+
+
+/* =========================================================
+   MENU ICON COLORS
+========================================================= */
+
+.project-icon {
+
+    background: #334155;
+
+    color: white;
+
+}
+
+
+.devops-icon {
+
+    background: #8b5cf6;
+
+    color: white;
+
+}
+
+
+.database-icon {
+
+    background: #10b981;
+
+    color: white;
+
+}
+
+
+.developer-icon {
+
+    background: #2563eb;
+
+    color: white;
+
+}
+
+
+.infrastructure-icon {
+
+    background: #f97316;
+
+    color: white;
+
+}
+
+
+/* =========================================================
+   DOCUMENTATION ITEM
+========================================================= */
+
+.documentation-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 1rem;
+
+    padding: 1rem;
+
+    border:
+        1px solid
+        rgba(148, 163, 184, .12);
+
+    border-radius: 1rem;
+
+    transition:
+
+        background .25s ease,
+        border-color .25s ease,
+        transform .25s ease;
+
+}
+
+
+.documentation-item:hover {
+
+    background:
+        rgba(51, 65, 85, .35);
+
+    border-color:
+        rgba(34, 211, 238, .25);
+
+    transform:
+        translateX(3px);
+
+}
+
+
+body.light-mode
+.documentation-item {
+
+    border-color:
+        rgba(15, 23, 42, .08);
+
+}
+
+
+body.light-mode
+.documentation-item:hover {
+
+    background:
+        rgba(241, 245, 249, .8);
+
+    border-color:
+        rgba(8, 145, 178, .25);
+
+}
+
+
+/* =========================================================
+   LIGHT MODE TEXT
+========================================================= */
+
+body.light-mode .text-white {
+
+    color: #0f172a !important;
+
+}
+
+
+body.light-mode .text-slate-200 {
+
+    color: #1e293b !important;
+
+}
+
+
+body.light-mode .text-slate-300 {
+
+    color: #334155 !important;
+
+}
+
+
+body.light-mode .text-slate-400 {
+
+    color: #475569 !important;
+
+}
+
+
+body.light-mode .text-slate-500 {
+
+    color: #64748b !important;
+
+}
+
+
+body.light-mode .text-slate-950 {
+
+    color: #f8fafc !important;
+
+}
+
+
+/* =========================================================
+   LIGHT MODE BORDER
+========================================================= */
+
+body.light-mode .border-slate-700 {
+
+    border-color:
+        #cbd5e1 !important;
+
+}
+
+
+body.light-mode .border-slate-800 {
+
+    border-color:
+        #e2e8f0 !important;
+
+}
+
+
+body.light-mode .border-slate-800\/80 {
+
+    border-color:
+        rgba(226, 232, 240, .8) !important;
+
+}
+
+
+/* =========================================================
+   LIGHT MODE BACKGROUND
+========================================================= */
+
+body.light-mode .bg-slate-950\/50,
+body.light-mode .bg-slate-950\/60 {
+
+    background:
+        rgba(241, 245, 249, .78) !important;
+
+}
+
+
+body.light-mode .bg-slate-900\/60 {
+
+    background:
+        rgba(255, 255, 255, .72) !important;
+
+}
+
+
+/* =========================================================
+   LIGHT MODE BUTTON
+========================================================= */
+
+body.light-mode
+.hover\:bg-slate-200:hover {
+
+    background:
+        #e2e8f0 !important;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE SIDEBAR
+========================================================= */
+
+@media (max-width: 1023px) {
+
+    .sidebar-nav {
+
+        position: static;
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: .5rem;
+
+    }
+
+
+    .sidebar-title {
+
+        grid-column:
+            1 / -1;
+
+        margin-top: .75rem;
+
+    }
+
+}
+
+
+@media (max-width: 640px) {
+
+    .sidebar-nav {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+}
+
+/* =========================================================
+   LIGHT MODE - PROJECT SECTION
+   ========================================================= */
+
+.light-mode .content-panel .glass {
+    background: rgba(255, 255, 255, 0.75);
+    border-color: rgba(148, 163, 184, 0.35);
+}
+
+/* Header */
+.light-mode .content-panel h2 {
+    color: #0f172a !important;
+}
+
+.light-mode .content-panel p {
+    color: #64748b;
+}
+
+.light-mode .content-panel .text-slate-400 {
+    color: #64748b !important;
+}
+
+.light-mode .content-panel .text-slate-500 {
+    color: #94a3b8 !important;
+}
+
+/* Total project */
+.light-mode .content-panel .bg-slate-900\/70 {
+    background: rgba(241, 245, 249, 0.9);
+}
+
+.light-mode .content-panel .border-slate-700 {
+    border-color: #cbd5e1 !important;
+}
+
+/* Search */
+.light-mode .content-panel input {
+    background: rgba(255, 255, 255, 0.9) !important;
+    color: #0f172a !important;
+    border-color: #cbd5e1 !important;
+}
+
+.light-mode .content-panel input::placeholder {
+    color: #94a3b8 !important;
+}
+
+.light-mode .content-panel input:focus {
+    border-color: rgba(59, 130, 246, 0.5) !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.08);
+}
+
+/* Search icon */
+.light-mode .content-panel .fa-magnifying-glass {
+    color: #94a3b8;
+}
+
+/* =========================================================
+   PROJECT CARD
+   ========================================================= */
+
+.light-mode .content-panel article {
+    background: rgba(255, 255, 255, 0.8) !important;
+    border-color: #e2e8f0 !important;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+}
+
+.light-mode .content-panel article:hover {
+    border-color: #cbd5e1 !important;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+}
+
+/* Project title */
+.light-mode .content-panel article h3 {
+    color: #0f172a !important;
+}
+
+/* Project subtitle */
+.light-mode .content-panel article p {
+    color: #64748b;
+}
+
+/* Icon */
+.light-mode .content-panel article .bg-slate-800\/70 {
+    background: #f1f5f9 !important;
+}
+
+.light-mode .content-panel article .text-slate-300 {
+    color: #475569 !important;
+}
+
+/* Technology badge */
+.light-mode .content-panel article .bg-slate-900\/70 {
+    background: #f8fafc !important;
+}
+
+.light-mode .content-panel article .border-slate-700\/70 {
+    border-color: #e2e8f0 !important;
+}
+
+.light-mode .content-panel article .text-\[11px\] {
+    color: #64748b !important;
+}
+
+/* Project links */
+.light-mode .content-panel article a {
+    background: #f8fafc !important;
+    border-color: #e2e8f0 !important;
+    color: #475569 !important;
+}
+
+.light-mode .content-panel article a:hover {
+    border-color: rgba(34, 211, 238, 0.4) !important;
+    color: #0891b2 !important;
+}
+
+/* Clear button */
+.light-mode .content-panel button {
+    color: #64748b;
+}
+
+.light-mode .content-panel button:hover {
+    color: #334155;
+}
+
+/* Searching text */
+.light-mode .content-panel .text-blue-400 {
+    color: #2563eb !important;
+}
+
+/* Empty state */
+.light-mode .content-panel .bg-slate-800\/70 {
+    background: #f1f5f9 !important;
+}
+
+.light-mode .content-panel .text-slate-300 {
+    color: #475569 !important;
+}
+
+/* =========================================================
+   PROJECT SCROLL
+========================================================= */
+
+.project-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(100, 116, 139, 0.5) transparent;
+}
+
+.project-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.project-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.project-scroll::-webkit-scrollbar-thumb {
+    background: rgba(100, 116, 139, 0.5);
+    border-radius: 999px;
+}
+
+.project-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(100, 116, 139, 0.8);
+}
+
