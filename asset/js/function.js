@@ -16,7 +16,8 @@ function portfolioApp() {
         totalContributions: 0,
         isLoadingContributions: true,
         selectedYear: 'last',
-        availableYears: [], // Diisi otomatis dari API
+        // Berikan nilai default tahun statis agar tombol langsung muncul di UI
+        availableYears: ['2026', '2025', '2024', '2023'],
 
         async fetchGitHubContributions(year = 'last') {
             this.selectedYear = year;
@@ -27,12 +28,10 @@ function portfolioApp() {
                 const data = await response.json();
 
                 // AUTO-DETECT TAHUN
-                if (data) {
-                    if (data.years && Array.isArray(data.years)) {
-                        this.availableYears = data.years.map(y => (y.year || y).toString()).sort((a, b) => b - a);
-                    } else if (this.availableYears.length === 0) {
-                        const currentYear = new Date().getFullYear();
-                        this.availableYears = [currentYear, currentYear - 1, currentYear - 2, currentYear - 3].map(String);
+                if (data && data.years && Array.isArray(data.years)) {
+                    const detectedYears = data.years.map(y => (y.year !== undefined ? y.year : y).toString()).sort((a, b) => b - a);
+                    if (detectedYears.length > 0) {
+                        this.availableYears = detectedYears;
                     }
                 }
 
@@ -46,7 +45,7 @@ function portfolioApp() {
                     let currentWeek = [];
                     let lastMonth = -1;
 
-                    // Memasukkan seluruh data harian ke dalam kelompok minggu secara presisi
+                    // Mengelompokkan hari langsung secara presisi berdasarkan urutan kalender API
                     contributions.forEach((day, index) => {
                         const dateObj = new Date(day.date);
                         const month = dateObj.toLocaleString('en-US', { month: 'short' });
@@ -67,7 +66,7 @@ function portfolioApp() {
                             isEmpty: false
                         });
 
-                        // Jika sudah genap 7 hari (1 minggu) atau data hari terakhir tercapai
+                        // Selesaikan 1 minggu jika sudah genap 7 hari atau data habis
                         if (currentWeek.length === 7 || index === contributions.length - 1) {
                             weeks.push({
                                 monthLabel: currentWeek.monthLabel || '',
