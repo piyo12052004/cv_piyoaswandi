@@ -467,9 +467,9 @@ function portfolioApp() {
                 tech: ['Git', 'Git Bash', 'GitHub', 'Repository', 'Commit', 'Version Control'],
                 links: [
                     {
-                        label: 'View Documentation',
-                        url: 'https://www.figma.com/slides/BLMhvBlvnxHbqHJO92Job4',
-                        icon: 'fa-solid fa-arrow-up-right-from-square text-sm'
+                        label: 'View Youtube',
+                        url: 'https://www.youtube.com/playlist?list=PLb8qWUSsS78I',
+                        icon: 'fa-brands fa-youtube text-sm'
                     }
                 ]
             },
