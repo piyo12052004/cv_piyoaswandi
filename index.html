@@ -1284,25 +1284,29 @@
         </section>
 
         <!-- FOOTER -->
-        <footer class="relative overflow-hidden border-t border-slate-800/80 pt-16 pb-28 sm:pb-36 lg:pb-44 mt-24">
+        <footer
+            class="relative overflow-hidden border-t border-slate-800/80 pt-16 pb-40 sm:pb-48 md:pb-36 lg:pb-44 mt-24">
 
             <!-- ================= AMBIENT SPOTLIGHT BEAM ================= -->
-            <!-- Cahaya senter biru besar yang bergerak bolak-balik menerangi background teks -->
             <div
-                class="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-72 sm:h-96 -z-10 flex justify-center items-end">
+                class="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-80 sm:h-96 -z-10 flex justify-center items-end">
                 <!-- Blue Glow Core -->
                 <div
-                    class="animate-spotlight w-[320px] sm:w-[500px] lg:w-[650px] h-[220px] sm:h-[300px] rounded-full bg-gradient-to-t from-blue-600/50 via-cyan-500/40 to-indigo-500/20 blur-[80px] sm:blur-[120px]">
+                    class="animate-spotlight w-[320px] sm:w-[500px] lg:w-[650px] h-[260px] sm:h-[320px] rounded-full bg-gradient-to-t from-blue-600/50 via-cyan-500/40 to-indigo-500/20 blur-[80px] sm:blur-[120px]">
                 </div>
             </div>
 
             <!-- ================= WATERMARK BACKGROUND ================= -->
-            <!-- Teks piyo academy dengan efek transparan & backdrop agar menyerap cahaya senter -->
+            <!-- Mobile: 2 Baris + Font Besar (17vw) | Desktop: 1 Baris (7vw) -->
             <div
-                class="pointer-events-none absolute inset-x-0 bottom-6 sm:bottom-8 lg:bottom-10 flex justify-center items-end select-none -z-0">
+                class="pointer-events-none absolute inset-x-0 bottom-4 sm:bottom-6 md:bottom-8 lg:bottom-10 flex flex-col md:flex-row justify-center items-center select-none -z-0">
                 <span
-                    class="font-sans font-black tracking-tight uppercase whitespace-nowrap text-[7vw] leading-none text-slate-400/20 mix-blend-plus-lighter drop-shadow-[0_0_35px_rgba(59,130,246,0.35)]">
-                    piyo academy
+                    class="font-sans font-black tracking-tight uppercase whitespace-nowrap text-[17vw] md:text-[7vw] leading-none text-slate-400/20 mix-blend-plus-lighter drop-shadow-[0_0_35px_rgba(59,130,246,0.35)] md:mr-4">
+                    piyo
+                </span>
+                <span
+                    class="font-sans font-black tracking-tight uppercase whitespace-nowrap text-[17vw] md:text-[7vw] leading-none text-slate-400/20 mix-blend-plus-lighter drop-shadow-[0_0_35px_rgba(59,130,246,0.35)]">
+                    academy
                 </span>
             </div>
 
