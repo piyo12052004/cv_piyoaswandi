@@ -64,38 +64,75 @@
     <main class="main-border max-w-6xl mx-auto px-5 sm:px-8 pt-8 ">
 
         <!-- NAVBAR -->
-        <nav class="glass rounded-2xl px-5 py-4 flex items-center justify-between sticky top-4 z-50">
-            <a href="#" class="font-mono font-semibold text-sm tracking-tight">
-                <span class="text-cyan-400">~/</span>piyo-aswandi
-            </a>
-
-            <div class="hidden md:flex items-center gap-6 text-sm text-slate-400">
-                <a href="#about" class="hover:text-cyan-300 transition">About</a>
-                <a href="#skills" class="hover:text-cyan-300 transition">Skills</a>
-                <a href="#projects-section" class="hover:text-cyan-300 transition">Projects & Dokumentasi</a>
-                <a href="#certificates" class="hover:text-cyan-300 transition">Certificate</a>
-            </div>
-
-            <div class="flex items-center gap-2 sm:gap-3">
-                <!-- Theme Toggle -->
-                <button id="themeToggle" type="button" class="theme-toggle" @click="toggleTheme()"
-                    :aria-label="theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'"
-                    :title="theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'">
-                    <i id="themeIcon" :class="theme === 'light' ? 'fa-solid fa-moon' : 'fa-solid fa-sun'"></i>
-                </button>
-
-                <!-- Resume / CV (Outline Button with File Icon) -->
-                <a href="https://canva.link/w3gdu9fqikn0s2u" target="_blank" rel="noopener noreferrer"
-                    class="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-900/60 px-3.5 sm:px-4 py-2 text-sm font-semibold text-slate-200 hover:border-cyan-400/40 hover:text-cyan-300 transition">
-                    <i class="fa-regular fa-file-lines text-cyan-400"></i>
-                    <span>CV</span>
+        <nav x-data="{ mobileMenuOpen: false }"
+            class="glass rounded-2xl px-4 sm:px-5 py-3.5 sm:py-4 sticky top-4 z-50 transition-all duration-300">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <a href="#" class="font-mono font-semibold text-sm tracking-tight shrink-0">
+                    <span class="text-cyan-400">~/</span>piyo-aswandi
                 </a>
 
-                <!-- Contact (Primary Solid Button) -->
-                <a href="mailto:piyoaswandi@gmail.com"
-                    class="inline-flex items-center gap-2 rounded-xl bg-cyan-400 px-3.5 sm:px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-cyan-300 transition">
-                    <i class="fa-regular fa-envelope"></i>
-                    <span>Contact</span>
+                <!-- Desktop Navigation Links -->
+                <div class="hidden md:flex items-center gap-6 text-sm text-slate-400">
+                    <a href="#about" class="hover:text-cyan-300 transition">About</a>
+                    <a href="#skills" class="hover:text-cyan-300 transition">Skills</a>
+                    <a href="#projects-section" class="hover:text-cyan-300 transition">Projects & Documentation</a>
+                    <a href="#certificates" class="hover:text-cyan-300 transition">Certificates</a>
+                </div>
+
+                <!-- Right Side: Action Buttons & Hamburger Toggle -->
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <!-- Theme Toggle -->
+                    <button id="themeToggle" type="button" class="theme-toggle" @click="toggleTheme()"
+                        :aria-label="theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'"
+                        :title="theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'">
+                        <i id="themeIcon" :class="theme === 'light' ? 'fa-solid fa-moon' : 'fa-solid fa-sun'"></i>
+                    </button>
+
+                    <!-- Resume / CV -->
+                    <a href="https://canva.link/w3gdu9fqikn0s2u" target="_blank" rel="noopener noreferrer"
+                        class="inline-flex items-center gap-1.5 sm:gap-2 rounded-xl border border-slate-700 bg-slate-900/60 px-2.5 sm:px-4 py-2 text-xs sm:text-sm font-semibold text-slate-200 hover:border-cyan-400/40 hover:text-cyan-300 transition">
+                        <i class="fa-regular fa-file-lines text-cyan-400"></i>
+                        <span>CV</span>
+                    </a>
+
+                    <!-- Contact -->
+                    <a href="mailto:piyoaswandi@gmail.com"
+                        class="inline-flex items-center gap-1.5 sm:gap-2 rounded-xl bg-cyan-400 px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold text-slate-950 hover:bg-cyan-300 transition">
+                        <i class="fa-regular fa-envelope"></i>
+                        <span class="hidden xs:inline">Contact</span>
+                    </a>
+
+                    <!-- Mobile Hamburger Button -->
+                    <button type="button" @click="mobileMenuOpen = !mobileMenuOpen" aria-label="Toggle Navigation Menu"
+                        class="md:hidden w-9 h-9 flex items-center justify-center rounded-xl border border-slate-700 bg-slate-900/60 text-slate-300 hover:text-cyan-300 hover:border-cyan-400/40 transition">
+                        <i :class="mobileMenuOpen ? 'fa-solid fa-xmark text-base' : 'fa-solid fa-bars text-sm'"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Dropdown Menu -->
+            <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2"
+                @click.outside="mobileMenuOpen = false"
+                class="md:hidden mt-3 pt-3 border-t border-slate-800/80 flex flex-col gap-1 text-sm font-medium">
+                <a href="#about" @click="mobileMenuOpen = false"
+                    class="px-3 py-2 rounded-lg text-slate-300 hover:text-cyan-300 hover:bg-slate-800/50 transition">
+                    About
+                </a>
+                <a href="#skills" @click="mobileMenuOpen = false"
+                    class="px-3 py-2 rounded-lg text-slate-300 hover:text-cyan-300 hover:bg-slate-800/50 transition">
+                    Skills
+                </a>
+                <a href="#projects-section" @click="mobileMenuOpen = false"
+                    class="px-3 py-2 rounded-lg text-slate-300 hover:text-cyan-300 hover:bg-slate-800/50 transition">
+                    Projects & Documentation
+                </a>
+                <a href="#certificates" @click="mobileMenuOpen = false"
+                    class="px-3 py-2 rounded-lg text-slate-300 hover:text-cyan-300 hover:bg-slate-800/50 transition">
+                    Certificates
                 </a>
             </div>
         </nav>
@@ -1079,40 +1116,62 @@
             </div>
 
             <div class="relative w-full max-w-7xl mx-auto">
-                <!-- Carousel Viewport -->
-                <div class="relative h-[650px] sm:h-[700px] lg:h-[800px] overflow-visible">
-                    <template x-for="(certificate, index) in certificates" :key="certificate.id">
-                        <article
-                            class="absolute top-1/2 left-1/2 -translate-y-1/2 w-[70%] sm:w-[58%] lg:w-[52%] xl:w-[48%] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                            :style="getCertificateStyle(index)">
-                            <div
-                                class="overflow-hidden rounded-[1.5rem] sm:rounded-[1.75rem] p-2 sm:p-3 bg-slate-600 border border-slate-600/30 shadow-[0_30px_80px_rgba(0,0,0,0.30)]">
+                <!-- ================= MOBILE VIEW (Horizontal Swipe / Ukuran Card Seragam) ================= -->
+                <div
+                    class="flex md:hidden overflow-x-auto snap-x snap-mandatory gap-4 px-5 pb-6 no-scrollbar items-stretch">
+                    <template x-for="certificate in certificates" :key="'mob-' + certificate.id">
+                        <!-- Card Wrapper (Lebar dan tinggi dikunci seragam) -->
+                        <article class="w-[85%] sm:w-[70%] shrink-0 snap-center flex flex-col">
+                            <div class="h-full flex flex-col overflow-hidden rounded-2xl border transition-colors duration-300 shadow-lg"
+                                :class="theme === 'light' 
+                                    ? 'bg-slate-200/80 border-slate-300 shadow-slate-300/40' 
+                                    : 'bg-slate-900 border-slate-800 shadow-black/40'">
+
                                 <!-- Browser Bar -->
-                                <div class="flex items-center gap-2 h-9 sm:h-11 px-3 sm:px-4 rounded-t-xl bg-slate-100">
-                                    <span class="w-3 h-3 rounded-full bg-red-500 shrink-0"></span>
-                                    <span class="w-3 h-3 rounded-full bg-yellow-500 shrink-0"></span>
-                                    <span class="w-3 h-3 rounded-full bg-green-500 shrink-0"></span>
+                                <div class="flex items-center gap-1.5 h-8 px-3 rounded-t-xl shrink-0 transition-colors duration-300"
+                                    :class="theme === 'light' ? 'bg-slate-300/90' : 'bg-slate-800'">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-red-500 shrink-0"></span>
+                                    <span class="w-2.5 h-2.5 rounded-full bg-yellow-500 shrink-0"></span>
+                                    <span class="w-2.5 h-2.5 rounded-full bg-green-500 shrink-0"></span>
                                 </div>
 
-                                <!-- Content -->
-                                <div
-                                    class="flex flex-col items-center justify-center min-h-[520px] sm:min-h-[540px] lg:min-h-[560px] px-5 sm:px-8 lg:px-12 py-8 text-center rounded-b-xl bg-white">
-                                    <div
-                                        class="w-full h-[220px] sm:h-[250px] lg:h-[270px] mb-6 overflow-hidden rounded-xl border border-slate-200 bg-slate-50 shadow-[0_15px_40px_rgba(15,23,42,0.10)]">
-                                        <img :src="certificate.image" :alt="certificate.title"
-                                            class="block w-full h-full object-cover">
-                                    </div>
+                                <!-- Full Width Image Header (Tinggi Dikunci 200px) -->
+                                <div class="w-full h-48 sm:h-52 shrink-0 overflow-hidden border-b transition-colors duration-300"
+                                    :class="theme === 'light' ? 'border-slate-200 bg-slate-100' : 'border-slate-800 bg-slate-900'">
+                                    <img :src="certificate.image" :alt="certificate.title"
+                                        class="w-full h-full object-cover">
+                                </div>
+
+                                <!-- Content Details (Flex-1 dengan space-between agar tinggi sejajar) -->
+                                <div class="flex-1 flex flex-col items-center p-5 text-center transition-colors duration-300"
+                                    :class="theme === 'light' ? 'bg-white text-slate-900' : 'bg-slate-950 text-slate-100'">
+
+                                    <!-- Badge -->
                                     <span
-                                        class="inline-flex items-center px-3 py-1.5 rounded-full bg-sky-100 text-sky-600 text-xs font-semibold mb-3"
+                                        class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold mb-2 shrink-0 transition-colors duration-300"
+                                        :class="theme === 'light' 
+                                            ? 'bg-sky-100 text-sky-700' 
+                                            : 'bg-cyan-500/10 text-cyan-300 border border-cyan-500/20'"
                                         x-text="certificate.badge"></span>
-                                    <h3 class="max-w-2xl text-lg sm:text-xl lg:text-2xl font-bold leading-tight text-slate-900"
+
+                                    <!-- Title (Tinggi dialokasikan 2 baris konsisten) -->
+                                    <h3 class="text-base font-bold leading-snug line-clamp-2 min-h-[2.75rem] flex items-center justify-center"
+                                        :class="theme === 'light' ? 'text-slate-900' : 'text-white'"
                                         x-text="certificate.title"></h3>
-                                    <p class="max-w-xl mt-3 text-sm sm:text-base leading-relaxed text-slate-500"
+
+                                    <!-- Description (Tinggi dialokasikan 3 baris konsisten) -->
+                                    <p class="mt-2 text-xs leading-relaxed line-clamp-3 min-h-[3.5rem] flex items-center justify-center"
+                                        :class="theme === 'light' ? 'text-slate-600' : 'text-slate-400'"
                                         x-text="certificate.description"></p>
+
+                                    <!-- Action Button (mt-auto agar selalu menempel rata di dasar kartu) -->
                                     <a :href="certificate.url" target="_blank" rel="noopener noreferrer"
-                                        class="inline-flex items-center justify-center gap-2 mt-6 px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-semibold shadow-sm transition-all duration-200 hover:bg-slate-50 hover:border-slate-300 hover:text-slate-900 hover:-translate-y-0.5 hover:shadow-md">
+                                        class="mt-auto inline-flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border text-xs font-semibold shadow-sm transition duration-200 shrink-0 pt-3"
+                                        :class="theme === 'light' 
+                                            ? 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 hover:text-slate-900' 
+                                            : 'border-slate-800 bg-slate-900/80 text-slate-200 hover:border-cyan-400/40 hover:text-cyan-300'">
                                         <span>View Certificate</span>
-                                        <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
                                     </a>
                                 </div>
                             </div>
@@ -1120,26 +1179,106 @@
                     </template>
                 </div>
 
-                <!-- Controls -->
-                <div class="relative z-50 flex items-center justify-center gap-4 mt-5 sm:mt-6">
-                    <button type="button" @click="prevCertificate()" aria-label="Previous certificate"
-                        class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-300 bg-white/90 text-slate-700 shadow-sm transition-all duration-200 hover:bg-white hover:border-slate-400 hover:scale-105 active:scale-95">
-                        <i class="fa-solid fa-chevron-left"></i>
-                    </button>
+                <!-- Swipe Guide -->
+                <div
+                    class="flex md:hidden justify-center items-center gap-1.5 text-[11px] font-mono text-slate-400 mt-2 mb-4">
+                    <i class="fa-solid fa-arrows-left-right text-xs"></i>
+                    <span>Swipe to explore certificates</span>
+                </div>
 
-                    <div class="flex items-center gap-1.5">
-                        <template x-for="(certificate, index) in certificates" :key="'indicator-' + certificate.id">
-                            <button type="button" @click="selectCertificate(index)"
-                                :aria-label="'Certificate ' + (index + 1)"
-                                :class="activeCertificate === index ? 'w-7 bg-slate-900' : 'w-2 bg-slate-300'"
-                                class="h-2 rounded-full transition-all duration-300"></button>
+                <!-- ================= DESKTOP & TABLET VIEW (3D Carousel) ================= -->
+                <div class="hidden md:block">
+                    <div class="relative h-[720px] lg:h-[820px] overflow-visible">
+                        <template x-for="(certificate, index) in certificates" :key="certificate.id">
+                            <article
+                                class="absolute top-1/2 left-1/2 -translate-y-1/2 w-[60%] lg:w-[54%] xl:w-[48%] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                                :style="getCertificateStyle(index)">
+                                <div class="overflow-hidden rounded-[1.75rem] border transition-colors duration-300 shadow-[0_30px_80px_rgba(0,0,0,0.30)]"
+                                    :class="theme === 'light' 
+                                        ? 'bg-slate-200/80 border-slate-300' 
+                                        : 'bg-slate-900 border-slate-800'">
+
+                                    <!-- Browser Bar -->
+                                    <div class="flex items-center gap-2 h-11 px-4 transition-colors duration-300"
+                                        :class="theme === 'light' ? 'bg-slate-300/90' : 'bg-slate-800'">
+                                        <span class="w-3 h-3 rounded-full bg-red-500 shrink-0"></span>
+                                        <span class="w-3 h-3 rounded-full bg-yellow-500 shrink-0"></span>
+                                        <span class="w-3 h-3 rounded-full bg-green-500 shrink-0"></span>
+                                    </div>
+
+                                    <!-- Full Width Image Header -->
+                                    <div class="w-full h-[280px] lg:h-[320px] overflow-hidden border-b transition-colors duration-300"
+                                        :class="theme === 'light' ? 'border-slate-200 bg-slate-100' : 'border-slate-800 bg-slate-900'">
+                                        <img :src="certificate.image" :alt="certificate.title"
+                                            class="w-full h-full object-cover">
+                                    </div>
+
+                                    <!-- Content Body -->
+                                    <div class="flex flex-col items-center justify-center p-8 lg:p-10 text-center transition-colors duration-300"
+                                        :class="theme === 'light' ? 'bg-white' : 'bg-slate-950'">
+
+                                        <!-- Badge -->
+                                        <span
+                                            class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold mb-3 transition-colors duration-300"
+                                            :class="theme === 'light' 
+                                                ? 'bg-sky-100 text-sky-700' 
+                                                : 'bg-cyan-500/10 text-cyan-300 border border-cyan-500/20'"
+                                            x-text="certificate.badge"></span>
+
+                                        <!-- Title -->
+                                        <h3 class="max-w-2xl text-xl lg:text-2xl font-bold leading-tight transition-colors duration-300"
+                                            :class="theme === 'light' ? 'text-slate-900' : 'text-white'"
+                                            x-text="certificate.title"></h3>
+
+                                        <!-- Description -->
+                                        <p class="max-w-xl mt-3 text-sm leading-relaxed transition-colors duration-300"
+                                            :class="theme === 'light' ? 'text-slate-600' : 'text-slate-400'"
+                                            x-text="certificate.description"></p>
+
+                                        <!-- Action Button -->
+                                        <a :href="certificate.url" target="_blank" rel="noopener noreferrer"
+                                            class="inline-flex items-center justify-center gap-2 mt-6 px-6 py-2.5 rounded-xl border text-sm font-semibold shadow-sm transition duration-200"
+                                            :class="theme === 'light' 
+                                                ? 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 hover:text-slate-900' 
+                                                : 'border-slate-800 bg-slate-900/80 text-slate-200 hover:border-cyan-400/40 hover:text-cyan-300'">
+                                            <span>View Certificate</span>
+                                            <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </article>
                         </template>
                     </div>
 
-                    <button type="button" @click="nextCertificate()" aria-label="Next certificate"
-                        class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-300 bg-white/90 text-slate-700 shadow-sm transition-all duration-200 hover:bg-white hover:border-slate-400 hover:scale-105 active:scale-95">
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </button>
+                    <!-- Controls (Desktop/Tablet Only) -->
+                    <div class="relative z-50 flex items-center justify-center gap-4 mt-6">
+                        <button type="button" @click="prevCertificate()" aria-label="Previous certificate"
+                            class="flex items-center justify-center w-10 h-10 rounded-full border shadow-sm transition-all duration-200 hover:scale-105 active:scale-95"
+                            :class="theme === 'light' 
+                                ? 'border-slate-300 bg-white text-slate-700 hover:bg-slate-50' 
+                                : 'border-slate-700 bg-slate-900 text-slate-200 hover:border-cyan-400/50 hover:text-cyan-300'">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+
+                        <div class="flex items-center gap-1.5">
+                            <template x-for="(certificate, index) in certificates" :key="'indicator-' + certificate.id">
+                                <button type="button" @click="selectCertificate(index)"
+                                    :aria-label="'Certificate ' + (index + 1)"
+                                    class="h-2 rounded-full transition-all duration-300" :class="activeCertificate === index 
+                                        ? (theme === 'light' ? 'w-7 bg-slate-900' : 'w-7 bg-cyan-400') 
+                                        : (theme === 'light' ? 'w-2 bg-slate-300' : 'w-2 bg-slate-700')">
+                                </button>
+                            </template>
+                        </div>
+
+                        <button type="button" @click="nextCertificate()" aria-label="Next certificate"
+                            class="flex items-center justify-center w-10 h-10 rounded-full border shadow-sm transition-all duration-200 hover:scale-105 active:scale-95"
+                            :class="theme === 'light' 
+                                ? 'border-slate-300 bg-white text-slate-700 hover:bg-slate-50' 
+                                : 'border-slate-700 bg-slate-900 text-slate-200 hover:border-cyan-400/50 hover:text-cyan-300'">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
