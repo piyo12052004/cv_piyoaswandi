@@ -771,7 +771,16 @@ function portfolioApp() {
                     'Certificate of participation in a technology seminar discussing the metaverse and emerging virtual world trends, held on August 8, 2023.',
                 image: 'asset/ser-2.jpeg',
                 url: 'https://drive.google.com/file/d/1ffliZrWs3xICKtxLZWJWmMibve0MZJR3/view?usp=drive_link'
+            }, 
+            {
+                id: 5,
+                badge: 'PPKMB Certificate - Universitas Pelita Bangsa',
+                title: 'Campus Life Orientation Program',
+                description: 'Certificate of participation in the Campus Life Orientation Program (PPKMB) at Universitas Pelita Bangsa, covering the introduction to the academic environment, campus culture, and student life.',
+                image: 'asset/Sertifikat-PPKMB-PIYO-ASWANDI.jpg',
+                url: 'https://drive.google.com/file/d/1-JOWn7uw2c3J8RYdP7fKkW89Kfk1ZQys/view?usp=drivesdk'
             }
+
         ],
 
         nextCertificate() {
