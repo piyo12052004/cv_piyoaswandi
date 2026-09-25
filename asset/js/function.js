@@ -149,30 +149,30 @@ function portfolioApp() {
                     }
                 ]
             },
-            {
-                id: 4,
-                category: 'project',
-                badge: 'Team Project',
-                badgeColor: 'bg-green-100 text-green-700',
-                borderColor: 'border-t-green-500',
-                icon: 'fa-solid fa-diagram-project',
-                hoverColor: 'hover:text-blue-600',
-                year: 2026,
-                month: 1,
-                dateLabel: 'Jan 2026',
-                title: 'Company Profile Website',
-                subtitle: 'Branch : main',
-                description:
-                    'A responsive company profile website developed collaboratively using Laravel Blade. The project showcases company information, services, portfolio, and contact pages with a clean and modern user interface. Built as a team project following the Laravel MVC architecture.',
-                tech: ['Laravel', 'Blade', 'PHP', 'MySQL', 'Bootstrap', 'Git', 'Team Collaboration'],
-                links: [
-                    {
-                        label: 'Source Code',
-                        url: 'https://github.com/piyo12052004/frelance_company_profile_team_work',
-                        icon: 'fa-solid fa-code'
-                    }
-                ]
-            },
+            // {
+            //     id: 4,
+            //     category: 'project',
+            //     badge: 'Team Project',
+            //     badgeColor: 'bg-green-100 text-green-700',
+            //     borderColor: 'border-t-green-500',
+            //     icon: 'fa-solid fa-diagram-project',
+            //     hoverColor: 'hover:text-blue-600',
+            //     year: 2026,
+            //     month: 1,
+            //     dateLabel: 'Jan 2026',
+            //     title: 'Company Profile Website',
+            //     subtitle: 'Branch : main',
+            //     description:
+            //         'A responsive company profile website developed collaboratively using Laravel Blade. The project showcases company information, services, portfolio, and contact pages with a clean and modern user interface. Built as a team project following the Laravel MVC architecture.',
+            //     tech: ['Laravel', 'Blade', 'PHP', 'MySQL', 'Bootstrap', 'Git', 'Team Collaboration'],
+            //     links: [
+            //         {
+            //             label: 'Source Code',
+            //             url: 'https://github.com/piyo12052004/frelance_company_profile_team_work',
+            //             icon: 'fa-solid fa-code'
+            //         }
+            //     ]
+            // },
             {
                 id: 5,
                 category: 'project',
@@ -197,30 +197,30 @@ function portfolioApp() {
                     }
                 ]
             },
-            {
-                id: 6,
-                category: 'project',
-                badge: 'JavaScript Project',
-                badgeColor: 'bg-yellow-100 text-yellow-700',
-                borderColor: 'border-t-yellow-500',
-                icon: 'fa-solid fa-calculator',
-                hoverColor: 'hover:text-yellow-600',
-                year: 2025,
-                month: 7,
-                dateLabel: 'Jul 2025',
-                title: 'Simply Supported Beam Analysis',
-                subtitle: 'Branch : calculator-test',
-                description:
-                    'A JavaScript-based engineering calculation application for analyzing simply supported beams. The project calculates support reactions and internal forces based on beam loading conditions, following the provided engineering calculation model.',
-                tech: ['JavaScript', 'HTML5', 'CSS3', 'Engineering Calculation', 'Beam Analysis'],
-                links: [
-                    {
-                        label: 'Source Code',
-                        url: 'https://github.com/piyo12052004/piyo-assignment/tree/calculator-test',
-                        icon: 'fa-solid fa-code'
-                    }
-                ]
-            },
+            // {
+            //     id: 6,
+            //     category: 'project',
+            //     badge: 'JavaScript Project',
+            //     badgeColor: 'bg-yellow-100 text-yellow-700',
+            //     borderColor: 'border-t-yellow-500',
+            //     icon: 'fa-solid fa-calculator',
+            //     hoverColor: 'hover:text-yellow-600',
+            //     year: 2025,
+            //     month: 7,
+            //     dateLabel: 'Jul 2025',
+            //     title: 'Simply Supported Beam Analysis',
+            //     subtitle: 'Branch : calculator-test',
+            //     description:
+            //         'A JavaScript-based engineering calculation application for analyzing simply supported beams. The project calculates support reactions and internal forces based on beam loading conditions, following the provided engineering calculation model.',
+            //     tech: ['JavaScript', 'HTML5', 'CSS3', 'Engineering Calculation', 'Beam Analysis'],
+            //     links: [
+            //         {
+            //             label: 'Source Code',
+            //             url: 'https://github.com/piyo12052004/piyo-assignment/tree/calculator-test',
+            //             icon: 'fa-solid fa-code'
+            //         }
+            //     ]
+            // },
             {
                 id: 7,
                 category: 'project',
@@ -245,127 +245,127 @@ function portfolioApp() {
                     }
                 ]
             },
-            {
-                id: 8,
-                category: 'project',
-                badge: '3D Graphics Project',
-                badgeColor: 'bg-indigo-100 text-indigo-700',
-                borderColor: 'border-t-indigo-500',
-                icon: 'fa-solid fa-cube',
-                hoverColor: 'hover:text-indigo-600',
-                year: 2025,
-                month: 7,
-                dateLabel: 'Jul 2025',
-                title: '3D Wood Model Viewer',
-                subtitle: 'Branch : three-dimension-test',
-                description:
-                    'A JavaScript-based 3D visualization project built with Three.js to render an interactive wooden model from an FBX file. The application recreates a realistic 3D scene with camera controls, lighting, and accurate model scaling.',
-                tech: ['JavaScript', 'Three.js', 'WebGL', 'FBX Loader', 'HTML5', 'CSS3'],
-                links: [
-                    {
-                        label: 'Source Code',
-                        url: 'https://github.com/piyo12052004/piyo-assignment/tree/three-dimension-test',
-                        icon: 'fa-solid fa-code'
-                    }
-                ]
-            },
-            {
-                id: 9,
-                category: 'project',
-                badge: 'Desktop Application',
-                badgeColor: 'bg-cyan-100 text-cyan-700',
-                borderColor: 'border-t-cyan-500',
-                icon: 'fa-solid fa-desktop',
-                hoverColor: 'hover:text-cyan-600',
-                year: 2026,
-                month: 4,
-                dateLabel: 'Apr 2026',
-                title: 'Parking Entry Management System',
-                subtitle: 'Branch : main',
-                description:
-                    'A desktop-based parking entry management system developed with Python and PyQt5. The application records incoming vehicles using QR Code / Barcode scanning or manual license plate input, automatically stores entry time, and saves parking data into a database.',
-                tech: ['Python', 'PyQt5', 'OpenCV', 'QR Code', 'SQLite', 'MySQL'],
-                links: [
-                    {
-                        label: 'View Source Code',
-                        url: 'https://github.com/piyo12052004/in_parkir_system_pyqt',
-                        icon: 'fa-solid fa-arrow-up-right-from-square'
-                    }
-                ]
-            },
-            {
-                id: 10,
-                category: 'project',
-                badge: 'Desktop Application',
-                badgeColor: 'bg-orange-100 text-orange-700',
-                borderColor: 'border-t-orange-500',
-                icon: 'fa-solid fa-right-to-bracket',
-                hoverColor: 'hover:text-orange-600',
-                year: 2026,
-                month: 4,
-                dateLabel: 'Apr 2026',
-                title: 'Parking Exit Management System',
-                subtitle: 'Branch : main',
-                description:
-                    'A desktop-based parking exit management system developed using Python and PyQt5. The application processes outgoing vehicles through QR Code / Barcode scanning or manual license plate input, updates parking records, and synchronizes data with the database in real time.',
-                tech: ['Python', 'PyQt5', 'OpenCV', 'QR Code', 'SQLite', 'MySQL'],
-                links: [
-                    {
-                        label: 'Source Code',
-                        url: 'https://github.com/piyo12052004/out_parkir_system_pyqt',
-                        icon: 'fa-solid fa-code'
-                    }
-                ]
-            },
-            {
-                id: 11,
-                category: 'project',
-                badge: 'Laravel Web App',
-                badgeColor: 'bg-rose-100 text-rose-700',
-                borderColor: 'border-t-rose-500',
-                icon: 'fa-solid fa-film',
-                hoverColor: 'hover:text-rose-600',
-                year: 2026,
-                month: 2,
-                dateLabel: 'Feb 2026',
-                title: 'Movie Information Application',
-                subtitle: 'Branch : main',
-                description:
-                    'A Laravel-based movie information application integrated with the OMDb API. Users can search for movies, view detailed movie information, save favorite movies, and manage their personal favorite list through a responsive web interface.',
-                tech: ['Laravel 5.5', 'PHP', 'Blade', 'Tailwind CSS', 'PostgreSQL', 'OMDb API', 'Guzzle HTTP'],
-                links: [
-                    {
-                        label: 'Source Code',
-                        url: 'https://github.com/piyo12052004/laravel-movie-app',
-                        icon: 'fa-solid fa-code'
-                    }
-                ]
-            },
-            {
-                id: 12,
-                category: 'project',
-                badge: 'Full Stack Project',
-                badgeColor: 'bg-violet-100 text-violet-700',
-                borderColor: 'border-t-violet-500',
-                icon: 'fa-solid fa-layer-group',
-                hoverColor: 'hover:text-violet-600',
-                year: 2025,
-                month: 2,
-                dateLabel: 'Feb 2025',
-                title: 'Dynamic Portfolio Website',
-                subtitle: 'Branch : main',
-                description:
-                    'A dynamic portfolio website built with a decoupled architecture, using Vue.js for the frontend and Laravel REST API for the backend. The application integrates PostgreSQL for data management and supports Google Authentication for secure user login.',
-                tech: ['Vue.js', 'Laravel', 'REST API', 'PostgreSQL', 'Google OAuth', 'JWT Authentication', 'Full Stack'],
-                note: 'Backend: Private',
-                links: [
-                    {
-                        label: 'Source Code Frontend',
-                        url: 'https://github.com/piyo12052004/portofolio_piyo_fe',
-                        icon: 'fa-solid fa-code'
-                    }
-                ]
-            },
+            // {
+            //     id: 8,
+            //     category: 'project',
+            //     badge: '3D Graphics Project',
+            //     badgeColor: 'bg-indigo-100 text-indigo-700',
+            //     borderColor: 'border-t-indigo-500',
+            //     icon: 'fa-solid fa-cube',
+            //     hoverColor: 'hover:text-indigo-600',
+            //     year: 2025,
+            //     month: 7,
+            //     dateLabel: 'Jul 2025',
+            //     title: '3D Wood Model Viewer',
+            //     subtitle: 'Branch : three-dimension-test',
+            //     description:
+            //         'A JavaScript-based 3D visualization project built with Three.js to render an interactive wooden model from an FBX file. The application recreates a realistic 3D scene with camera controls, lighting, and accurate model scaling.',
+            //     tech: ['JavaScript', 'Three.js', 'WebGL', 'FBX Loader', 'HTML5', 'CSS3'],
+            //     links: [
+            //         {
+            //             label: 'Source Code',
+            //             url: 'https://github.com/piyo12052004/piyo-assignment/tree/three-dimension-test',
+            //             icon: 'fa-solid fa-code'
+            //         }
+            //     ]
+            // },
+            // {
+            //     id: 9,
+            //     category: 'project',
+            //     badge: 'Desktop Application',
+            //     badgeColor: 'bg-cyan-100 text-cyan-700',
+            //     borderColor: 'border-t-cyan-500',
+            //     icon: 'fa-solid fa-desktop',
+            //     hoverColor: 'hover:text-cyan-600',
+            //     year: 2026,
+            //     month: 4,
+            //     dateLabel: 'Apr 2026',
+            //     title: 'Parking Entry Management System',
+            //     subtitle: 'Branch : main',
+            //     description:
+            //         'A desktop-based parking entry management system developed with Python and PyQt5. The application records incoming vehicles using QR Code / Barcode scanning or manual license plate input, automatically stores entry time, and saves parking data into a database.',
+            //     tech: ['Python', 'PyQt5', 'OpenCV', 'QR Code', 'SQLite', 'MySQL'],
+            //     links: [
+            //         {
+            //             label: 'View Source Code',
+            //             url: 'https://github.com/piyo12052004/in_parkir_system_pyqt',
+            //             icon: 'fa-solid fa-arrow-up-right-from-square'
+            //         }
+            //     ]
+            // },
+            // {
+            //     id: 10,
+            //     category: 'project',
+            //     badge: 'Desktop Application',
+            //     badgeColor: 'bg-orange-100 text-orange-700',
+            //     borderColor: 'border-t-orange-500',
+            //     icon: 'fa-solid fa-right-to-bracket',
+            //     hoverColor: 'hover:text-orange-600',
+            //     year: 2026,
+            //     month: 4,
+            //     dateLabel: 'Apr 2026',
+            //     title: 'Parking Exit Management System',
+            //     subtitle: 'Branch : main',
+            //     description:
+            //         'A desktop-based parking exit management system developed using Python and PyQt5. The application processes outgoing vehicles through QR Code / Barcode scanning or manual license plate input, updates parking records, and synchronizes data with the database in real time.',
+            //     tech: ['Python', 'PyQt5', 'OpenCV', 'QR Code', 'SQLite', 'MySQL'],
+            //     links: [
+            //         {
+            //             label: 'Source Code',
+            //             url: 'https://github.com/piyo12052004/out_parkir_system_pyqt',
+            //             icon: 'fa-solid fa-code'
+            //         }
+            //     ]
+            // },
+            // {
+            //     id: 11,
+            //     category: 'project',
+            //     badge: 'Laravel Web App',
+            //     badgeColor: 'bg-rose-100 text-rose-700',
+            //     borderColor: 'border-t-rose-500',
+            //     icon: 'fa-solid fa-film',
+            //     hoverColor: 'hover:text-rose-600',
+            //     year: 2026,
+            //     month: 2,
+            //     dateLabel: 'Feb 2026',
+            //     title: 'Movie Information Application',
+            //     subtitle: 'Branch : main',
+            //     description:
+            //         'A Laravel-based movie information application integrated with the OMDb API. Users can search for movies, view detailed movie information, save favorite movies, and manage their personal favorite list through a responsive web interface.',
+            //     tech: ['Laravel 5.5', 'PHP', 'Blade', 'Tailwind CSS', 'PostgreSQL', 'OMDb API', 'Guzzle HTTP'],
+            //     links: [
+            //         {
+            //             label: 'Source Code',
+            //             url: 'https://github.com/piyo12052004/laravel-movie-app',
+            //             icon: 'fa-solid fa-code'
+            //         }
+            //     ]
+            // },
+            // {
+            //     id: 12,
+            //     category: 'project',
+            //     badge: 'Full Stack Project',
+            //     badgeColor: 'bg-violet-100 text-violet-700',
+            //     borderColor: 'border-t-violet-500',
+            //     icon: 'fa-solid fa-layer-group',
+            //     hoverColor: 'hover:text-violet-600',
+            //     year: 2025,
+            //     month: 2,
+            //     dateLabel: 'Feb 2025',
+            //     title: 'Dynamic Portfolio Website',
+            //     subtitle: 'Branch : main',
+            //     description:
+            //         'A dynamic portfolio website built with a decoupled architecture, using Vue.js for the frontend and Laravel REST API for the backend. The application integrates PostgreSQL for data management and supports Google Authentication for secure user login.',
+            //     tech: ['Vue.js', 'Laravel', 'REST API', 'PostgreSQL', 'Google OAuth', 'JWT Authentication', 'Full Stack'],
+            //     note: 'Backend: Private',
+            //     links: [
+            //         {
+            //             label: 'Source Code Frontend',
+            //             url: 'https://github.com/piyo12052004/portofolio_piyo_fe',
+            //             icon: 'fa-solid fa-code'
+            //         }
+            //     ]
+            // },
             {
                 id: 13,
                 category: 'project',
@@ -390,78 +390,78 @@ function portfolioApp() {
                     }
                 ]
             },
-            {
-                id: 14,
-                category: 'project',
-                badge: 'Portfolio Website',
-                badgeColor: 'bg-emerald-100 text-emerald-700',
-                borderColor: 'border-t-emerald-500',
-                icon: 'fa-solid fa-globe',
-                hoverColor: 'hover:text-emerald-600',
-                year: 2025,
-                month: 8,
-                dateLabel: 'Aug 2025',
-                title: 'Freelance Portfolio – Natanusa',
-                subtitle: 'Branch : production',
-                description:
-                    'A modern and responsive portfolio website developed using Vue.js. The application showcases company information, services, featured projects, and contact details with a clean user interface and component-based architecture for maintainability and scalability.',
-                tech: ['Vue.js', 'JavaScript', 'HTML5', 'CSS3', 'Responsive Design', 'GitHub'],
-                links: [
-                    {
-                        label: 'Source Code',
-                        url: 'https://github.com/piyo12052004/freelance_profile_natanusa/tree/production',
-                        icon: 'fa-solid fa-code'
-                    }
-                ]
-            },
-            {
-                id: 15,
-                category: 'project',
-                badge: 'E-Commerce Project',
-                badgeColor: 'bg-orange-100 text-orange-700',
-                borderColor: 'border-t-orange-500',
-                icon: 'fa-solid fa-cart-shopping',
-                hoverColor: 'hover:text-orange-600',
-                year: 2025,
-                month: 5,
-                dateLabel: 'May 2025',
-                title: 'Online Store Management System',
-                subtitle: 'Branch : production',
-                description:
-                    'A web-based e-commerce application developed using PHP Native and MySQL. The system enables customers to browse products, manage shopping activities, and supports product management through an administrative interface.',
-                tech: ['PHP Native', 'MySQL', 'HTML5', 'CSS3', 'JavaScript', 'Bootstrap'],
-                links: [
-                    {
-                        label: 'Source Code',
-                        url: 'https://github.com/piyo12052004/frelance-toko_oneline/tree/production',
-                        icon: 'fa-solid fa-code'
-                    }
-                ]
-            },
-            {
-                id: 16,
-                category: 'project',
-                badge: 'Laravel Project',
-                badgeColor: 'bg-teal-100 text-teal-700',
-                borderColor: 'border-t-teal-500',
-                icon: 'fa-solid fa-car-side',
-                hoverColor: 'hover:text-teal-600',
-                year: 2025,
-                month: 0,
-                dateLabel: '2025',
-                title: 'Car Rental Management System',
-                subtitle: 'Branch : main',
-                description:
-                    'A web-based car rental management system developed using Laravel and PostgreSQL. The application provides complete CRUD functionality for managing vehicle data, rental transactions, customer information, and rental records through an intuitive web interface.',
-                tech: ['Laravel', 'PHP', 'PostgreSQL', 'Bootstrap', 'CRUD', 'MVC'],
-                links: [
-                    {
-                        label: 'Source Code',
-                        url: 'https://github.com/piyo12052004/peminjaman_mobil',
-                        icon: 'fa-solid fa-code'
-                    }
-                ]
-            },
+            // {
+            //     id: 14,
+            //     category: 'project',
+            //     badge: 'Portfolio Website',
+            //     badgeColor: 'bg-emerald-100 text-emerald-700',
+            //     borderColor: 'border-t-emerald-500',
+            //     icon: 'fa-solid fa-globe',
+            //     hoverColor: 'hover:text-emerald-600',
+            //     year: 2025,
+            //     month: 8,
+            //     dateLabel: 'Aug 2025',
+            //     title: 'Freelance Portfolio – Natanusa',
+            //     subtitle: 'Branch : production',
+            //     description:
+            //         'A modern and responsive portfolio website developed using Vue.js. The application showcases company information, services, featured projects, and contact details with a clean user interface and component-based architecture for maintainability and scalability.',
+            //     tech: ['Vue.js', 'JavaScript', 'HTML5', 'CSS3', 'Responsive Design', 'GitHub'],
+            //     links: [
+            //         {
+            //             label: 'Source Code',
+            //             url: 'https://github.com/piyo12052004/freelance_profile_natanusa/tree/production',
+            //             icon: 'fa-solid fa-code'
+            //         }
+            //     ]
+            // },
+            // {
+            //     id: 15,
+            //     category: 'project',
+            //     badge: 'E-Commerce Project',
+            //     badgeColor: 'bg-orange-100 text-orange-700',
+            //     borderColor: 'border-t-orange-500',
+            //     icon: 'fa-solid fa-cart-shopping',
+            //     hoverColor: 'hover:text-orange-600',
+            //     year: 2025,
+            //     month: 5,
+            //     dateLabel: 'May 2025',
+            //     title: 'Online Store Management System',
+            //     subtitle: 'Branch : production',
+            //     description:
+            //         'A web-based e-commerce application developed using PHP Native and MySQL. The system enables customers to browse products, manage shopping activities, and supports product management through an administrative interface.',
+            //     tech: ['PHP Native', 'MySQL', 'HTML5', 'CSS3', 'JavaScript', 'Bootstrap'],
+            //     links: [
+            //         {
+            //             label: 'Source Code',
+            //             url: 'https://github.com/piyo12052004/frelance-toko_oneline/tree/production',
+            //             icon: 'fa-solid fa-code'
+            //         }
+            //     ]
+            // },
+            // {
+            //     id: 16,
+            //     category: 'project',
+            //     badge: 'Laravel Project',
+            //     badgeColor: 'bg-teal-100 text-teal-700',
+            //     borderColor: 'border-t-teal-500',
+            //     icon: 'fa-solid fa-car-side',
+            //     hoverColor: 'hover:text-teal-600',
+            //     year: 2025,
+            //     month: 0,
+            //     dateLabel: '2025',
+            //     title: 'Car Rental Management System',
+            //     subtitle: 'Branch : main',
+            //     description:
+            //         'A web-based car rental management system developed using Laravel and PostgreSQL. The application provides complete CRUD functionality for managing vehicle data, rental transactions, customer information, and rental records through an intuitive web interface.',
+            //     tech: ['Laravel', 'PHP', 'PostgreSQL', 'Bootstrap', 'CRUD', 'MVC'],
+            //     links: [
+            //         {
+            //             label: 'Source Code',
+            //             url: 'https://github.com/piyo12052004/peminjaman_mobil',
+            //             icon: 'fa-solid fa-code'
+            //         }
+            //     ]
+            // },
             {
                 id: 17,
                 category: 'devops',
