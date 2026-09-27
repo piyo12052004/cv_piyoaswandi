@@ -738,6 +738,14 @@ function portfolioApp() {
         certificates: [
             {
                 id: 1,
+                badge: 'AWS Training & Certification',
+                title: 'AWS Cloud Practitioner Essentials',
+                description: 'Sertifikat penyelesaian pelatihan AWS Cloud Practitioner Essentials yang diberikan kepada Piyo Aswandi pada tanggal 27 September 2026.',
+                image: 'asset/sertifikat-aws-coude.jpeg',
+                url: 'https://drive.google.com/file/d/1wC9pfjdwTZwFZmQeG3aRX5TcSzqZpk0y/view?usp=sharing'
+            },
+            {
+                id: 2,
                 badge: 'Work Experience Certificate',
                 title: 'Certificate of Employment',
                 description:
@@ -746,7 +754,7 @@ function portfolioApp() {
                 url: 'https://drive.google.com/file/d/1khA_G4-ErLRl1b5ax1PRQ1lct124ZGEN/view?usp=drive_link'
             },
             {
-                id: 2,
+                id: 3,
                 badge: 'BBPVP Certificate',
                 title: 'Junior Web Developer Training',
                 description:
@@ -755,7 +763,7 @@ function portfolioApp() {
                 url: 'https://drive.google.com/file/d/1GZimXp7tX_L3cFrOWFL_xvTXHrmvSgYK/view?usp=drive_link'
             },
             {
-                id: 3,
+                id: 4,
                 badge: 'Competency Certificate',
                 title: 'Junior Web Developer Competency Certificate',
                 description:
@@ -764,7 +772,7 @@ function portfolioApp() {
                 url: 'https://drive.google.com/file/d/1dew8desS_XVJNzPGI2g3vObVg_2NWcqj/view?usp=drive_link'
             },
             {
-                id: 4,
+                id: 5,
                 badge: 'Seminar Certificate',
                 title: 'Metaverse: The Future of Virtual Technology',
                 description:
@@ -773,7 +781,7 @@ function portfolioApp() {
                 url: 'https://drive.google.com/file/d/1ffliZrWs3xICKtxLZWJWmMibve0MZJR3/view?usp=drive_link'
             }, 
             {
-                id: 5,
+                id: 6,
                 badge: 'PPKMB Certificate - Universitas Pelita Bangsa',
                 title: 'Campus Life Orientation Program',
                 description: 'Certificate of participation in the Campus Life Orientation Program (PPKMB) at Universitas Pelita Bangsa, covering the introduction to the academic environment, campus culture, and student life.',
